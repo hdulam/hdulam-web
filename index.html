@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HDulam | Servicios Digitales</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    .gradient-text {
+      background: linear-gradient(to right, #14b8a6, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .bg-gradient-custom {
+      background: linear-gradient(to bottom right, #ccfbf1, #bfdbfe, #e0f2fe);
+    }
+    .service-box {
+      border-top: 4px solid;
+      border-radius: 1rem;
+      padding: 2rem;
+      background-color: white;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    }
+    .portfolio-img {
+      object-fit: cover;
+      width: 100%;
+      height: 200px;
+      border-radius: 0.5rem;
+    }
+  </style>
+</head>
+
+<body class="bg-light text-dark">
+  <header class="bg-white shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+      <div class="container">
+        <a class="navbar-brand fw-bold gradient-text" href="#">HDulam | Servicios Digitales</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link text-secondary" href="#servicios">Servicios</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-secondary" href="#portafolio">Portafolio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-secondary" href="#contacto">Contacto</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <section class="text-center py-5 bg-gradient-custom" data-aos="fade-down" data-aos-easing="ease-out-back">
+    <div class="container">
+      <h2 class="display-4 fw-bold gradient-text mb-3">Haz que tu presencia digital destaque</h2>
+      <p class="lead text-secondary mx-auto mb-4" style="max-width: 720px;">Desarrollo web, diseño, escritura y traducción para transformar tu visión en impacto.</p>
+      <a href="https://wa.me/50234427911?text=Hola%2C%20Quiero%20empezar%20un%20proyecto%20ustedes" class="btn btn-success btn-lg">
+        <i class="bi bi-whatsapp me-2"></i>¡Contáctanos por WhatsApp!
+      </a>
+    </div>
+  </section>
+
+  <section id="servicios" class="py-5" data-aos="fade-up" data-aos-delay="200">
+    <div class="container">
+      <h3 class="text-center display-5 fw-bold mb-5">Servicios</h3>
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3" data-aos="flip-left">
+          <div class="service-box border-success">
+            <h4 class="text-success fw-bold mb-2"><i class="bi bi-code-slash me-2"></i>Desarrollo Web</h4>
+            <p>Sitios rápidos y responsivos. Desde landings hasta soluciones completas.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3" data-aos="flip-left" data-aos-delay="100">
+          <div class="service-box border-primary">
+            <h4 class="text-primary fw-bold mb-2"><i class="bi bi-palette2 me-2"></i>Diseño Web</h4>
+            <p>Diseño visual atractivo con enfoque UX/UI para destacar online y mejorar la experiencia del usuario.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3" data-aos="flip-left" data-aos-delay="200">
+          <div class="service-box border-warning">
+            <h4 class="text-warning fw-bold mb-2"><i class="bi bi-pencil-square me-2"></i>Escritura & Edición</h4>
+            <p>Textos claros, persuasivos y bien editados. Corrección de estilo, narrativa y contenido editorial.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3" data-aos="flip-left" data-aos-delay="300">
+          <div class="service-box border-danger">
+            <h4 class="text-danger fw-bold mb-2"><i class="bi bi-translate me-2"></i>Traducción</h4>
+            <p>Traducciones precisas en español, inglés e italiano. Profesionalismo garantizado.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="portafolio" class="py-5 bg-light" data-aos="fade-up">
+    <div class="container">
+      <h3 class="text-center display-5 fw-bold mb-5">Portafolio</h3>
+      <div class="row g-4 mb-4">
+        <div class="col-md-4" data-aos="zoom-in">
+          <div class="bg-white rounded shadow h-100 p-3">
+            <img src="im1.jpeg" alt="Proyecto 1" class="portfolio-img mb-3">
+            <p class="text-secondary text-center">Web para televisión internacional. Diseño accesible, responsivo y orientado a impacto social.</p>
+          </div>
+        </div>
+        <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
+          <div class="bg-white rounded shadow h-100 p-3">
+            <img src="im2.jpeg" alt="Proyecto 2" class="portfolio-img mb-3">
+            <p class="text-secondary text-center">Web para RMotors, una empresa líder en importación de vehículos en El Salvador.</p>
+          </div>
+        </div>
+        <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
+          <div class="bg-white rounded shadow h-100 p-3">
+            <img src="3.png" alt="Proyecto 3" class="portfolio-img mb-3">
+            <p class="text-secondary text-center">Libros para CZYK Publisher - editorial americana.</p>
+          </div>
+        </div>
+        <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
+          <div class="bg-white rounded shadow h-100 p-3">
+            <img src="4.jpg" alt="Proyecto 4" class="portfolio-img mb-3">
+            <p class="text-secondary text-center">Coming soon: Toki Pona Language Simplifier.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contacto" class="py-5 bg-white" data-aos="fade-up">
+    <div class="container text-center">
+      <h3 class="display-5 fw-bold mb-3">¿Listo para comenzar?</h3>
+      <p class="text-muted mb-4 mx-auto" style="max-width: 720px;">Envíame un mensaje por WhatsApp o sígueme en redes para conocer más sobre mi trabajo.</p>
+      <a href="https://wa.me/50234427911" class="btn btn-success btn-lg mb-3 me-2">
+        <i class="bi bi-whatsapp me-2"></i>Escribir por WhatsApp
+      </a>
+      <a href="https://facebook.com/HDulam" class="btn btn-primary btn-lg mb-3">
+        <i class="bi bi-facebook me-2"></i>Visitar Facebook
+      </a>
+    </div>
+  </section>
+
+  <footer class="bg-dark text-white text-center py-4">
+    <p class="mb-0">© 2025 HDulam — Desarrollo Web, Diseño, Traducción y Escritura</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1200, once: true });
+  </script>
+</body>
+</html>
