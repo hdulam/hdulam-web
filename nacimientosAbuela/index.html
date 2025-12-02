@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Nacimientos de la Abuela Brenda</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    touch-action: manipulation;
+  }
+
+  body {
+    font-family: 'Arial', sans-serif;
+    background: #000;
+    position: relative;
+    min-height: 100vh;
+  }
+
+  /* ===== LOADING SCREEN ===== */
+  #loadingScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #001122, #002244);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity 1s ease;
+  }
+
+  .loading-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 20px;
+    max-width: 500px;
+  }
+
+  .loading-title {
+    color: white;
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 15px #00a8ff;
+    animation: pulse 2s infinite;
+    line-height: 1.3;
+    padding: 0 10px;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+  }
+
+  .spinner {
+    width: clamp(60px, 15vw, 70px);
+    height: clamp(60px, 15vw, 70px);
+    border: clamp(4px, 1vw, 6px) solid rgba(255,255,255,0.1);
+    border-top: clamp(4px, 1vw, 6px) solid #00a8ff;
+    border-radius: 50%;
+    animation: spin 1.5s linear infinite;
+    margin-bottom: 2rem;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .loading-text {
+    color: white;
+    font-size: clamp(1rem, 4vw, 1.3rem);
+    margin-bottom: 2rem;
+    opacity: 0.9;
+    padding: 0 20px;
+  }
+
+  #startBtn {
+    background: linear-gradient(45deg, #ff3366, #ff6633);
+    color: white;
+    border: none;
+    padding: clamp(12px, 3vw, 14px) clamp(25px, 8vw, 35px);
+    font-size: clamp(1rem, 4vw, 1.2rem);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(255,51,102,0.5);
+    margin-top: 1rem;
+    width: auto;
+    min-width: 200px;
+    max-width: 90%;
+  }
+
+  #startBtn:hover, #startBtn:active {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(255,51,102,0.8);
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  #mainContent {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .background-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, #012, #034, #012);
+    background-size: 400% 400%;
+    animation: bgShift 20s ease infinite;
+  }
+
+  @keyframes bgShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* ===== TITLE GROUP - FIX: keep title+subtitle as a single centered block ===== */
+  .title-group {
+    position: absolute;
+    top: 10vh; /* will be adjusted in media queries */
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 20;
+    padding: 0 clamp(10px, 5vw, 20px);
+    gap: clamp(0.4rem, 2vw, 0.9rem);
+    pointer-events: none; /* keep clicks to ornament */
+  }
+
+  /* Main Title - Responsive (now NOT absolute) */
+  .main-title {
+    /* removed position:absolute to avoid overlap issues */
+    width: auto;
+    text-align: center;
+    font-size: clamp(1.5rem, 7vw, 2.2rem);
+    color: #fff;
+    text-shadow: 0 0 15px #fff, 0 0 25px #ff0000;
+    animation: titleGlow 4s ease-in-out infinite;
+    padding: 0;
+    line-height: 1.2;
+    transform: translateY(0);
+    transition: all 0.5s ease;
+    pointer-events: auto; /* allow text selection if needed */
+  }
+
+  @keyframes titleGlow {
+    0%, 100% { text-shadow: 0 0 15px #fff, 0 0 25px #ff0000; }
+    50% { text-shadow: 0 0 25px #ffb3b3, 0 0 40px #ff3333; }
+  }
+
+  /* Tradition Subtitle - Responsive (now part of title-group) */
+  .tradition-subtitle {
+    width: auto;
+    text-align: center;
+    font-size: clamp(1rem, 4.5vw, 1.5rem);
+    color: #ffcc00;
+    text-shadow: 0 0 10px #ff9900;
+    animation: fadeIn 3s ease-out 1s both;
+    font-style: italic;
+    padding: 0;
+    line-height: 1.3;
+    pointer-events: auto;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Christmas ornament - Responsive */
+  .ornament-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(120px, 30vw, 160px);
+    height: clamp(120px, 30vw, 160px);
+    z-index: 30;
+    pointer-events: auto;
+  }
+
+  .ornament {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 30%, #ff5555, #990000);
+    border-radius: 50%;
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.7);
+    cursor: pointer;
+    animation: glow 4s ease-in-out infinite, swing 3s ease-in-out infinite;
+    transform-origin: top center;
+    position: relative;
+    touch-action: manipulation;
+  }
+
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 0 25px rgba(255,0,0,0.7); }
+    50% { box-shadow: 0 0 45px rgba(255,80,80,1); }
+  }
+
+  @keyframes swing {
+    0%,100% { transform: rotate(0deg); }
+    50% { transform: rotate(8deg); }
+  }
+
+  .ornament::before {
+    content: "";
+    position: absolute;
+    top: -12%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30%;
+    height: 12%;
+    background: gold;
+    border-radius: 5px;
+  }
+
+  /* Text - Responsive */
+  .text {
+    position: absolute;
+    top: calc(50% + clamp(70px, 20vw, 90px));
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: #fff;
+    font-size: clamp(1rem, 4vw, 1.4rem);
+    text-shadow: 0 0 10px #fff;
+    animation: pulseText 2s infinite;
+    z-index: 30;
+    width: 100%;
+    padding: 0 clamp(10px, 5vw, 20px);
+    line-height: 1.4;
+    pointer-events: none;
+  }
+
+  @keyframes pulseText {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+  }
+
+  /* Ornament shine effect */
+  .ornament-shine {
+    position: absolute;
+    width: 30%;
+    height: 30%;
+    background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%);
+    border-radius: 50%;
+    top: 20%;
+    left: 20%;
+    animation: shineMove 3s infinite alternate;
+  }
+
+  @keyframes shineMove {
+    0% { transform: translate(0, 0) scale(1); opacity: 0.7; }
+    100% { transform: translate(10%, 10%) scale(1.2); opacity: 0.9; }
+  }
+
+  /* Snow - Responsive */
+  .snowflake {
+    position: fixed;
+    top: -10px;
+    color: white;
+    font-size: clamp(12px, 3vw, 20px);
+    user-select: none;
+    animation: fall linear infinite;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* Sparkles - Responsive */
+  .sparkle {
+    position: fixed;
+    width: clamp(4px, 1.5vw, 8px);
+    height: clamp(4px, 1.5vw, 8px);
+    background: radial-gradient(#fff, rgba(255,255,255,0));
+    border-radius: 50%;
+    animation: sparkleAnim 2s infinite ease-in-out;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  @keyframes sparkleAnim {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.4); opacity: 1; }
+    100% { transform: scale(0); opacity: 0; }
+  }
+
+  /* Lights - Responsive */
+  .light {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(clamp(10px, 3vw, 20px));
+    opacity: 0.4;
+    animation: lightFloat 10s infinite ease-in-out;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  @keyframes lightFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(20px, -20px) scale(1.1); }
+    50% { transform: translate(0, -40px) scale(1); }
+    75% { transform: translate(-20px, -20px) scale(0.9); }
+  }
+
+  /* Floating particles */
+  .particle {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* Decorative elements */
+  .decoration {
+    position: fixed;
+    pointer-events: none;
+    z-index: 3;
+    font-size: clamp(16px, 4vw, 30px);
+  }
+
+  /* ===== VIDEO OVERLAY ===== */
+  #videoOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.98);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .video-wrapper {
+    width: 95%;
+    height: 95vh;
+    max-width: 400px;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.5s ease;
+  }
+
+  #videoOverlay.show .video-wrapper {
+    transform: scale(1);
+  }
+
+  #videoOverlay.show {
+    opacity: 1;
+    display: flex;
+  }
+
+  .youtube-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 50px rgba(255, 0, 0, 0.5);
+    background: #000;
+  }
+
+  .youtube-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 20px;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    background: rgba(255,0,0,0.9);
+    color: white;
+    border: none;
+    width: clamp(35px, 10vw, 40px);
+    height: clamp(35px, 10vw, 40px);
+    border-radius: 50%;
+    font-size: clamp(1.2rem, 4vw, 1.5rem);
+    cursor: pointer;
+    z-index: 101;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(255,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
+  }
+
+  .close-btn:hover, .close-btn:active {
+    background: rgba(255,0,0,1);
+    transform: scale(1.1);
+    box-shadow: 0 0 25px rgba(255,0,0,1);
+  }
+
+  /* Mobile-specific adjustments */
+  @media (max-width: 768px) and (orientation: portrait) {
+    .title-group {
+      top: 8vh;
+    }
+
+    .main-title {
+      font-size: clamp(1.3rem, 6vw, 1.8rem);
+      line-height: 1.1;
+    }
+    
+    .tradition-subtitle {
+      font-size: clamp(0.9rem, 4vw, 1.2rem);
+    }
+    
+    .ornament-container {
+      width: clamp(100px, 40vw, 140px);
+      height: clamp(100px, 40vw, 140px);
+    }
+    
+    .text {
+      top: calc(50% + clamp(60px, 25vw, 80px));
+      font-size: clamp(0.9rem, 4vw, 1.2rem);
+    }
+    
+    .video-wrapper {
+      width: 98%;
+      height: 80vh;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .loading-title {
+      font-size: clamp(1.5rem, 7vw, 1.8rem);
+    }
+    
+    .title-group {
+      top: 7vh;
+      padding: 0 15px;
+    }
+    
+    .main-title {
+      font-size: clamp(1.1rem, 6vw, 1.6rem);
+      padding: 0 15px;
+    }
+    
+    .tradition-subtitle {
+      font-size: clamp(0.85rem, 4.5vw, 1.0rem);
+      padding: 0 15px;
+    }
+    
+    .text {
+      top: calc(50% + clamp(50px, 30vw, 70px));
+    }
+  }
+
+  @media (max-height: 600px) {
+    .title-group {
+      top: 5vh;
+    }
+    
+    .main-title {
+      font-size: clamp(1.0rem, 5vw, 1.5rem);
+    }
+    
+    .tradition-subtitle {
+      top: calc(5vh + clamp(1.5rem, 6vw, 2rem)); /* won't affect since now static, but kept for fallback */
+      font-size: clamp(0.8rem, 3vw, 1rem);
+    }
+    
+    .ornament-container {
+      width: clamp(80px, 25vw, 120px);
+      height: clamp(80px, 25vw, 120px);
+    }
+    
+    .text {
+      top: calc(50% + clamp(40px, 20vw, 60px));
+      font-size: clamp(0.8rem, 3vw, 1rem);
+    }
+  }
+
+  /* Orientation lock for mobile */
+  @media (orientation: landscape) and (max-height: 500px) {
+    .title-group {
+      top: 5vh;
+    }
+
+    .main-title {
+      font-size: 1.2rem;
+    }
+    
+    .tradition-subtitle {
+      font-size: 1rem;
+    }
+    
+    .ornament-container {
+      width: 80px;
+      height: 80px;
+    }
+    
+    .text {
+      top: calc(50% + 50px);
+      font-size: 0.9rem;
+    }
+    
+    .video-wrapper {
+      height: 90vh;
+      max-width: 300px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div id="loadingScreen">
+  <div class="loading-content">
+    <h1 class="loading-title">🎄 Nacimientos de la Abuela Brenda 🎄</h1>
+    <div class="spinner"></div>
+    <p class="loading-text">Preparando la magia navideña...</p>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div id="mainContent">
+  <div class="background-gradient"></div>
+  
+  <!-- Lights Container -->
+  <div id="lightsContainer"></div>
+  
+  <!-- Sparkles Container -->
+  <div id="sparklesContainer"></div>
+  
+  <!-- Snow Container -->
+  <div id="snowContainer"></div>
+  
+  <!-- Floating Particles -->
+  <div id="particlesContainer"></div>
+  
+  <!-- Decorative Elements -->
+  <div id="decorationsContainer"></div>
+  
+  <!-- Titles grouped to avoid overlap -->
+  <div class="title-group">
+    <h1 class="main-title">298 Nacimientos de la Abuela Brenda — 2026</h1>
+    <div class="tradition-subtitle">La Tradición de la Abuela Brenda</div>
+  </div>
+  
+  <!-- Main Ornament -->
+  <div class="ornament-container">
+    <div class="ornament" onclick="openVideo()">
+      <div class="ornament-shine"></div>
+    </div>
+  </div>
+  <div class="text">✨ Haz click en la bomba navideña ✨</div>
+</div>
+
+<!-- Video Overlay -->
+<div id="videoOverlay" onclick="closeVideo(event)">
+  <div class="video-wrapper">
+    <div class="youtube-container" id="youtubePlayer">
+      <!-- YouTube iframe will be inserted here -->
+    </div>
+    <button class="close-btn" onclick="closeVideo(event)">×</button>
+  </div>
+</div>
+
+<script>
+  // DOM Elements
+  const loadingScreen = document.getElementById('loadingScreen');
+  const mainContent = document.getElementById('mainContent');
+  const videoOverlay = document.getElementById('videoOverlay');
+  const youtubeContainer = document.getElementById('youtubePlayer');
+  const lightsContainer = document.getElementById('lightsContainer');
+  const sparklesContainer = document.getElementById('sparklesContainer');
+  const snowContainer = document.getElementById('snowContainer');
+  const particlesContainer = document.getElementById('particlesContainer');
+  const decorationsContainer = document.getElementById('decorationsContainer');
+
+  const youtubeVideoId = 'D8_xIyDKy0o';
+  
+  // Colors for lights
+  const lightColors = ['#ff3366', '#33ff66', '#3366ff', '#ffcc00', '#ff33cc', '#00ffff'];
+  const decorationSymbols = ['🎄', '🎁', '🌟', '⭐', '❄️', '🎅', '🤶'];
+
+  // Initialize all effects when page loads
+  window.addEventListener('load', () => {
+    // Adjust for mobile viewport
+    adjustViewport();
+    
+    // Simulate loading for 2 seconds
+    setTimeout(() => {
+      loadingScreen.style.opacity = '0';
+      setTimeout(() => {
+        loadingScreen.style.display = 'none';
+        showMainContent();
+      }, 1000);
+    }, 2000);
+    
+    // Handle orientation changes
+    window.addEventListener('orientationchange', adjustViewport);
+    window.addEventListener('resize', adjustViewport);
+  });
+
+  function adjustViewport() {
+    // Fix for mobile viewport height
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    
+    // Adjust title group position on mobile
+    const titleGroup = document.querySelector('.title-group');
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+      titleGroup.style.top = '8vh';
+      const mainTitle = document.querySelector('.main-title');
+      mainTitle.style.lineHeight = '1.1';
+    } else {
+      titleGroup.style.top = '10vh';
+      const mainTitle = document.querySelector('.main-title');
+      mainTitle.style.lineHeight = '1.2';
+    }
+  }
+
+  function startExperience() {
+    loadingScreen.style.opacity = '0';
+    setTimeout(() => {
+      loadingScreen.style.display = 'none';
+      showMainContent();
+    }, 1000);
+  }
+
+  function showMainContent() {
+    mainContent.style.display = 'block';
+    
+    // Create all visual effects
+    createLights();
+    createSparkles();
+    createSnow();
+    createParticles();
+    createDecorations();
+    
+    // Animate ornament entrance
+    const ornamentContainer = document.querySelector('.ornament-container');
+    ornamentContainer.style.opacity = '0';
+    ornamentContainer.style.transform = 'translate(-50%, -55%) scale(0.5)';
+    
+    setTimeout(() => {
+      ornamentContainer.style.transition = 'opacity 1.5s ease, transform 1.5s ease';
+      ornamentContainer.style.opacity = '1';
+      ornamentContainer.style.transform = 'translate(-50%, -50%) scale(1)';
+    }, 500);
+    
+    // Animate titles entrance
+    const mainTitle = document.querySelector('.main-title');
+    const subtitle = document.querySelector('.tradition-subtitle');
+    
+    mainTitle.style.opacity = '0';
+    mainTitle.style.transform = 'translateY(-15px)';
+    subtitle.style.opacity = '0';
+    subtitle.style.transform = 'translateY(-15px)';
+    
+    setTimeout(() => {
+      mainTitle.style.transition = 'opacity 1s ease, transform 1s ease';
+      subtitle.style.transition = 'opacity 1s ease 0.3s, transform 1s ease 0.3s';
+      mainTitle.style.opacity = '1';
+      mainTitle.style.transform = 'translateY(0)';
+      subtitle.style.opacity = '1';
+      subtitle.style.transform = 'translateY(0)';
+    }, 300);
+  }
+
+  function createLights() {
+    const lightCount = window.innerWidth < 768 ? 8 : 12;
+    
+    for (let i = 0; i < lightCount; i++) {
+      const light = document.createElement('div');
+      light.className = 'light';
+      
+      // Random properties
+      const size = window.innerWidth < 768 ? 
+        (40 + Math.random() * 80) : 
+        (60 + Math.random() * 120);
+      
+      const color = lightColors[Math.floor(Math.random() * lightColors.length)];
+      const x = Math.random() * 100;
+      const y = Math.random() * 100;
+      
+      // Apply styles
+      light.style.width = `${size}px`;
+      light.style.height = `${size}px`;
+      light.style.background = `radial-gradient(circle, ${color}, transparent)`;
+      light.style.left = `${x}vw`;
+      light.style.top = `${y}vh`;
+      light.style.animationDuration = `${8 + Math.random() * 12}s`;
+      light.style.animationDelay = `${Math.random() * 5}s`;
+      light.style.opacity = `${0.3 + Math.random() * 0.3}`;
+      
+      lightsContainer.appendChild(light);
+    }
+  }
+
+  function createSparkles() {
+    const sparkleCount = window.innerWidth < 768 ? 30 : 50;
+    
+    for (let i = 0; i < sparkleCount; i++) {
+      const sparkle = document.createElement('div');
+      sparkle.className = 'sparkle';
+      
+      // Random properties
+      const size = window.innerWidth < 768 ? 
+        (3 + Math.random() * 6) : 
+        (4 + Math.random() * 10);
+      
+      const x = Math.random() * 100;
+      const y = Math.random() * 100;
+      
+      // Apply styles
+      sparkle.style.width = `${size}px`;
+      sparkle.style.height = `${size}px`;
+      sparkle.style.left = `${x}vw`;
+      sparkle.style.top = `${y}vh`;
+      sparkle.style.animationDuration = `${1 + Math.random() * 4}s`;
+      sparkle.style.animationDelay = `${Math.random() * 4}s`;
+      sparkle.style.background = `radial-gradient(circle, 
+        rgba(255,255,255,${0.8 + Math.random() * 0.2}), 
+        transparent)`;
+      
+      sparklesContainer.appendChild(sparkle);
+    }
+  }
+
+  function createSnow() {
+    const snowCount = window.innerWidth < 768 ? 50 : 80;
+    
+    for (let i = 0; i < snowCount; i++) {
+      const snow = document.createElement("div");
+      snow.className = "snowflake";
+      
+      // Use snowflake symbol or star randomly
+      snow.textContent = Math.random() > 0.5 ? "❄" : "✦";
+      
+      snow.style.left = Math.random() * 100 + "vw";
+      snow.style.fontSize = (window.innerWidth < 768 ? 8 : 10) + Math.random() * (window.innerWidth < 768 ? 15 : 25) + "px";
+      snow.style.animationDuration = (5 + Math.random() * 10) + "s";
+      snow.style.animationDelay = Math.random() * 8 + "s";
+      snow.style.opacity = Math.random() * 0.7 + 0.3;
+      snow.style.color = Math.random() > 0.8 ? "#ffcc00" : "white";
+      
+      snowContainer.appendChild(snow);
+    }
+  }
+
+  function createParticles() {
+    const particleCount = window.innerWidth < 768 ? 20 : 30;
+    
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      
+      const size = window.innerWidth < 768 ? 
+        (1 + Math.random() * 2) : 
+        (1 + Math.random() * 3);
+      
+      const color = lightColors[Math.floor(Math.random() * lightColors.length)];
+      const x = Math.random() * 100;
+      const y = Math.random() * 100;
+      const duration = 15 + Math.random() * 20;
+      
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.background = color;
+      particle.style.left = `${x}vw`;
+      particle.style.top = `${y}vh`;
+      particle.style.boxShadow = `0 0 ${size * 2}px ${color}`;
+      particle.style.animation = `lightFloat ${duration}s infinite ease-in-out`;
+      particle.style.animationDelay = `${Math.random() * 10}s`;
+      particle.style.opacity = `${0.2 + Math.random() * 0.3}`;
+      
+      particlesContainer.appendChild(particle);
+    }
+  }
+
+  function createDecorations() {
+    const decorationCount = window.innerWidth < 768 ? 15 : 20;
+    
+    for (let i = 0; i < decorationCount; i++) {
+      const decoration = document.createElement('div');
+      decoration.className = 'decoration';
+      
+      const symbol = decorationSymbols[Math.floor(Math.random() * decorationSymbols.length)];
+      const size = window.innerWidth < 768 ? 
+        (15 + Math.random() * 25) : 
+        (20 + Math.random() * 40);
+      
+      const x = Math.random() * 100;
+      const y = Math.random() * 100;
+      const duration = 20 + Math.random() * 30;
+      const rotation = Math.random() * 360;
+      
+      decoration.textContent = symbol;
+      decoration.style.fontSize = `${size}px`;
+      decoration.style.left = `${x}vw`;
+      decoration.style.top = `${y}vh`;
+      decoration.style.opacity = `${0.1 + Math.random() * 0.2}`;
+      decoration.style.transform = `rotate(${rotation}deg)`;
+      decoration.style.animation = `lightFloat ${duration}s infinite ease-in-out`;
+      decoration.style.animationDelay = `${Math.random() * 15}s`;
+      
+      decorationsContainer.appendChild(decoration);
+    }
+  }
+
+  function openVideo() {
+    // Add click effect to ornament
+    const ornamentContainer = document.querySelector('.ornament-container');
+    ornamentContainer.style.transform = 'translate(-50%, -50%) scale(0.9)';
+    setTimeout(() => {
+      ornamentContainer.style.transform = 'translate(-50%, -50%) scale(1)';
+    }, 200);
+    
+    // Create sparkle burst effect
+    createSparkleBurst();
+    
+    // Load YouTube video
+    window.open("https://youtube.com/shorts/D8_xIyDKy0o", "_blank");
+    
+    // Show video overlay with animation
+    
+  }
+
+  function loadYouTubeVideo() {
+    // Create YouTube iframe
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+    iframe.title = "Christmas Video";
+    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+    iframe.allowFullscreen = true;
+    iframe.loading = "eager";
+    
+    // Clear container and add iframe
+    youtubeContainer.innerHTML = '';
+    youtubeContainer.appendChild(iframe);
+  }
+
+  function closeVideo(event) {
+    if (event) {
+      event.stopPropagation();
+      
+      // Only close if clicking overlay or close button
+      if (event.target.id !== 'videoOverlay' && event.target.className !== 'close-btn') {
+        return;
+      }
+    }
+    
+    videoOverlay.style.opacity = '0';
+    videoOverlay.classList.remove('show');
+    
+    // Stop YouTube video
+    const iframe = youtubeContainer.querySelector('iframe');
+    if (iframe) {
+      iframe.src = iframe.src.replace('&autoplay=1', '');
+    }
+    
+    setTimeout(() => {
+      videoOverlay.style.display = 'none';
+      // Clear YouTube iframe
+      youtubeContainer.innerHTML = '';
+    }, 500);
+  }
+
+  function createSparkleBurst() {
+    const burstCount = window.innerWidth < 768 ? 15 : 20;
+    const ornament = document.querySelector('.ornament');
+    const rect = ornament.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    
+    for (let i = 0; i < burstCount; i++) {
+      const sparkle = document.createElement('div');
+      sparkle.style.position = 'fixed';
+      sparkle.style.width = window.innerWidth < 768 ? '8px' : '10px';
+      sparkle.style.height = window.innerWidth < 768 ? '8px' : '10px';
+      sparkle.style.background = 'radial-gradient(circle, #fff, #ffcc00)';
+      sparkle.style.borderRadius = '50%';
+      sparkle.style.left = `${centerX}px`;
+      sparkle.style.top = `${centerY}px`;
+      sparkle.style.zIndex = '40';
+      sparkle.style.pointerEvents = 'none';
+      
+      document.body.appendChild(sparkle);
+      
+      // Animate burst
+      const angle = Math.random() * Math.PI * 2;
+      const distance = window.innerWidth < 768 ? 
+        (30 + Math.random() * 70) : 
+        (50 + Math.random() * 100);
+      
+      const duration = 0.5 + Math.random() * 0.5;
+      
+      const animation = sparkle.animate([
+        { 
+          transform: 'translate(0, 0) scale(1)', 
+          opacity: 1 
+        },
+        { 
+          transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(0)`, 
+          opacity: 0 
+        }
+      ], {
+        duration: duration * 1000,
+        easing: 'ease-out'
+      });
+      
+      animation.onfinish = () => {
+        sparkle.remove();
+      };
+    }
+  }
+
+  // Close video with ESC key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && videoOverlay.style.display === 'flex') {
+      closeVideo();
+    }
+  });
+
+  // Prevent zoom on double tap (mobile)
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (e) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      e.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, false);
+</script>
+
+</body>
+</html>
