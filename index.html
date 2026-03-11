@@ -1,160 +1,698 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HDulam | Servicios Digitales</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-  <style>
-    html {
-      scroll-behavior: smooth;
-    }
-    .gradient-text {
-      background: linear-gradient(to right, #14b8a6, #3b82f6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .bg-gradient-custom {
-      background: linear-gradient(to bottom right, #ccfbf1, #bfdbfe, #e0f2fe);
-    }
-    .service-box {
-      border-top: 4px solid;
-      border-radius: 1rem;
-      padding: 2rem;
-      background-color: white;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-    }
-    .portfolio-img {
-      object-fit: cover;
-      width: 100%;
-      height: 200px;
-      border-radius: 0.5rem;
-    }
-  </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HDulam – Soluciones Digitales para tu Negocio</title>
+    <meta name="description" content="HDulam ofrece gestión de redes sociales, diseño web, redacción y traducción para emprendedores y pequeñas empresas.">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --navy:      #0b1f3a;
+            --navy-mid:  #132d52;
+            --navy-soft: #1a3d6e;
+            --blue:      #2a6dd9;
+            --blue-light:#4a8fe8;
+            --sky:       #d4e8ff;
+            --off-white: #f2f6fc;
+            --muted:     rgba(255,255,255,0.45);
+            --pad-y:     clamp(72px, 9vw, 120px);
+        }
+
+        html  { scroll-behavior: smooth; }
+        body  { font-family: 'Inter', sans-serif; background: var(--off-white); color: var(--navy); overflow-x: hidden; }
+        h1,h2,h3,h4,h5 { font-family: 'Bricolage Grotesque', sans-serif; letter-spacing: -0.03em; }
+        h2 { font-weight: 700; }
+        h3 { font-weight: 700; letter-spacing: -0.02em; }
+        p, li { font-family: 'Inter', sans-serif; }
+
+        /* ── SVG ICONS: force white everywhere ── */
+        svg { color: #fff; }
+        svg[fill="currentColor"] { fill: #fff; }
+        svg[stroke="currentColor"] { stroke: #fff; }
+        /* check-circle keeps its filled look */
+        .svc-list svg[fill="var(--blue-light)"] { fill: var(--blue-light); }
+        .svc-list svg polyline { stroke: #fff; }
+        /* hero badge dot stays sky-blue */
+        .hero-badge svg { color: var(--sky); fill: var(--sky); }
+
+        /* FADE-UP */
+        .fade-up { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s ease; }
+        .fade-up.visible { opacity: 1; transform: none; }
+
+        /* ── NAVBAR ── */
+        #mainNav {
+            padding: 16px 0;
+            background: transparent;
+            transition: background .3s, box-shadow .3s;
+        }
+        #mainNav.scrolled {
+            background: rgba(11,31,58,.97);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 1px 0 rgba(255,255,255,.06);
+        }
+        #mainNav .navbar-brand {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: #fff;
+            letter-spacing: -.03em;
+        }
+        #mainNav .nav-link {
+            font-size: .82rem;
+            font-weight: 500;
+            color: rgba(255,255,255,.6);
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            transition: color .2s;
+            padding: 6px 14px;
+        }
+        #mainNav .nav-link:hover { color: var(--sky); }
+        .btn-nav {
+            background: var(--blue) !important;
+            color: #fff !important;
+            border-radius: 100px !important;
+            padding: 8px 22px !important;
+            font-weight: 600 !important;
+            font-size: .82rem !important;
+            transition: background .2s, transform .2s !important;
+        }
+        .btn-nav:hover { background: var(--blue-light) !important; transform: translateY(-1px); }
+        .navbar-toggler { border: 1px solid rgba(255,255,255,.25); }
+        .navbar-toggler-icon { filter: invert(1); }
+
+        /* ── HERO ── */
+        #hero {
+            min-height: 100vh;
+            background: linear-gradient(160deg, var(--navy) 0%, var(--navy-mid) 60%, var(--navy-soft) 100%);
+            display: flex;
+            align-items: center;
+            padding: 140px 0 100px;
+            position: relative;
+            overflow: hidden;
+        }
+        #hero::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse 55% 70% at 90% 40%, rgba(42,109,217,.22) 0%, transparent 65%);
+            pointer-events: none;
+        }
+        .hero-dot-grid {
+            position: absolute; inset: 0;
+            background-image: radial-gradient(circle, rgba(255,255,255,.055) 1px, transparent 1px);
+            background-size: 32px 32px;
+            pointer-events: none;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(74,143,232,.12);
+            border: 1px solid rgba(74,143,232,.3);
+            color: var(--sky);
+            font-size: .72rem; font-weight: 500;
+            letter-spacing: .12em; text-transform: uppercase;
+            padding: 6px 16px; border-radius: 100px;
+            margin-bottom: 32px;
+        }
+        h1 {
+            font-size: clamp(2.8rem, 4.2vw, 5rem);
+            font-weight: 800; line-height: 1.05;
+            color: #fff; margin-bottom: 26px;
+            letter-spacing: -0.03em;
+        }
+        h1 span { color: var(--sky); }
+        .hero-sub {
+            font-size: 1.1rem; font-weight: 300;
+            color: rgba(255,255,255,.55); line-height: 1.8;
+            max-width: 480px; margin-bottom: 42px;
+        }
+        .btn-primary-hd {
+            background: var(--blue); color: #fff;
+            font-weight: 600; font-size: 1rem;
+            padding: 15px 34px; border-radius: 100px;
+            text-decoration: none; display: inline-block;
+            transition: background .2s, transform .2s, box-shadow .2s;
+            box-shadow: 0 4px 20px rgba(42,109,217,.4);
+        }
+        .btn-primary-hd:hover { background: var(--blue-light); color: #fff; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(42,109,217,.5); }
+        .btn-ghost {
+            background: transparent; color: rgba(255,255,255,.7);
+            font-weight: 400; font-size: 1rem;
+            padding: 15px 34px; border-radius: 100px;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,.18); display: inline-block;
+            transition: border-color .2s, color .2s, transform .2s;
+        }
+        .btn-ghost:hover { border-color: rgba(212,232,255,.5); color: var(--sky); transform: translateY(-2px); }
+
+        /* hero pills */
+        .hero-pills { display: flex; flex-direction: column; gap: 12px; }
+        .h-pill {
+            background: rgba(255,255,255,.04);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 16px; padding: 16px 20px;
+            display: flex; align-items: center; gap: 16px;
+            transition: border-color .3s, background .3s, transform .3s;
+            opacity: 0; animation: slideIn .5s ease forwards;
+            backdrop-filter: blur(6px);
+        }
+        .h-pill:hover { border-color: rgba(74,143,232,.45); background: rgba(42,109,217,.08); transform: translateX(4px); }
+        .h-pill:nth-child(1){ animation-delay:.2s; }
+        .h-pill:nth-child(2){ animation-delay:.35s; }
+        .h-pill:nth-child(3){ animation-delay:.5s; }
+        .h-pill:nth-child(4){ animation-delay:.65s; }
+        @keyframes slideIn {
+            from { opacity:0; transform:translateX(20px); }
+            to   { opacity:1; transform:translateX(0); }
+        }
+        .pill-icon {
+            width: 40px; height: 40px;
+            background: rgba(42,109,217,.2); border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; color: var(--sky);
+        }
+        .pill-text h5 { font-size: .92rem; font-weight: 600; margin: 0 0 2px; color: #fff; letter-spacing: -.01em; }
+        .pill-text p  { font-size: .76rem; color: rgba(255,255,255,.38); margin: 0; font-weight: 300; }
+        .pill-price   { margin-left: auto; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: .85rem; color: var(--sky); white-space: nowrap; }
+
+        /* ── ABOUT ── */
+        #about {
+            background: var(--navy);
+            padding: var(--pad-y) 0;
+            border-top: 1px solid rgba(255,255,255,.05);
+        }
+        .section-label {
+            font-size: .7rem; font-weight: 600;
+            letter-spacing: .18em; text-transform: uppercase; margin-bottom: 18px; display: block; font-family: 'Inter', sans-serif;
+        }
+        .about-lead {
+            font-size: clamp(1.9rem, 3.2vw, 2.8rem); font-weight: 700;
+            color: #fff; line-height: 1.12; margin-bottom: 22px;
+        }
+        .about-lead span { color: var(--sky); }
+        .about-body { font-size: 1.02rem; color: rgba(255,255,255,.5); line-height: 1.85; font-weight: 300; }
+        .about-body strong { color: rgba(255,255,255,.8); font-weight: 500; }
+        .about-feature {
+            display: flex; align-items: flex-start; gap: 14px;
+            padding: 20px; background: rgba(255,255,255,.03);
+            border: 1px solid rgba(255,255,255,.06); border-radius: 12px;
+            transition: border-color .3s;
+        }
+        .about-feature:hover { border-color: rgba(74,143,232,.3); }
+        .about-feature i { font-size: 1.3rem; color: var(--sky); flex-shrink: 0; margin-top: 2px; }
+        .about-feature h6 { font-size: .92rem; font-weight: 600; color: #fff; margin-bottom: 4px; }
+        .about-feature p  { font-size: .83rem; color: rgba(255,255,255,.4); margin: 0; font-weight: 300; line-height: 1.55; }
+
+        /* ── SERVICES ── */
+        #services { padding: var(--pad-y) 0; background: var(--off-white); }
+        #services h2 { color: var(--navy); }
+        #services .section-label { color: var(--navy); opacity: .45; }
+
+        .svc-card {
+            border-radius: 18px; padding: 36px 32px;
+            height: 100%; position: relative; overflow: hidden;
+            transition: transform .3s, box-shadow .3s;
+        }
+        .svc-card:hover { transform: translateY(-6px); box-shadow: 0 16px 50px rgba(0,0,0,.1); }
+        .svc-card.light   { background: #e4ecf8; }
+        .svc-card.dark    { background: var(--navy); }
+        .svc-card.featured {
+            background: var(--navy-soft);
+            border: 1px solid rgba(74,143,232,.35);
+            box-shadow: 0 0 40px rgba(42,109,217,.1);
+        }
+        .svc-featured-tag {
+            position: absolute; top: 18px; right: 18px;
+            background: var(--blue); color: #fff;
+            font-size: .68rem; font-weight: 600; letter-spacing: .08em;
+            text-transform: uppercase; padding: 4px 12px; border-radius: 100px;
+        }
+        .svc-icon {
+            width: 52px; height: 52px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.35rem; margin-bottom: 22px;
+        }
+        .svc-card.light   .svc-icon { background: var(--navy); color: var(--sky); }
+        .svc-card.dark    .svc-icon { background: rgba(42,109,217,.2); color: var(--sky); }
+        .svc-card.featured .svc-icon { background: var(--blue); color: #fff; }
+        .svc-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 12px; }
+        .svc-card.light   h3 { color: var(--navy); }
+        .svc-card.dark    h3,
+        .svc-card.featured h3 { color: #fff; }
+        .svc-card p { font-size: .88rem; line-height: 1.72; font-weight: 300; margin-bottom: 0; }
+        .svc-card.light   p { color: #4a6080; }
+        .svc-card.dark    p,
+        .svc-card.featured p { color: rgba(255,255,255,.5); }
+        .svc-list { list-style: none; padding: 0; margin: 14px 0 0; display: flex; flex-direction: column; gap: 7px; }
+        .svc-list li { font-size: .83rem; display: flex; align-items: center; gap: 8px; font-weight: 400; }
+        .svc-card.light   .svc-list li { color: #3a5070; }
+        .svc-card.dark    .svc-list li,
+        .svc-card.featured .svc-list li { color: rgba(255,255,255,.55); }
+        .svc-list i { font-size: .7rem; color: var(--blue-light); }
+        .svc-price {
+            display: inline-block; margin-top: 20px;
+            font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: .82rem;
+            padding: 5px 14px; border-radius: 100px;
+        }
+        .svc-card.light   .svc-price { background: var(--navy); color: var(--sky); }
+        .svc-card.dark    .svc-price { background: rgba(42,109,217,.2); color: var(--sky); border: 1px solid rgba(74,143,232,.3); }
+        .svc-card.featured .svc-price { background: var(--blue); color: #fff; }
+
+        /* ── WHY ── */
+        #why { padding: var(--pad-y) 0; background: var(--navy); }
+        .why-lead { color: rgba(255,255,255,.48); font-size: 1.02rem; line-height: 1.82; font-weight: 300; max-width: 520px; }
+        .why-check-item {
+            display: flex; align-items: flex-start; gap: 12px;
+            font-size: .95rem; color: rgba(255,255,255,.7); line-height: 1.6; margin-bottom: 14px;
+        }
+        .check-circle {
+            width: 22px; height: 22px; flex-shrink: 0;
+            background: rgba(74,143,232,.15); border: 1px solid rgba(74,143,232,.35);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-top: 1px;
+        }
+        .check-circle i { font-size: .6rem; color: var(--sky); }
+        .why-box {
+            background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.07);
+            border-radius: 14px; padding: 22px 24px; margin-bottom: 14px; transition: border-color .3s;
+        }
+        .why-box:hover { border-color: rgba(74,143,232,.3); }
+        .why-box h6 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: .93rem; color: #fff; margin-bottom: 5px; }
+        .why-box p  { font-size: .83rem; color: rgba(255,255,255,.38); margin: 0; font-weight: 300; line-height: 1.6; }
+        .why-box i  { color: var(--sky); margin-right: 8px; }
+
+        /* ── PROCESS ── */
+        #process { padding: var(--pad-y) 0; background: var(--off-white); }
+        #process h2 { color: var(--navy); }
+        #process .section-label { color: var(--navy); opacity: .45; }
+        .step-wrap { text-align: center; padding: 0 16px; }
+        .step-circle {
+            width: 62px; height: 62px; background: var(--navy); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 20px;
+            font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--sky);
+        }
+        .step-wrap h5 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 9px; }
+        .step-wrap p  { font-size: .85rem; color: #6a7f99; line-height: 1.65; font-weight: 300; }
+        .step-connector { height: 1px; background: linear-gradient(to right, var(--blue), var(--sky)); opacity: .25; margin-top: 31px; }
+
+        /* ── CTA / CONTACT ── */
+        #contact {
+            padding: var(--pad-y) 0;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
+            text-align: center;
+        }
+        #contact h2 { color: #fff; font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 18px; }
+        #contact h2 span { color: var(--sky); }
+        #contact p  { color: var(--muted); font-size: 1.02rem; font-weight: 300; line-height: 1.75; max-width: 560px; margin: 0 auto 40px; }
+        .contact-row a {
+            display: inline-flex; align-items: center; gap: 8px;
+            color: rgba(255,255,255,.4); font-size: .88rem; text-decoration: none;
+            transition: color .2s; margin: 8px 16px;
+        }
+        .contact-row a:hover { color: var(--sky); }
+
+        /* ── FOOTER ── */
+        footer { background: #060e1a; padding: 26px 0; border-top: 1px solid rgba(255,255,255,.05); }
+        .footer-brand { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; color: #fff; font-size: 1.1rem; text-decoration: none; }
+        footer p { font-size: .78rem; color: rgba(255,255,255,.22); margin: 0; }
+    </style>
 </head>
+<body id="page-top">
 
-<body class="bg-light text-dark">
-  <header class="bg-white shadow-sm">
-    <nav class="navbar navbar-expand-lg navbar-light bg-white">
-      <div class="container">
-        <a class="navbar-brand fw-bold gradient-text" href="#">HDulam | Servicios Digitales</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-          <span class="navbar-toggler-icon"></span>
+<!-- ═══════════════ NAVBAR ═══════════════ -->
+<nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="#page-top">HDulam</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
+            aria-controls="navMenu" aria-expanded="false" aria-label="Menú">
+            <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link text-secondary" href="#servicios">Servicios</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-secondary" href="#portafolio">Portafolio</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-secondary" href="#contacto">Contacto</a>
-            </li>
-          </ul>
+        <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-1">
+                <li class="nav-item"><a class="nav-link" href="#about">Nosotros</a></li>
+                <li class="nav-item"><a class="nav-link" href="#services">Servicios</a></li>
+                <li class="nav-item"><a class="nav-link" href="#process">Proceso</a></li>
+                <li class="nav-item ms-lg-2"><a class="nav-link btn-nav" href="#contact">Contactar</a></li>
+            </ul>
         </div>
-      </div>
-    </nav>
-  </header>
+    </div>
+</nav>
 
-  <section class="text-center py-5 bg-gradient-custom" data-aos="fade-down" data-aos-easing="ease-out-back">
+<!-- ═══════════════ HERO ═══════════════ -->
+<section id="hero">
+    <div class="hero-dot-grid"></div>
     <div class="container">
-      <h2 class="display-4 fw-bold gradient-text mb-3">Haz que tu presencia digital destaque</h2>
-      <p class="lead text-secondary mx-auto mb-4" style="max-width: 720px;">Desarrollo web, diseño, escritura y traducción para transformar tu visión en impacto.</p>
-      <a href="https://wa.me/50234427911?text=Hola%2C%20Quiero%20empezar%20un%20proyecto%20ustedes" class="btn btn-success btn-lg">
-        <i class="bi bi-whatsapp me-2"></i>¡Contáctanos por WhatsApp!
-      </a>
-    </div>
-  </section>
+        <div class="row align-items-center g-5">
 
-  <section id="servicios" class="py-5" data-aos="fade-up" data-aos-delay="200">
+            <div class="col-lg-7 col-xl-6">
+                <div class="hero-badge">
+                    <svg width="6" height="6" viewBox="0 0 6 6" fill="currentColor"><circle cx="3" cy="3" r="3"/></svg>
+                    Soluciones digitales para negocios
+                </div>
+                <h1>Tu negocio merece<br>estar en <span>internet.</span></h1>
+                <p class="hero-sub">Gestionamos tus redes sociales, creamos tu sitio web y te ayudamos a comunicar mejor. Profesional, accesible y sin complicaciones.</p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="#contact" class="btn-primary-hd">Empezá hoy</a>
+                    <a href="#services" class="btn-ghost">Ver servicios</a>
+                </div>
+            </div>
+
+            <div class="col-lg-5 col-xl-5 offset-xl-1">
+                <div class="hero-pills">
+                    <div class="h-pill">
+                        <div class="pill-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><circle cx="12" cy="18" r="1"/></svg></div>
+                        <div class="pill-text">
+                            <h5>Redes Sociales</h5>
+                            <p>Contenido + administración de cuentas</p>
+                        </div>
+                        <span class="pill-price">Diseños a Q35 <br> Completo desde Q495</span>
+                    </div>
+                    <div class="h-pill">
+                        <div class="pill-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg></div>
+                        <div class="pill-text">
+                            <h5>Diseño Web</h5>
+                            <p>Landing page o sitio completo</p>
+                        </div>
+                        <span class="pill-price">Desde Q750</span>
+                    </div>
+                    <div class="h-pill">
+                        <div class="pill-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+                        <div class="pill-text">
+                            <h5>Escritura y Edición</h5>
+                            <p>Textos claros y persuasivos</p>
+                        </div>
+                        <span class="pill-price">A consultar</span>
+                    </div>
+                    <div class="h-pill">
+                        <div class="pill-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8l6 6"/><path d="M4 14l6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="M22 22l-5-10-5 10"/><path d="M14 18h6"/></svg></div>
+                        <div class="pill-text">
+                            <h5>Traducción</h5>
+                            <p>ES · EN · IT · PT</p>
+                        </div>
+                        <span class="pill-price">A consultar</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ ABOUT ═══════════════ -->
+<section id="about">
     <div class="container">
-      <h3 class="text-center display-5 fw-bold mb-5">Servicios</h3>
-      <div class="row g-4">
-        <div class="col-md-6 col-lg-3" data-aos="flip-left">
-          <div class="service-box border-success">
-            <h4 class="text-success fw-bold mb-2"><i class="bi bi-code-slash me-2"></i>Desarrollo Web</h4>
-            <p>Sitios rápidos y responsivos. Desde landings hasta soluciones completas.</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3" data-aos="flip-left" data-aos-delay="100">
-          <div class="service-box border-primary">
-            <h4 class="text-primary fw-bold mb-2"><i class="bi bi-palette2 me-2"></i>Diseño Web</h4>
-            <p>Diseño visual atractivo con enfoque UX/UI para destacar online y mejorar la experiencia del usuario.</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3" data-aos="flip-left" data-aos-delay="200">
-          <div class="service-box border-warning">
-            <h4 class="text-warning fw-bold mb-2"><i class="bi bi-pencil-square me-2"></i>Escritura & Edición</h4>
-            <p>Textos claros, persuasivos y bien editados. Corrección de estilo, narrativa y contenido editorial.</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3" data-aos="flip-left" data-aos-delay="300">
-          <div class="service-box border-danger">
-            <h4 class="text-danger fw-bold mb-2"><i class="bi bi-translate me-2"></i>Traducción</h4>
-            <p>Traducciones precisas en español, inglés e italiano. Profesionalismo garantizado.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+        <div class="row align-items-center g-5">
 
-  <section id="portafolio" class="py-5 bg-light" data-aos="fade-up">
+            <div class="col-lg-5 fade-up">
+                <span class="section-label" style="color:var(--sky);">Sobre HDulam</span>
+                <h2 class="about-lead">Tu aliado digital para <span>crecer en internet</span></h2>
+                <p class="about-body">
+                    Somos un equipo de profesionales enfocado en ayudar a <strong>emprendedores y pequeñas empresas</strong> a tener una presencia real en internet.<br><br>
+                    Entendemos que cada negocio es distinto. Por eso escuchamos primero, y después creamos soluciones <strong>a medida, sin letra chica y a precios que tienen sentido.</strong>
+                </p>
+            </div>
+
+            <div class="col-lg-6 offset-lg-1 fade-up">
+                <div class="d-flex flex-column gap-3">
+                    <div class="about-feature">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                        <div>
+                            <h6>Rápidos y directos</h6>
+                            <p>Respondemos rápido, con propuestas claras y sin procesos eternos.</p>
+                        </div>
+                    </div>
+                    <div class="about-feature">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                        <div>
+                            <h6>Enfocados en resultados</h6>
+                            <p>No creamos por crear. Cada acción está pensada para que tu negocio llegue a más personas.</p>
+                        </div>
+                    </div>
+                    <div class="about-feature">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                        <div>
+                            <h6>Multiidioma</h6>
+                            <p>Trabajamos en español, inglés, italiano y portugués. Ideal si tu negocio apunta a más de un mercado.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ SERVICES ═══════════════ -->
+<section id="services">
     <div class="container">
-      <h3 class="text-center display-5 fw-bold mb-5">Portafolio</h3>
-      <div class="row g-4 mb-4">
-        <div class="col-md-4" data-aos="zoom-in">
-          <div class="bg-white rounded shadow h-100 p-3">
-            <img src="im1.jpeg" alt="Proyecto 1" class="portfolio-img mb-3">
-            <p class="text-secondary text-center">Web para televisión internacional. Diseño accesible, responsivo y orientado a impacto social.</p>
-          </div>
+
+        <div class="row mb-5 fade-up">
+            <div class="col-lg-7">
+                <span class="section-label">Servicios</span>
+                <h2 style="font-size:clamp(1.9rem,3.5vw,2.7rem);">Todo lo que tu negocio necesita para crecer en digital</h2>
+            </div>
         </div>
-        <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
-          <div class="bg-white rounded shadow h-100 p-3">
-            <img src="im2.jpeg" alt="Proyecto 2" class="portfolio-img mb-3">
-            <p class="text-secondary text-center">Web para RMotors, una empresa líder en importación de vehículos en El Salvador.</p>
-          </div>
+
+        <div class="row g-4">
+
+            <!-- 1. Social Media — FEATURED full width -->
+            <div class="col-12 fade-up">
+                <div class="svc-card featured">
+                    <span class="svc-featured-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="margin-right:5px;"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Servicio principal</span>
+                    <div class="row align-items-center g-4">
+                        <div class="col-lg-5">
+                            <div class="svc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><circle cx="12" cy="18" r="1"/></svg></div>
+                            <h3>Gestión de Redes Sociales</h3>
+                            <p>Tener redes activas y con contenido de calidad genera confianza y atrae clientes. Nos encargamos de todo: estrategia, contenido visual, textos y publicación. Vos te enfocás en tu negocio, nosotros en tu presencia digital.</p>
+                            <span class="svc-price">Planes a medida</span>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <ul class="svc-list">
+                                        <li><svg width="11" height="11" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#4a8fe8"/><polyline points="7 12 10 15 17 9" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Diseño de posts e historias</li>
+                                        <li><svg width="11" height="11" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#4a8fe8"/><polyline points="7 12 10 15 17 9" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Producción de video corto</li>
+                                        <li><svg width="11" height="11" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#4a8fe8"/><polyline points="7 12 10 15 17 9" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Redacción de copies y hashtags</li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-6">
+                                    <ul class="svc-list">
+                                        <li><svg width="11" height="11" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#4a8fe8"/><polyline points="7 12 10 15 17 9" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Calendario editorial mensual</li>
+                                        <li><svg width="11" height="11" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#4a8fe8"/><polyline points="7 12 10 15 17 9" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Administración de cuentas</li>
+                                        <li><svg width="11" height="11" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#4a8fe8"/><polyline points="7 12 10 15 17 9" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Reporte de resultados</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Web -->
+            <div class="col-md-6 col-lg-4 fade-up">
+                <div class="svc-card light">
+                    <div class="svc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg></div>
+                    <h3>Diseño de Páginas Web</h3>
+                    <p>Tu sitio web trabaja para vos las 24 horas. Diseñamos páginas modernas, rápidas y adaptadas a celular que generan confianza y convierten visitas en clientes.</p>
+                    <ul class="svc-list">
+                        <li><svg width="11" height="11" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#4a8fe8"/><polyline points="7 12 10 15 17 9" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Landing page desde Q750</li>
+                        <li><svg width="11" height="11" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#4a8fe8"/><polyline points="7 12 10 15 17 9" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Sitio completo desde Q2,000</li>
+                        <li><svg width="11" height="11" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#4a8fe8"/><polyline points="7 12 10 15 17 9" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>100% responsive · SEO básico</li>
+                    </ul>
+                    <span class="svc-price">A consultar</span>
+                </div>
+            </div>
+
+            <!-- 3. Escritura -->
+            <div class="col-md-6 col-lg-4 fade-up">
+                <div class="svc-card dark">
+                    <div class="svc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+                    <h3>Escritura y Edición</h3>
+                    <p>Las palabras correctas hacen la diferencia. Escribimos y editamos textos que comunican con claridad: para tu web, redes, correos o presentaciones.</p>
+                    <ul class="svc-list">
+                        <li><svg width="11" height="11" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#4a8fe8"/><polyline points="7 12 10 15 17 9" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Textos para sitios web</li>
+                        <li><svg width="11" height="11" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#4a8fe8"/><polyline points="7 12 10 15 17 9" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Correos y presentaciones</li>
+                        <li><svg width="11" height="11" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#4a8fe8"/><polyline points="7 12 10 15 17 9" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Edición y corrección de estilo</li>
+                    </ul>
+                    <span class="svc-price">A consultar</span>
+                </div>
+            </div>
+
+            <!-- 4. Traducción -->
+            <div class="col-md-6 col-lg-4 fade-up">
+                <div class="svc-card dark">
+                    <div class="svc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8l6 6"/><path d="M4 14l6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="M22 22l-5-10-5 10"/><path d="M14 18h6"/></svg></div>
+                    <h3>Traducción Profesional</h3>
+                    <p>Llegá a más mercados sin perder naturalidad. Traducciones cuidadas y fluidas para que tu mensaje sea igual de efectivo en cualquier idioma.</p>
+                    <ul class="svc-list">
+                        <li><svg width="11" height="11" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#4a8fe8"/><polyline points="7 12 10 15 17 9" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Español · Inglés</li>
+                        <li><svg width="11" height="11" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#4a8fe8"/><polyline points="7 12 10 15 17 9" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Italiano · Portugués</li>
+                        <li><svg width="11" height="11" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#4a8fe8"/><polyline points="7 12 10 15 17 9" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Webs, documentos y contenido</li>
+                    </ul>
+                    <span class="svc-price">A consultar</span>
+                </div>
+            </div>
+
         </div>
-        <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
-          <div class="bg-white rounded shadow h-100 p-3">
-            <img src="3.png" alt="Proyecto 3" class="portfolio-img mb-3">
-            <p class="text-secondary text-center">Libros para CZYK Publisher - editorial americana.</p>
-          </div>
-        </div>
-        <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
-          <div class="bg-white rounded shadow h-100 p-3">
-            <img src="4.jpg" alt="Proyecto 4" class="portfolio-img mb-3">
-            <p class="text-secondary text-center">Coming soon: Toki Pona Language Simplifier.</p>
-          </div>
-        </div>
-      </div>
     </div>
-  </section>
+</section>
 
-  <section id="contacto" class="py-5 bg-white" data-aos="fade-up">
-    <div class="container text-center">
-      <h3 class="display-5 fw-bold mb-3">¿Listo para comenzar?</h3>
-      <p class="text-muted mb-4 mx-auto" style="max-width: 720px;">Envíame un mensaje por WhatsApp o sígueme en redes para conocer más sobre mi trabajo.</p>
-      <a href="https://wa.me/50234427911" class="btn btn-success btn-lg mb-3 me-2">
-        <i class="bi bi-whatsapp me-2"></i>Escribir por WhatsApp
-      </a>
-      <a href="https://facebook.com/HDulam" class="btn btn-primary btn-lg mb-3">
-        <i class="bi bi-facebook me-2"></i>Visitar Facebook
-      </a>
+<!-- ═══════════════ WHY ═══════════════ -->
+<section id="why">
+    <div class="container">
+        <div class="row g-5 align-items-start">
+
+            <div class="col-lg-5 fade-up">
+                <span class="section-label" style="color:var(--sky);">Por qué elegirnos</span>
+                <h2 style="color:#fff;font-size:clamp(1.8rem,3vw,2.5rem);margin-bottom:18px;">Trato directo, calidad real y precios que tienen sentido</h2>
+                <p class="why-lead mb-4">No somos una agencia enorme con procesos lentos. Somos un equipo ágil que se involucra de verdad en cada proyecto.</p>
+                <div class="why-check-item">
+                    <span class="check-circle"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                    Comunicación clara desde el primer mensaje
+                </div>
+                <div class="why-check-item">
+                    <span class="check-circle"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                    Precios accesibles sin sacrificar calidad
+                </div>
+                <div class="why-check-item">
+                    <span class="check-circle"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                    Entregamos en tiempo y forma, sin vueltas
+                </div>
+                <div class="why-check-item">
+                    <span class="check-circle"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                    Web, contenido, texto y traducción en un solo equipo
+                </div>
+                <div class="why-check-item">
+                    <span class="check-circle"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                    Pensamos en resultados, no solo en estética
+                </div>
+            </div>
+
+            <div class="col-lg-6 offset-lg-1 fade-up">
+                <div class="why-box">
+                    <h6><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>Respuesta rápida</h6>
+                    <p>Sabemos que tu tiempo vale. Te respondemos en el día y avanzamos sin demoras innecesarias.</p>
+                </div>
+                <div class="why-box">
+                    <h6><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg>Trato personalizado</h6>
+                    <p>Cada negocio es distinto. Escuchamos tu caso y adaptamos la solución a lo que realmente necesitás.</p>
+                </div>
+                <div class="why-box">
+                    <h6><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>Enfoque en conversión</h6>
+                    <p>No creamos contenido bonito por crear. Todo está pensado para atraer clientes y generar más ventas.</p>
+                </div>
+                <div class="why-box">
+                    <h6><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>Sin sorpresas</h6>
+                    <p>Presupuesto claro antes de empezar. Sin costos ocultos, sin letra chica, sin malas sorpresas.</p>
+                </div>
+            </div>
+
+        </div>
     </div>
-  </section>
+</section>
 
-  <footer class="bg-dark text-white text-center py-4">
-    <p class="mb-0">© 2025 HDulam — Desarrollo Web, Diseño, Traducción y Escritura</p>
-  </footer>
+<!-- ═══════════════ PROCESS ═══════════════ -->
+<section id="process">
+    <div class="container">
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>
-    AOS.init({ duration: 1200, once: true });
-  </script>
+        <div class="row mb-5 fade-up">
+            <div class="col-lg-7">
+                <span class="section-label">Cómo trabajamos</span>
+                <h2 style="font-size:clamp(1.9rem,3.5vw,2.7rem);">De la idea al resultado en 4 pasos simples</h2>
+            </div>
+        </div>
+
+        <div class="row g-0 align-items-start text-center">
+            <div class="col-6 col-md-3 fade-up">
+                <div class="step-wrap">
+                    <div class="step-circle">01</div>
+                    <h5>Nos contás tu proyecto</h5>
+                    <p>Nos escribís, nos explicás qué necesitás y respondemos rápido para entender tu negocio y objetivos.</p>
+                </div>
+            </div>
+            <div class="d-none d-md-block col-md align-self-start" style="padding-top:30px;">
+                <div class="step-connector"></div>
+            </div>
+            <div class="col-6 col-md-3 fade-up">
+                <div class="step-wrap">
+                    <div class="step-circle">02</div>
+                    <h5>Te enviamos una propuesta</h5>
+                    <p>Presupuesto claro, plazos definidos y exactamente lo que vas a recibir. Sin letra chica.</p>
+                </div>
+            </div>
+            <div class="d-none d-md-block col-md align-self-start" style="padding-top:30px;">
+                <div class="step-connector"></div>
+            </div>
+            <div class="col-6 col-md-3 fade-up">
+                <div class="step-wrap">
+                    <div class="step-circle">03</div>
+                    <h5>Trabajamos juntos</h5>
+                    <p>Desarrollamos tu proyecto con actualizaciones frecuentes. Tu opinión es parte del proceso.</p>
+                </div>
+            </div>
+            <div class="d-none d-md-block col-md align-self-start" style="padding-top:30px;">
+                <div class="step-connector"></div>
+            </div>
+            <div class="col-6 col-md-3 fade-up">
+                <div class="step-wrap">
+                    <div class="step-circle">04</div>
+                    <h5>Entregamos y acompañamos</h5>
+                    <p>Lanzamos el resultado y nos aseguramos de que todo funcione. No te dejamos solo al terminar.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ═══════════════ CONTACT ═══════════════ -->
+<section id="contact">
+    <div class="container">
+        <div class="row justify-content-center fade-up">
+            <div class="col-lg-8 text-center">
+                <span class="section-label" style="color:var(--sky);">¿Listo para empezar?</span>
+                <h2>Tu negocio puede estar en internet <span>hoy.</span></h2>
+                <p>Escribinos, contanos tu proyecto y te respondemos con una propuesta clara. Sin compromiso, sin vueltas.</p>
+                <a href="https://wa.me/50234427911" class="btn-primary-hd" style="font-size:1rem;padding:16px 38px;">
+                    Quiero mi presencia digital &nbsp;<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+                <div class="contact-row mt-4">
+                    <a href="mailto:hector@hdulam.com">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> hector@hdulam.com
+                    </a>
+                    <a href="https://wa.me/50234427911" target="_blank">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.99.576 3.845 1.57 5.408L2 22l4.705-1.537A9.944 9.944 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 0 1-4.057-1.11l-.291-.173-3.013.985.848-3.093-.19-.31A7.94 7.94 0 0 1 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z"/></svg> WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+    <div class="container d-flex flex-wrap justify-content-between align-items-center gap-3">
+        <a href="#page-top" class="footer-brand">HDulam</a>
+        <p>© 2025 HDulam · Todos los derechos reservados.</p>
+        <p>Diseño web · Redes sociales · Traducción</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Navbar scroll effect
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Fade-up on scroll
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
 </body>
 </html>
