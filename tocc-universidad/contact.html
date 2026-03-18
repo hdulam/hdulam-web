@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — The Old Catholic University</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  body { padding-top: 68px; }
+  .page-hero {
+    background: var(--navy); padding: 5rem 2rem 4rem;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .page-hero::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(184,146,42,.4) 50%, transparent);
+  }
+  .page-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4.5vw, 4rem);
+    font-weight: 300; color: var(--white); line-height: 1.15; margin-bottom: .6rem;
+  }
+  .page-hero h1 em { font-style: italic; color: var(--gold-light); }
+  .page-hero p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 1.2rem;
+    color: var(--stone); max-width: 560px; margin: 1rem auto 0;
+  }
+
+  #contact-main { background: var(--navy); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 5.5rem; align-items: start; }
+  .contact-info p { font-size: 1rem; color: var(--stone-mid); line-height: 1.85; margin-bottom: 2rem; }
+  .contact-links { display: flex; flex-direction: column; gap: .5rem; margin-bottom: 3rem; }
+  .contact-link {
+    font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: .14em;
+    color: var(--gold-light); text-transform: uppercase;
+    text-decoration: none;
+    display: flex; align-items: center; gap: .8rem;
+    transition: color .2s; padding: .6rem 0;
+    border-bottom: 1px solid rgba(184,146,42,.08);
+  }
+  .contact-link:last-child { border-bottom: none; }
+  .contact-link:hover { color: var(--gold-pale); }
+  .contact-link-icon { color: var(--gold); flex-shrink: 0; }
+
+  /* Form */
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: .4rem; }
+  .form-group label {
+    font-family: 'Cinzel', serif; font-size: 9.5px; letter-spacing: .16em;
+    color: var(--stone-mid); text-transform: uppercase;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: var(--navy-light); border: 1px solid rgba(184,146,42,.2);
+    color: var(--cream); padding: 12px 14px;
+    font-family: 'EB Garamond', serif; font-size: 15px;
+    outline: none; transition: border-color .2s; width: 100%;
+    -webkit-appearance: none;
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: var(--stone-dark); }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: rgba(184,146,42,.6); }
+  .form-group textarea { resize: vertical; min-height: 120px; }
+  .form-group select option { background: var(--navy); color: var(--cream); }
+  .form-submit {
+    font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: .18em;
+    background: var(--gold); color: var(--navy);
+    border: none; padding: 14px 32px;
+    cursor: pointer; text-transform: uppercase;
+    font-weight: 700; align-self: flex-start;
+    transition: background .2s;
+    display: flex; align-items: center; gap: .7rem;
+  }
+  .form-submit:hover { background: var(--gold-light); }
+
+  /* Regions */
+  #regions { background: var(--cream); }
+  .regions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem; }
+  .region-card {
+    border: 1px solid var(--cream-dark); padding: 2.2rem 2rem; background: var(--white);
+    transition: border-color .2s;
+  }
+  .region-card:hover { border-color: rgba(184,146,42,.3); }
+  .reg-icon { color: var(--gold); margin-bottom: 1rem; }
+  .region-card h3 {
+    font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: .14em;
+    color: var(--navy); text-transform: uppercase; margin-bottom: .7rem;
+  }
+  .region-card p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+
+  @media(max-width: 960px) { .contact-grid { grid-template-columns: 1fr; } }
+  @media(max-width: 820px) {
+    .regions-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-hero">
+  <span class="label-tag">Contact</span>
+  <h1>Get in <em>Touch</em></h1>
+  <p>We welcome inquiries from prospective students, clergy, and institutions</p>
+</div>
+
+<section id="contact-main" class="section-pad">
+  <div class="container">
+    <div class="contact-grid">
+      <div>
+        <span class="label-tag">Reach Us</span>
+        <h2 class="sec-title light">We Are Here<br><em>to Assist You</em></h2>
+        <div class="gold-rule"></div>
+        <p>Whether you are discerning enrollment, seeking information about our programs, exploring partnership opportunities, or inquiring about ecclesial matters, our team is here to assist you in beginning or continuing your formation journey.</p>
+        <div class="contact-links">
+          <a href="https://theoldcatholic.church/contact-us" target="_blank" rel="noopener" class="contact-link">
+            <span class="contact-link-icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 4h14v9a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4z" stroke="currentColor" stroke-width="1.2"/><path d="M1 4l7 5 7-5" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+            </span>
+            Official Contact Page
+          </a>
+          <a href="https://theoldcatholic.church/university" target="_blank" rel="noopener" class="contact-link">
+            <span class="contact-link-icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13V6l5-4 5 4v7" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><rect x="5.5" y="8" width="5" height="5" stroke="currentColor" stroke-width="1.2"/></svg>
+            </span>
+            University Website
+          </a>
+          <a href="https://theoldcatholic.church/about-us" target="_blank" rel="noopener" class="contact-link">
+            <span class="contact-link-icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M8 7v4M8 5.5v.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </span>
+            About The Old Catholic Church
+          </a>
+          <a href="https://theoldcatholic.church/apostolic-succession" target="_blank" rel="noopener" class="contact-link">
+            <span class="contact-link-icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="6" y="0" width="4" height="16" fill="currentColor"/><rect x="0" y="5" width="16" height="4" fill="currentColor"/></svg>
+            </span>
+            Apostolic Succession
+          </a>
+        </div>
+        <a href="admissions.html" class="btn-gold">Apply for Admission</a>
+      </div>
+
+      <div class="reveal">
+        <div class="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">First Name</label>
+              <input type="text" id="fname" name="fname" placeholder="John">
+            </div>
+            <div class="form-group">
+              <label for="lname">Last Name</label>
+              <input type="text" id="lname" name="lname" placeholder="Smith">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <select id="subject" name="subject">
+              <option value="">Select a subject&hellip;</option>
+              <option>Admissions Inquiry</option>
+              <option>Program Information — B.O.C.Th.</option>
+              <option>Program Information — M.Div.</option>
+              <option>Program Information — M.M.L.</option>
+              <option>Program Information — D.Min.</option>
+              <option>Program Information — S.Th.D.</option>
+              <option>Seminary of St. Matthew</option>
+              <option>Ecclesiastical Partnership</option>
+              <option>General Inquiry</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="tradition">Ecclesial Tradition (Optional)</label>
+            <input type="text" id="tradition" name="tradition" placeholder="e.g. Old Catholic, Independent Catholic, Anglican…">
+          </div>
+          <div class="form-group">
+            <label for="message">Your Message</label>
+            <textarea id="message" name="message" placeholder="Please tell us about your vocation, formation interests, and how we may assist you&hellip;"></textarea>
+          </div>
+          <button type="button" class="form-submit">
+            Send Inquiry
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="regions" class="section-pad">
+  <div class="container">
+    <span class="label-tag">Global Presence</span>
+    <h2 class="sec-title">The Old Catholic Church<br><em>Around the World</em></h2>
+    <div class="gold-rule"></div>
+    <div class="regions-grid reveal">
+      <div class="region-card">
+        <div class="reg-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="3" y="6" width="22" height="16" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M3 10h22M3 18h22M12 6v16" stroke="currentColor" stroke-width="1.4"/></svg>
+        </div>
+        <h3>United Kingdom</h3>
+        <p>Home of the Seminary of St. Matthew of South Mimms. The historical and spiritual heartland of the University's formation.</p>
+        <a href="https://theoldcatholic.church/united-kingdom" target="_blank" rel="noopener" style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:.16em;color:var(--gold);text-transform:uppercase;text-decoration:none;display:inline-block;margin-top:1rem;">Visit Region &rarr;</a>
+      </div>
+      <div class="region-card">
+        <div class="reg-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><ellipse cx="14" cy="14" rx="11" ry="11" stroke="currentColor" stroke-width="1.4"/><path d="M3 14h22M14 3c-2.6 3-4 6.7-4 11s1.4 8 4 11M14 3c2.6 3 4 6.7 4 11s-1.4 8-4 11" stroke="currentColor" stroke-width="1.4"/></svg>
+        </div>
+        <h3>Americas</h3>
+        <p>Active dioceses and communities throughout North and Latin America. Spanish and English language formation available.</p>
+        <a href="https://theoldcatholic.church/america" target="_blank" rel="noopener" style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:.16em;color:var(--gold);text-transform:uppercase;text-decoration:none;display:inline-block;margin-top:1rem;">Visit Region &rarr;</a>
+      </div>
+      <div class="region-card">
+        <div class="reg-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M4 22l4-8 5 4 4-10 5 6 2-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Africa</h3>
+        <p>Growing communities across Africa. French and English language formation supporting the Church's expanding mission on the continent.</p>
+        <a href="https://theoldcatholic.church/africa" target="_blank" rel="noopener" style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:.16em;color:var(--gold);text-transform:uppercase;text-decoration:none;display:inline-block;margin-top:1rem;">Visit Region &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="nav.js"></script>
+</body>
+</html>

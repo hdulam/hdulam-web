@@ -1,0 +1,267 @@
+/* ═══════════════════════════════════════════════════════════
+   THE OLD CATHOLIC UNIVERSITY — Global Stylesheet
+   All nav, footer, transition and shared styles live here
+   so they are parsed before any JS executes → zero FOUC
+═══════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap');
+
+/* ── TOKENS ── */
+:root {
+  --navy:        #0C1927;
+  --navy-mid:    #142035;
+  --navy-light:  #1E2E45;
+  --gold:        #B8922A;
+  --gold-light:  #D4AA4A;
+  --gold-pale:   #EDD98A;
+  --gold-bg:     #F9F2E3;
+  --cream:       #FAF7F2;
+  --cream-mid:   #F2EBE0;
+  --cream-dark:  #E8DDD0;
+  --stone:       #C5B8A4;
+  --stone-mid:   #9A8B78;
+  --stone-dark:  #6E6155;
+  --text:        #1A120D;
+  --text-mid:    #362A20;
+  --text-muted:  #6B5E50;
+  --white:       #FEFCF9;
+  --nav-h:       68px;
+}
+
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+img  { display: block; max-width: 100%; }
+
+/* ── BODY & PAGE TRANSITIONS ─────────────────────────────
+   Strategy: body starts opacity:0 so there is never a
+   visible flash of raw HTML before fonts/nav are ready.
+   Background is ALWAYS --cream so no colour jump occurs.
+   nav.js adds .ready (fade in) and .page-out (fade out).
+─────────────────────────────────────────────────────────── */
+body {
+  font-family: 'EB Garamond', Georgia, serif;
+  background: var(--cream);   /* always cream — no colour flash */
+  color: var(--text);
+  line-height: 1.75;
+  overflow-x: hidden;
+  padding-top: var(--nav-h);
+  /* start invisible — JS adds .ready to fade in */
+  opacity: 0;
+  transition: opacity .28s ease;
+}
+body.ready    { opacity: 1; }
+body.page-out { opacity: 0; transition: opacity .18s ease; }
+
+/* ── LAYOUT ── */
+.container   { max-width: 1140px; margin: 0 auto; padding: 0 2rem; }
+.section-pad { padding: 7rem 2rem; }
+
+/* ── TYPOGRAPHY ── */
+.label-tag {
+  font-family: 'Cinzel', serif;
+  font-size: 9.5px; letter-spacing: .32em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: .9rem; display: block;
+}
+h2.sec-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  font-weight: 300; color: var(--navy);
+  line-height: 1.2; margin-bottom: 1rem;
+}
+h2.sec-title em       { color: var(--gold); font-style: italic; }
+h2.sec-title.light    { color: var(--cream); }
+h2.sec-title.light em { color: var(--gold-light); }
+.gold-rule { width: 56px; height: 2px; background: var(--gold); margin-bottom: 2rem; }
+
+/* ── BUTTONS ── */
+.btn-gold {
+  font-family: 'Cinzel', serif;
+  font-size: 10.5px; letter-spacing: .16em;
+  background: var(--gold); color: var(--navy);
+  border: none; padding: 14px 34px;
+  cursor: pointer; text-transform: uppercase; font-weight: 700;
+  transition: background .2s, transform .15s;
+  text-decoration: none; display: inline-block;
+}
+.btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+.btn-ghost {
+  font-family: 'Cinzel', serif;
+  font-size: 10.5px; letter-spacing: .16em;
+  background: transparent; color: var(--stone);
+  border: 1px solid rgba(184,146,42,.4); padding: 14px 34px;
+  cursor: pointer; text-transform: uppercase;
+  transition: border-color .2s, color .2s;
+  text-decoration: none; display: inline-block;
+}
+.btn-ghost:hover { border-color: var(--gold-light); color: var(--gold-light); }
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity .65s ease, transform .65s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ════════════════════════════════════════════════════════
+   NAVIGATION — CSS here so it renders before JS runs
+════════════════════════════════════════════════════════ */
+#nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  height: var(--nav-h);
+  background: var(--navy);
+  border-bottom: 1px solid rgba(184,146,42,.22);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 3.5rem;
+  /* nav is always visible — never hidden by body opacity */
+  transition: box-shadow .3s;
+}
+#nav.scrolled { box-shadow: 0 4px 32px rgba(0,0,0,.55); }
+
+.nav-left { display: flex; align-items: center; gap: 1.1rem; flex-shrink: 0; }
+.nav-left > a { display: flex; align-items: center; gap: 1.1rem; text-decoration: none; }
+.nav-logo-img  { height: 46px; width: auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,.5)); flex-shrink: 0; }
+.nav-wordmark  {
+  font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: .18em;
+  color: var(--gold-light); text-transform: uppercase; line-height: 1.45; white-space: nowrap;
+}
+.nav-wordmark span { display: block; font-size: 8.5px; letter-spacing: .22em; opacity: .6; }
+
+.nav-links { display: flex; gap: 2rem; align-items: center; list-style: none; margin: 0 2rem; }
+.nav-links a {
+  font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: .13em;
+  color: var(--stone); text-decoration: none; text-transform: uppercase;
+  padding-bottom: 2px; border-bottom: 1px solid transparent;
+  transition: color .2s, border-color .2s; white-space: nowrap;
+}
+.nav-links a:hover,
+.nav-links a.active { color: var(--gold-light); border-bottom-color: rgba(184,146,42,.4); }
+
+.nav-apply {
+  font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: .15em;
+  color: var(--navy); background: var(--gold);
+  border: none; padding: 10px 20px;
+  cursor: pointer; text-transform: uppercase; font-weight: 700;
+  text-decoration: none; display: inline-block;
+  white-space: nowrap; flex-shrink: 0;
+  transition: background .2s, transform .15s;
+}
+.nav-apply:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+.nav-menu-btn {
+  display: none; background: none; border: none;
+  color: var(--stone); cursor: pointer; padding: 6px; flex-shrink: 0;
+}
+
+#nav-drawer {
+  position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 499;
+  background: var(--navy-mid);
+  border-bottom: 1px solid rgba(184,146,42,.18);
+  padding: 1.8rem 3.5rem 2rem;
+  pointer-events: none;
+  opacity: 0; transform: translateY(-8px);
+  transition: opacity .22s ease, transform .22s ease;
+}
+#nav-drawer.open { pointer-events: all; opacity: 1; transform: translateY(0); }
+#nav-drawer ul { list-style: none; width: 100%; }
+#nav-drawer li a {
+  font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: .14em;
+  color: var(--stone); text-decoration: none; text-transform: uppercase;
+  display: block; padding: .8rem 0;
+  border-bottom: 1px solid rgba(184,146,42,.07); transition: color .2s;
+}
+#nav-drawer li:last-child a { border-bottom: none; }
+#nav-drawer li a:hover,
+#nav-drawer li a.active { color: var(--gold-light); }
+#nav-drawer .nav-drawer-apply {
+  margin-top: 1.6rem; display: inline-block;
+  font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: .16em;
+  background: var(--gold); color: var(--navy);
+  padding: 11px 24px; text-decoration: none;
+  text-transform: uppercase; font-weight: 700;
+}
+
+/* ════════════════════════════════════════════════════════
+   FOOTER
+════════════════════════════════════════════════════════ */
+#site-footer {
+  background: var(--navy);
+  border-top: 1px solid rgba(184,146,42,.18);
+  padding: 4.5rem 0 0;
+}
+.footer-grid {
+  display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 3.5rem; padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(184,146,42,.07);
+}
+.footer-logo { height: 72px; width: auto; margin-bottom: 1.2rem; filter: drop-shadow(0 2px 8px rgba(0,0,0,.4)); }
+.footer-brand p { font-size: 13px; color: var(--stone-dark); line-height: 1.7; max-width: 220px; margin-bottom: 1.2rem; }
+.footer-col h4 {
+  font-family: 'Cinzel', serif; font-size: 9.5px; letter-spacing: .22em;
+  color: var(--gold); text-transform: uppercase; margin-bottom: 1.4rem;
+}
+.footer-col a {
+  display: block; font-size: 13px; color: var(--stone-dark);
+  text-decoration: none; margin-bottom: .5rem; transition: color .2s;
+}
+.footer-col a:hover { color: var(--stone); }
+.footer-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 1rem; padding: 1.6rem 0;
+}
+.footer-bottom p {
+  font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: .13em;
+  color: rgba(197,184,164,.26); text-transform: uppercase;
+}
+
+/* ════════════════════════════════════════════════════════
+   PAGE HERO (inner pages)
+════════════════════════════════════════════════════════ */
+.page-hero {
+  background: var(--navy); padding: 5rem 2rem 4rem;
+  text-align: center; position: relative; overflow: hidden;
+}
+.page-hero::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(184,146,42,.4) 50%, transparent);
+}
+.page-hero .label-tag { color: rgba(184,146,42,.65); }
+.page-hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.2rem, 4.5vw, 4rem);
+  font-weight: 300; color: var(--white); line-height: 1.15; margin-bottom: .6rem;
+}
+.page-hero h1 em { font-style: italic; color: var(--gold-light); }
+.page-hero p {
+  font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.2rem;
+  color: var(--stone); max-width: 560px; margin: 1rem auto 0; line-height: 1.6;
+}
+
+/* ════════════════════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════════════════════ */
+@media(max-width: 1060px) {
+  #nav { padding: 0 1.8rem; }
+  .nav-links { gap: 1.4rem; }
+  .nav-links a { font-size: 9px; }
+  .nav-wordmark { font-size: 10px; }
+}
+@media(max-width: 820px) {
+  .nav-links, .nav-apply { display: none; }
+  .nav-menu-btn { display: flex; align-items: center; justify-content: center; }
+  .section-pad { padding: 4.5rem 1.5rem; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+}
+@media(max-width: 540px) {
+  #nav { padding: 0 1.2rem; }
+  .nav-wordmark span { display: none; }
+  .footer-grid { grid-template-columns: 1fr; }
+}

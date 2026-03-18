@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Old Catholic University — Fiat Lux</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  body { padding-top: 68px; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: calc(100vh - 68px);
+    background: var(--navy);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 5rem 2rem 5rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-ring {
+    position: absolute; border-radius: 50%; pointer-events: none;
+  }
+  .hero-ring-1 {
+    width: 900px; height: 900px;
+    top: 50%; left: 50%; transform: translate(-50%, -52%);
+    border: 1px solid rgba(184,146,42,.06);
+  }
+  .hero-ring-2 {
+    width: 620px; height: 620px;
+    top: 50%; left: 50%; transform: translate(-50%, -52%);
+    border: 1px solid rgba(184,146,42,.1);
+  }
+  .hero-base-line {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(184,146,42,.4) 50%, transparent);
+  }
+
+  .hero-logo-wrap {
+    animation: fadeUp .9s .1s both;
+    margin-bottom: 2rem;
+  }
+  .hero-logo-img {
+    width: 190px; height: auto;
+    filter: drop-shadow(0 10px 36px rgba(0,0,0,.65));
+    transition: transform .4s ease;
+  }
+  .hero-logo-img:hover { transform: scale(1.04) translateY(-3px); }
+
+  .hero-super {
+    font-family: 'Cinzel', serif;
+    font-size: 10px; letter-spacing: .36em;
+    color: rgba(184,146,42,.65);
+    text-transform: uppercase;
+    margin-bottom: 1.4rem;
+    animation: fadeUp .9s .25s both;
+  }
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.6rem, 5.5vw, 5.4rem);
+    font-weight: 400; color: var(--white);
+    line-height: 1.08; letter-spacing: .01em;
+    animation: fadeUp .9s .38s both;
+    margin-bottom: .4rem;
+  }
+  h1 em {
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--gold-light); font-weight: 300;
+  }
+  .hero-divider {
+    width: 220px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold) 40%, var(--gold) 60%, transparent);
+    margin: 2rem auto;
+    animation: fadeUp .9s .5s both;
+  }
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 2.2vw, 1.45rem);
+    font-style: italic; color: var(--stone);
+    max-width: 580px; line-height: 1.6;
+    margin-bottom: .9rem;
+    animation: fadeUp .9s .6s both;
+  }
+  .hero-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 9.5px; letter-spacing: .24em;
+    color: rgba(184,146,42,.5);
+    text-transform: uppercase; margin-bottom: 3rem;
+    animation: fadeUp .9s .68s both;
+  }
+  .hero-actions {
+    display: flex; gap: 1.2rem; flex-wrap: wrap; justify-content: center;
+    margin-bottom: 4rem;
+    animation: fadeUp .9s .78s both;
+  }
+  .hero-footer-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 1rem;
+    color: rgba(197,184,164,.38);
+    animation: fadeUp .9s .9s both;
+    letter-spacing: .02em;
+  }
+
+  /* ── STATS ── */
+  #stats {
+    background: var(--navy-mid);
+    border-top: 1px solid rgba(184,146,42,.18);
+    border-bottom: 1px solid rgba(184,146,42,.18);
+    display: grid; grid-template-columns: repeat(4, 1fr);
+  }
+  .stat {
+    padding: 2.4rem 2rem; text-align: center;
+    border-right: 1px solid rgba(184,146,42,.1);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-n {
+    font-family: 'Cinzel', serif;
+    font-size: 2.6rem; font-weight: 400;
+    color: var(--gold-light); display: block; line-height: 1;
+    margin-bottom: .35rem;
+  }
+  .stat-l {
+    font-family: 'Cinzel', serif;
+    font-size: 9px; letter-spacing: .2em;
+    color: var(--stone-mid); text-transform: uppercase;
+  }
+
+  /* ── IDENTITY TEASER ── */
+  #teaser { background: var(--cream); }
+  .teaser-grid {
+    display: grid; grid-template-columns: 1fr 400px;
+    gap: 5.5rem; align-items: center;
+  }
+  .teaser-text p {
+    font-size: 1.06rem; color: var(--text-mid);
+    line-height: 1.9; margin-bottom: 1.3rem;
+  }
+  .teaser-text p:first-of-type::first-letter {
+    font-family: 'Cinzel', serif; font-size: 3.4rem;
+    float: left; line-height: .85; margin-right: 9px;
+    color: var(--gold); font-weight: 700;
+  }
+  .teaser-text .cta-row { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+
+  .identity-badge {
+    background: var(--navy);
+    padding: 3rem 2.6rem;
+    position: relative;
+  }
+  .identity-badge::before {
+    content: ''; position: absolute;
+    top: -10px; left: -10px; right: 10px; bottom: 10px;
+    border: 1px solid rgba(184,146,42,.22); pointer-events: none;
+  }
+  .badge-cross-icon {
+    display: flex; justify-content: center; margin-bottom: 1.4rem;
+    color: var(--gold);
+  }
+  .badge-motto {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 1.6rem; color: var(--cream);
+    text-align: center; line-height: 1.4; margin-bottom: .5rem;
+  }
+  .badge-sub {
+    font-family: 'Cinzel', serif; font-size: 9px;
+    letter-spacing: .22em; color: var(--stone-mid);
+    text-align: center; text-transform: uppercase;
+    display: block; margin-bottom: 2rem;
+  }
+  .badge-hr { border: none; border-top: 1px solid rgba(184,146,42,.18); margin-bottom: 2rem; }
+  .twin-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: .6rem; }
+  .twin-item {
+    background: rgba(184,146,42,.07);
+    border: 1px solid rgba(184,146,42,.18);
+    padding: 1rem 1.2rem; text-align: center;
+  }
+  .twin-item p {
+    font-family: 'Cinzel', serif; font-size: 10px;
+    letter-spacing: .12em; color: var(--gold-light);
+    text-transform: uppercase; line-height: 1.65;
+  }
+
+  /* ── PROGRAMS PREVIEW ── */
+  #programs-preview { background: var(--navy); }
+  .preview-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px; background: rgba(184,146,42,.12);
+    border: 1.5px solid rgba(184,146,42,.12);
+    margin-top: 3rem;
+  }
+  .preview-card {
+    background: var(--navy-light);
+    padding: 2.6rem 2.2rem;
+    transition: background .2s;
+    text-decoration: none; display: block;
+  }
+  .preview-card:hover { background: rgba(184,146,42,.07); }
+  .pc-icon { color: var(--gold); margin-bottom: 1.1rem; }
+  .preview-card h3 {
+    font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: .08em;
+    color: var(--gold-light); margin-bottom: .6rem; text-transform: uppercase;
+  }
+  .preview-card p { font-size: 14px; color: var(--stone-mid); line-height: 1.68; margin-bottom: 1.2rem; }
+  .pc-link {
+    font-family: 'Cinzel', serif; font-size: 9.5px; letter-spacing: .18em;
+    color: var(--gold); text-transform: uppercase;
+    display: flex; align-items: center; gap: .5rem;
+  }
+
+  /* ── PULLQUOTE ── */
+  #pullquote {
+    background: var(--gold-bg);
+    border-top: 1px solid var(--cream-dark);
+    border-bottom: 1px solid var(--cream-dark);
+    padding: 5.5rem 2rem; text-align: center;
+  }
+  .pq-label {
+    font-family: 'Cinzel', serif; font-size: 11px;
+    letter-spacing: .38em; color: var(--gold);
+    text-transform: uppercase; display: block; margin-bottom: 1.5rem;
+  }
+  blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-weight: 300;
+    font-size: clamp(1.4rem, 2.8vw, 2.2rem);
+    color: var(--navy); max-width: 800px;
+    margin: 0 auto 1.5rem; line-height: 1.5;
+  }
+  cite {
+    font-family: 'Cinzel', serif; font-size: 10px;
+    letter-spacing: .2em; color: var(--stone-dark);
+    text-transform: uppercase; font-style: normal;
+  }
+
+  /* ── QUICK LINKS ── */
+  #quick-links { background: var(--cream-mid); }
+  .ql-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem; margin-top: 3.5rem;
+  }
+  .ql-card {
+    background: var(--cream); padding: 2.2rem 1.8rem;
+    border-top: 2px solid transparent;
+    text-decoration: none; display: block;
+    transition: border-top-color .2s, transform .2s;
+  }
+  .ql-card:hover { border-top-color: var(--gold); transform: translateY(-3px); }
+  .ql-icon { color: var(--gold); margin-bottom: 1rem; }
+  .ql-card h3 {
+    font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: .14em;
+    color: var(--navy); text-transform: uppercase; margin-bottom: .7rem;
+  }
+  .ql-card p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+
+  @media(max-width: 960px) {
+    .teaser-grid { grid-template-columns: 1fr; }
+    .identity-badge { max-width: 440px; }
+  }
+  @media(max-width: 820px) {
+    #stats { grid-template-columns: repeat(2, 1fr); }
+    .preview-grid { grid-template-columns: 1fr; }
+    .ql-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media(max-width: 480px) {
+    .ql-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="hero-ring hero-ring-1"></div>
+  <div class="hero-ring hero-ring-2"></div>
+  <div class="hero-base-line"></div>
+
+  <div class="hero-logo-wrap">
+    <img src="logo.png" alt="The Old Catholic University Seal — Fiat Lux" class="hero-logo-img">
+  </div>
+
+  <p class="hero-super">Western Orthodoxy &middot; Apostolic Tradition &middot; Ministerial Formation</p>
+
+  <h1>The Old <em>Catholic</em><br>University</h1>
+
+  <div class="hero-divider"></div>
+
+  <p class="hero-tagline">A center of theological education and spiritual formation<br>
+  rooted in the faith of the Holy Undivided Church</p>
+
+  <p class="hero-sub">Catholic but not Roman &middot; Orthodox but not Eastern</p>
+
+  <div class="hero-actions">
+    <a href="admissions.html" class="btn-gold">Begin Your Formation</a>
+    <a href="programs.html" class="btn-ghost">Explore Programs</a>
+  </div>
+
+  <p class="hero-footer-text">Sacred Scripture &middot; Apostolic Tradition &middot; The Fathers of the Church</p>
+</section>
+
+<!-- ══ STATS ══ -->
+<div id="stats">
+  <div class="stat">
+    <span class="stat-n">3</span>
+    <span class="stat-l">Languages of Instruction</span>
+  </div>
+  <div class="stat">
+    <span class="stat-n">5</span>
+    <span class="stat-l">Degree Programs</span>
+  </div>
+  <div class="stat">
+    <span class="stat-n">9</span>
+    <span class="stat-l">Areas of Study</span>
+  </div>
+  <div class="stat">
+    <span class="stat-n">I</span>
+    <span class="stat-l">Undivided Church</span>
+  </div>
+</div>
+
+<!-- ══ IDENTITY TEASER ══ -->
+<section id="teaser" class="section-pad">
+  <div class="container">
+    <div class="teaser-grid reveal">
+      <div class="teaser-text">
+        <span class="label-tag">Our Identity</span>
+        <h2 class="sec-title">Rooted in the Faith of the<br><em>Undivided Church</em></h2>
+        <div class="gold-rule"></div>
+        <p>The Old Catholic University is a center of theological education and spiritual formation established within the ministry of The Old Catholic Church and its Patriarchate. The University is dedicated to the preservation, study, and transmission of the apostolic faith of the historic Church as received by the Holy Undivided Church of the first millennium.</p>
+        <p>Rooted in the living tradition of Western Orthodoxy, the University forms ministers, scholars, and faithful disciples capable of serving the people of God with theological depth, pastoral wisdom, and spiritual maturity.</p>
+        <div class="cta-row">
+          <a href="about.html" class="btn-gold">Our Full Identity</a>
+          <a href="about.html#values" class="btn-ghost">Core Values</a>
+        </div>
+      </div>
+      <div>
+        <div class="identity-badge">
+          <div class="badge-cross-icon">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor"><rect x="13" y="0" width="6" height="32"/><rect x="0" y="12" width="32" height="6"/></svg>
+          </div>
+          <p class="badge-motto">"Fiat Lux"</p>
+          <span class="badge-sub">Let There Be Light &middot; Genesis 1:3</span>
+          <hr class="badge-hr">
+          <p style="font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:.18em;color:var(--stone-dark);text-transform:uppercase;margin-bottom:.8rem;">Our Theological Identity</p>
+          <div class="twin-row">
+            <div class="twin-item"><p>Catholic<br>but not Roman</p></div>
+            <div class="twin-item"><p>Orthodox<br>but not Eastern</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROGRAMS PREVIEW ══ -->
+<section id="programs-preview" class="section-pad">
+  <div class="container">
+    <span class="label-tag">Academic Programs</span>
+    <h2 class="sec-title light">Degrees in Sacred Theology<br><em>&amp; Ministerial Formation</em></h2>
+    <div class="gold-rule"></div>
+    <div class="preview-grid reveal">
+
+      <a href="programs.html#undergraduate" class="preview-card">
+        <div class="pc-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 2L2 8l12 6 12-6-12-6z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M2 8v10l12 6 12-6V8" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M8 11v8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Bachelor Level</h3>
+        <p>Bachelor of Old Catholic Theology (B.O.C.Th.) — foundational formation in Scripture, dogmatics, patristics, and Church history.</p>
+        <span class="pc-link">Learn more
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="programs.html#masters" class="preview-card">
+        <div class="pc-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="3" y="6" width="22" height="16" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M8 6V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2" stroke="currentColor" stroke-width="1.4"/><path d="M9 12h10M9 16h6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Master's Level</h3>
+        <p>M.Div. and Master of Ministry Leadership — advanced formation for ordained ministry and ecclesial leadership.</p>
+        <span class="pc-link">Learn more
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="programs.html#doctoral" class="preview-card">
+        <div class="pc-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="11" stroke="currentColor" stroke-width="1.4"/><path d="M14 6v8l5 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Doctoral Level</h3>
+        <p>D.Min. and Doctor of Sacred Theology (S.Th.D.) — the pinnacle of pastoral and scholarly theological formation.</p>
+        <span class="pc-link">Learn more
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+    </div>
+    <div style="text-align:center;margin-top:3rem;">
+      <a href="programs.html" class="btn-ghost">View All Programs</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PULLQUOTE ══ -->
+<div id="pullquote">
+  <div class="container">
+    <span class="pq-label">&#10022; Fiat Lux &#10022;</span>
+    <blockquote>"Theological education is understood not merely as academic study but as participation in the living tradition of the Church."</blockquote>
+    <cite>The Old Catholic University &middot; Mission Statement</cite>
+  </div>
+</div>
+
+<!-- ══ QUICK LINKS ══ -->
+<section id="quick-links" class="section-pad">
+  <div class="container">
+    <span class="label-tag">Explore the University</span>
+    <h2 class="sec-title">Where Would You<br><em>Like to Begin?</em></h2>
+    <div class="gold-rule"></div>
+    <div class="ql-grid reveal">
+
+      <a href="about.html" class="ql-card">
+        <div class="ql-icon">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11" stroke="currentColor" stroke-width="1.4"/><path d="M9 13a4 4 0 1 1 4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="13" cy="9" r="1.2" fill="currentColor"/></svg>
+        </div>
+        <h3>Our Identity</h3>
+        <p>Western Orthodoxy, apostolic fidelity, Christ-centered theology, and authentic Marian devotion.</p>
+      </a>
+
+      <a href="seminary.html" class="ql-card">
+        <div class="ql-icon">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M3 22V10l10-7 10 7v12" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><rect x="9" y="14" width="8" height="8" stroke="currentColor" stroke-width="1.4"/><path d="M13 6v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+        <h3>St. Matthew Seminary</h3>
+        <p>Our center for clergy formation, integrating spiritual, intellectual, pastoral, and liturgical preparation.</p>
+      </a>
+
+      <a href="faculty.html" class="ql-card">
+        <div class="ql-icon">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><circle cx="10" cy="8" r="4" stroke="currentColor" stroke-width="1.4"/><path d="M2 22c0-4.4 3.6-8 8-8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="19" cy="14" r="3" stroke="currentColor" stroke-width="1.4"/><path d="M14 22c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Leadership &amp; Faculty</h3>
+        <p>Meet the Chancellor, Vice-Chancellor, President, Academic Dean, and Board of Trustees.</p>
+      </a>
+
+      <a href="admissions.html" class="ql-card">
+        <div class="ql-icon">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M13 2L3 8v10l10 6 10-6V8L13 2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M13 2v16M3 8l10 6 10-6" stroke="currentColor" stroke-width="1.4"/></svg>
+        </div>
+        <h3>Admissions</h3>
+        <p>Open to ordination candidates, clergy, lay faithful, and students from all ecclesial traditions.</p>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<script src="nav.js"></script>
+</body>
+</html>

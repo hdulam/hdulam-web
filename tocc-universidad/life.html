@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Academic Life — The Old Catholic University</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  body { padding-top: 68px; }
+  .page-hero {
+    background: var(--navy); padding: 5rem 2rem 4rem;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .page-hero::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(184,146,42,.4) 50%, transparent);
+  }
+  .page-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4.5vw, 4rem);
+    font-weight: 300; color: var(--white); line-height: 1.15; margin-bottom: .6rem;
+  }
+  .page-hero h1 em { font-style: italic; color: var(--gold-light); }
+  .page-hero p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 1.2rem;
+    color: var(--stone); max-width: 560px; margin: 1rem auto 0;
+  }
+
+  #life-intro { background: var(--cream); }
+  .life-intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .life-intro-text p { font-size: 1.05rem; color: var(--text-mid); line-height: 1.9; margin-bottom: 1.2rem; }
+  .life-intro-text p:first-of-type::first-letter {
+    font-family: 'Cinzel', serif; font-size: 3.4rem;
+    float: left; line-height: .85; margin-right: 9px;
+    color: var(--gold); font-weight: 700;
+  }
+  .three-pillars { display: flex; flex-direction: column; gap: 0; }
+  .pillar-row {
+    display: flex; gap: 1.2rem; align-items: flex-start;
+    padding: 1.6rem 0; border-bottom: 1px solid var(--cream-dark);
+  }
+  .pillar-row:last-child { border-bottom: none; }
+  .pr-icon { color: var(--gold); flex-shrink: 0; margin-top: 3px; }
+  .pr-title {
+    font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: .14em;
+    color: var(--navy); text-transform: uppercase; margin-bottom: .35rem;
+  }
+  .pr-text { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+
+  #life-cards { background: var(--cream-mid); }
+  .life-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem; }
+  .life-card {
+    background: var(--cream); padding: 2.4rem 2rem;
+    border-top: 2px solid transparent;
+    transition: border-top-color .2s, transform .2s;
+  }
+  .life-card:hover { border-top-color: var(--gold); transform: translateY(-3px); }
+  .lc-icon { color: var(--gold); margin-bottom: 1rem; }
+  .life-card h3 {
+    font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: .14em;
+    color: var(--navy); text-transform: uppercase; margin-bottom: .8rem;
+  }
+  .life-card p { font-size: 14.5px; color: var(--text-muted); line-height: 1.75; }
+
+  #languages { background: var(--navy); }
+  .lang-bar {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px; background: rgba(184,146,42,.12);
+    border: 1.5px solid rgba(184,146,42,.12);
+    margin-top: 3rem;
+  }
+  .lang-cell {
+    background: var(--navy-light); padding: 3rem 2.5rem; text-align: center;
+    transition: background .2s;
+  }
+  .lang-cell:hover { background: rgba(184,146,42,.07); }
+  .lang-flag-icon { color: var(--gold); margin: 0 auto 1.2rem; }
+  .lang-cell h3 {
+    font-family: 'Cinzel', serif; font-size: 14px; letter-spacing: .1em;
+    color: var(--gold-light); text-transform: uppercase; margin-bottom: .5rem;
+  }
+  .lang-cell p { font-size: 13px; color: var(--stone-mid); line-height: 1.6; }
+
+  #monastic { background: var(--gold-bg); border-top: 1px solid var(--cream-dark); border-bottom: 1px solid var(--cream-dark); }
+  .monastic-inner { max-width: 780px; }
+  .monastic-inner p { font-size: 1.05rem; color: var(--text-mid); line-height: 1.9; margin-bottom: 1.2rem; }
+  .monk-quote {
+    border-left: 3px solid var(--gold); padding: 1.5rem 2rem;
+    background: rgba(184,146,42,.06); margin: 2rem 0;
+  }
+  .monk-quote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 1.3rem;
+    color: var(--navy); line-height: 1.5;
+  }
+
+  @media(max-width: 960px) { .life-intro-grid { grid-template-columns: 1fr; } }
+  @media(max-width: 820px) {
+    .life-grid { grid-template-columns: 1fr 1fr; }
+    .lang-bar { grid-template-columns: 1fr; }
+  }
+  @media(max-width: 540px) { .life-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="page-hero">
+  <span class="label-tag">Academic Life</span>
+  <h1>Study, Prayer,<br><em>&amp; Service</em></h1>
+  <p>Formation that integrates intellectual inquiry, spiritual discipline, and pastoral service</p>
+</div>
+
+<section id="life-intro" class="section-pad">
+  <div class="container">
+    <div class="life-intro-grid reveal">
+      <div class="life-intro-text">
+        <span class="label-tag">Formation Journey</span>
+        <h2 class="sec-title">More Than<br><em>Academic Study</em></h2>
+        <div class="gold-rule"></div>
+        <p>Academic life at The Old Catholic University is an invitation to enter into a meaningful journey of theological discovery, spiritual growth, and preparation for service within the Church. Programs are structured to make serious theological study accessible, manageable, and affordable, allowing students from many backgrounds and responsibilities to engage in formation while continuing their work, ministry, and family life.</p>
+        <p>At The Old Catholic University, academic formation is always joined to spiritual formation. Students are encouraged not only to study theology, philosophy, and the sacred tradition of the Church, but also to cultivate a deeper life of prayer, reflection, and participation in the sacramental life of the Church.</p>
+      </div>
+      <div class="three-pillars">
+        <div class="pillar-row">
+          <div class="pr-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 4h18M3 8h14M3 12h16M3 16h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          </div>
+          <div><p class="pr-title">Intellectual Study</p><p class="pr-text">Engagement with the classical sources of theology, Sacred Scripture, and the Fathers of the Church.</p></div>
+        </div>
+        <div class="pillar-row">
+          <div class="pr-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="10" y="0" width="4" height="24" fill="currentColor"/><rect x="0" y="9" width="24" height="4" fill="currentColor"/></svg>
+          </div>
+          <div><p class="pr-title">Liturgical Participation</p><p class="pr-text">Prayer and sacramental worship woven into the rhythm of the academic year.</p></div>
+        </div>
+        <div class="pillar-row">
+          <div class="pr-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="10" cy="8" r="4" stroke="currentColor" stroke-width="1.4"/><path d="M2 21c0-4.4 3.6-8 8-8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M16 14l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div><p class="pr-title">Pastoral Service</p><p class="pr-text">Formation oriented toward real service of the Church and the people of God.</p></div>
+        </div>
+        <div class="pillar-row">
+          <div class="pr-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2C8 2 5 5.6 5 10c0 3.9 2.4 7.2 5.8 8.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.4"/></svg>
+          </div>
+          <div><p class="pr-title">Spiritual Discipline</p><p class="pr-text">Growth in prayer, self-knowledge, and the virtues necessary for holy ministry.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="life-cards" class="section-pad">
+  <div class="container">
+    <span class="label-tag">University Life</span>
+    <h2 class="sec-title">Dimensions of<br><em>Formation</em></h2>
+    <div class="gold-rule"></div>
+    <div class="life-grid reveal">
+      <div class="life-card">
+        <div class="lc-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M4 5h20M4 9h16M4 13h18M4 17h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M20 14v10M15 19h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Theological Scholarship</h3>
+        <p>Rigorous engagement with the classical sources of theology — Sacred Scripture, the Fathers, the Ecumenical Councils, and the living Tradition of the apostolic faith.</p>
+      </div>
+      <div class="life-card">
+        <div class="lc-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 3v9M14 3L8 9M14 3l6 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 19c0 3.3 4 6 9 6s9-2.7 9-6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Liturgical Worship</h3>
+        <p>Prayer and sacramental participation woven into formation life, inspired by the Western monastic tradition, particularly the Rule of Saint Benedict.</p>
+      </div>
+      <div class="life-card">
+        <div class="lc-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 2l3 8h8l-6.5 4.7 2.5 7.7-7-4.4-7 4.4 2.5-7.7L3 10h8L14 2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Spiritual Formation</h3>
+        <p>A guided journey of personal growth, cultivating intellectual development, spiritual maturity, and pastoral sensitivity through mentorship and reflection.</p>
+      </div>
+      <div class="life-card">
+        <div class="lc-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><ellipse cx="14" cy="14" rx="11" ry="6" stroke="currentColor" stroke-width="1.4"/><ellipse cx="14" cy="14" rx="11" ry="6" transform="rotate(60 14 14)" stroke="currentColor" stroke-width="1.4"/><ellipse cx="14" cy="14" rx="11" ry="6" transform="rotate(120 14 14)" stroke="currentColor" stroke-width="1.4"/></svg>
+        </div>
+        <h3>International Community</h3>
+        <p>A diverse global community united in the pursuit of theological truth, drawing students from many nations and ecclesial traditions.</p>
+      </div>
+      <div class="life-card">
+        <div class="lc-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="3" y="4" width="22" height="17" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M3 9h22" stroke="currentColor" stroke-width="1.4"/><path d="M9 4V2M19 4V2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Flexible Learning</h3>
+        <p>Programs designed for accessibility, allowing students to pursue serious formation while continuing their work, ministry, and family responsibilities.</p>
+      </div>
+      <div class="life-card">
+        <div class="lc-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="10" cy="8" r="4.5" stroke="currentColor" stroke-width="1.4"/><path d="M2 25c0-4.4 3.6-8 8-8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M19 14l2.5 2.5L27 11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Mentorship &amp; Guidance</h3>
+        <p>Faculty, clergy, and mentors accompany students throughout their studies, fostering an environment where learning and formation grow together.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="languages" class="section-pad">
+  <div class="container">
+    <span class="label-tag">Global Access</span>
+    <h2 class="sec-title light">Languages of<br><em>Instruction</em></h2>
+    <div class="gold-rule"></div>
+    <div class="lang-bar reveal">
+      <div class="lang-cell">
+        <div class="lang-flag-icon">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="4" y="8" width="28" height="20" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M4 12h28M4 24h28M16 8v20" stroke="currentColor" stroke-width="1.4"/></svg>
+        </div>
+        <h3>English</h3>
+        <p>Primary language of instruction. All programs available in English, supporting students across the United Kingdom, Americas, Africa, and beyond.</p>
+      </div>
+      <div class="lang-cell">
+        <div class="lang-flag-icon">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="4" y="8" width="28" height="20" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M4 16h28M4 20h28" stroke="currentColor" stroke-width="1.4"/></svg>
+        </div>
+        <h3>French</h3>
+        <p>Programs available in French, supporting students from francophone regions of Africa, Europe, and the Caribbean.</p>
+      </div>
+      <div class="lang-cell">
+        <div class="lang-flag-icon">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="4" y="8" width="28" height="20" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M4 15h28M4 21h28M13 8v20" stroke="currentColor" stroke-width="1.4"/></svg>
+        </div>
+        <h3>Spanish</h3>
+        <p>Programs available in Spanish, supporting students from Latin America, Spain, and Hispanic communities worldwide.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="monastic" class="section-pad">
+  <div class="container">
+    <span class="label-tag">Spiritual Heritage</span>
+    <h2 class="sec-title">The Benedictine<br><em>Inspiration</em></h2>
+    <div class="gold-rule"></div>
+    <div class="monastic-inner reveal">
+      <p>The University draws inspiration from the Western monastic tradition, particularly the Rule of Saint Benedict, which has shaped the spiritual and intellectual life of the Western Church for fifteen centuries.</p>
+      <div class="monk-quote">
+        <p>"Ora et Labora — Prayer and Work — the rhythm that sanctifies all of life."</p>
+      </div>
+      <p>The Benedictine values of humility, stability, obedience, and the sanctification of daily life through prayer and work permeate the formation program of the University, shaping not only the content of theological study but the manner in which that study is undertaken and lived.</p>
+    </div>
+  </div>
+</section>
+
+<script src="nav.js"></script>
+</body>
+</html>
