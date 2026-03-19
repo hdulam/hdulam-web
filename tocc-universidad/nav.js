@@ -38,7 +38,7 @@ const NAV_HTML = `
     <li><a href="programs.html">Programs</a></li>
     <li><a href="seminary.html">Seminary</a></li>
     <li><a href="faculty.html">Faculty</a></li>
-    <li><a href="life.html">Campus Life</a></li>
+    <li><a href="life.html">Student Life</a></li>
     <li><a href="admissions.html">Admissions</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
