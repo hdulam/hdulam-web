@@ -1,544 +1,458 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Distribuidora Galvez — Admin · Registros</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-  <!-- jsPDF -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
-
+  <title>Distribuidora Galvez — Agua Pura</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:       #f0f6ff;
-      --surface:  #ffffff;
-      --border:   #d6e6f5;
-      --blue:     #0a2540;
-      --mid:      #1a5276;
-      --aqua:     #1abc9c;
-      --aqua-lt:  #e8faf5;
-      --text:     #0d1f2d;
-      --muted:    #5d7a8a;
-      --danger:   #e74c3c;
-      --row-odd:  #f7fbff;
+      --blue-deep:  #0a2540;
+      --blue-mid:   #1a5276;
+      --blue-light: #aed6f1;
+      --aqua:       #48c9b0;
+      --aqua-glow:  rgba(72, 201, 176, 0.25);
+      --white:      #f4faff;
+      --text:       #d6eaf8;
+      --muted:      #7fb3d3;
     }
 
     body {
       min-height: 100vh;
-      background: var(--bg);
+      background: var(--blue-deep);
       font-family: 'DM Sans', sans-serif;
-      color: var(--text);
-      padding: 2rem 1.5rem 4rem;
-    }
-
-    /* ── HEADER ── */
-    header {
       display: flex;
       align-items: center;
-      gap: 1rem;
-      margin-bottom: 2.5rem;
-      flex-wrap: wrap;
+      justify-content: center;
+      padding: 2rem 1rem;
+      overflow-x: hidden;
     }
-    .logo {
-      width: 44px; height: 44px;
-      background: linear-gradient(135deg, var(--aqua), #1a8fd1);
+
+    /* animated water background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 80%, rgba(26,82,118,0.6) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 80% 20%, rgba(72,201,176,0.15) 0%, transparent 55%),
+        radial-gradient(ellipse 100% 100% at 50% 50%, #0a2540 0%, #061a2e 100%);
+      z-index: 0;
+    }
+
+    /* floating bubbles */
+    .bubble {
+      position: fixed;
       border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
+      background: rgba(72,201,176,0.08);
+      border: 1px solid rgba(72,201,176,0.15);
+      animation: rise linear infinite;
+      z-index: 0;
     }
-    .logo svg { width: 22px; height: 22px; fill: white; }
-    .brand h1 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--blue); }
-    .brand p  { font-size: 0.78rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
-    .header-actions { margin-left: auto; display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    @keyframes rise {
+      from { transform: translateY(110vh) scale(0.8); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 0.6; }
+      to   { transform: translateY(-20vh) scale(1.1); opacity: 0; }
+    }
 
-    /* ── BUTTONS ── */
-    .btn {
-      display: inline-flex; align-items: center; gap: 7px;
-      padding: 0.6rem 1.2rem;
-      border-radius: 10px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.88rem; font-weight: 500;
-      cursor: pointer; border: none;
-      transition: transform .15s, box-shadow .15s, filter .15s;
-    }
-    .btn:hover  { transform: translateY(-1px); filter: brightness(1.06); }
-    .btn:active { transform: translateY(0); }
-    .btn svg { width: 16px; height: 16px; }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--aqua), #1a8fd1);
-      color: white;
-      box-shadow: 0 4px 14px rgba(26,188,156,.3);
-    }
-    .btn-outline {
-      background: white;
-      color: var(--blue);
-      border: 1.5px solid var(--border);
-      box-shadow: 0 2px 8px rgba(0,0,0,.06);
-    }
-    .btn-pdf {
-      background: linear-gradient(135deg, #c0392b, #e74c3c);
-      color: white;
-      box-shadow: 0 4px 14px rgba(231,76,60,.3);
-    }
-    .btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
-
-    /* ── CONFIG PANEL ── */
-    .config-panel {
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: 16px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 2px 12px rgba(0,0,0,.05);
-    }
-    .config-panel h2 { font-size: 0.82rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
-    .config-row { display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end; }
-    .config-field { flex: 1; min-width: 260px; }
-    .config-field label { display: block; font-size: 0.78rem; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: .4rem; }
-    .config-field input {
+    .card {
+      position: relative;
+      z-index: 1;
+      background: rgba(10, 37, 64, 0.75);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(72,201,176,0.2);
+      border-radius: 24px;
+      padding: 3rem 2.5rem 2.5rem;
       width: 100%;
-      padding: .65rem .9rem;
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.82rem;
-      color: var(--text);
-      background: var(--bg);
-      outline: none;
-      transition: border-color .2s;
+      max-width: 420px;
+      box-shadow:
+        0 0 60px rgba(72,201,176,0.08),
+        0 24px 64px rgba(0,0,0,0.5);
+      animation: fadeUp 0.7s ease both;
     }
-    .config-field input:focus { border-color: var(--aqua); }
-    .hint { font-size: 0.74rem; color: var(--muted); margin-top: .35rem; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
-    /* ── STATS ── */
-    .stats { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
-    .stat-card {
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      padding: 1rem 1.4rem;
-      flex: 1; min-width: 140px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.04);
+    .logo-wrap {
+      text-align: center;
+      margin-bottom: 2rem;
     }
-    .stat-card .num { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--blue); }
-    .stat-card .lbl { font-size: 0.76rem; color: var(--muted); margin-top: .15rem; text-transform: uppercase; letter-spacing: .07em; }
-
-    /* ── SEARCH ── */
-    .toolbar {
-      display: flex; gap: .75rem; align-items: center; flex-wrap: wrap;
-      margin-bottom: 1rem;
-    }
-    .search-wrap { position: relative; flex: 1; min-width: 200px; }
-    .search-wrap svg { position: absolute; left: .8rem; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; stroke: var(--muted); fill: none; stroke-width: 2; stroke-linecap: round; }
-    .search-wrap input {
-      width: 100%; padding: .6rem .9rem .6rem 2.3rem;
-      border: 1.5px solid var(--border); border-radius: 10px;
-      font-family: 'DM Sans', sans-serif; font-size: .9rem;
-      background: var(--surface); outline: none;
-      transition: border-color .2s;
-    }
-    .search-wrap input:focus { border-color: var(--aqua); }
-
-    /* ── TABLE ── */
-    .table-wrap {
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 2px 16px rgba(0,0,0,.06);
-    }
-    table { width: 100%; border-collapse: collapse; font-size: .9rem; }
-    thead tr { background: var(--blue); }
-    thead th {
-      padding: .85rem 1.1rem;
-      text-align: left;
-      font-size: .72rem; font-weight: 600;
-      color: rgba(255,255,255,.75);
-      text-transform: uppercase; letter-spacing: .09em;
-    }
-    thead th:first-child { border-radius: 0; }
-    tbody tr { border-bottom: 1px solid var(--border); transition: background .12s; }
-    tbody tr:last-child { border-bottom: none; }
-    tbody tr:nth-child(odd)  { background: var(--row-odd); }
-    tbody tr:nth-child(even) { background: var(--surface); }
-    tbody tr:hover { background: var(--aqua-lt); }
-    td { padding: .8rem 1.1rem; vertical-align: middle; }
-    td.num-col { font-family: 'DM Mono', monospace; font-size: .85rem; }
-    .badge {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: .25rem .65rem; border-radius: 20px;
-      font-size: .75rem; font-weight: 500;
-      background: var(--aqua-lt); color: #0e7a5f;
-    }
-    .badge svg { width: 12px; height: 12px; fill: currentColor; }
-
-    /* ── STATES ── */
-    .state-box {
-      text-align: center; padding: 3rem 2rem;
-      color: var(--muted); font-size: .95rem;
-    }
-    .state-box svg { width: 40px; height: 40px; margin: 0 auto 1rem; display: block; stroke: var(--border); fill: none; stroke-width: 1.5; }
-    .state-box p { margin-top: .4rem; font-size: .85rem; }
-
-    .spinner {
-      width: 36px; height: 36px; margin: 0 auto 1rem;
-      border: 3px solid var(--border);
-      border-top-color: var(--aqua);
+    .drop-icon {
+      width: 56px; height: 56px;
+      margin: 0 auto 1rem;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, var(--aqua), #1a8fd1);
       border-radius: 50%;
-      animation: spin .8s linear infinite;
+      box-shadow: 0 0 24px var(--aqua-glow);
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    .drop-icon svg { width: 28px; height: 28px; fill: white; }
 
-    /* ── TOAST ── */
-    #toast {
-      position: fixed; bottom: 2rem; right: 2rem;
-      padding: .75rem 1.25rem; border-radius: 12px;
-      font-size: .88rem; font-weight: 500; color: white;
-      box-shadow: 0 8px 24px rgba(0,0,0,.2);
-      transform: translateY(80px); opacity: 0;
-      transition: transform .3s, opacity .3s;
-      z-index: 999;
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
     }
-    #toast.show { transform: translateY(0); opacity: 1; }
-    #toast.success { background: #1abc9c; }
-    #toast.error   { background: #e74c3c; }
+    .tagline {
+      font-size: 0.85rem;
+      color: var(--aqua);
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 0.4rem;
+    }
 
-    @media (max-width: 600px) {
-      .header-actions { width: 100%; }
-      .btn { flex: 1; justify-content: center; }
+    .form-group {
+      margin-top: 1.6rem;
     }
+    label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    input {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(72,201,176,0.2);
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      color: var(--white);
+      outline: none;
+      transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+    }
+    input::placeholder { color: rgba(174,214,241,0.3); }
+    input:focus {
+      border-color: var(--aqua);
+      background: rgba(72,201,176,0.06);
+      box-shadow: 0 0 0 3px var(--aqua-glow);
+    }
+
+    .phone-wrap {
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(72,201,176,0.2);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+    .phone-wrap:focus-within {
+      border-color: var(--aqua);
+      box-shadow: 0 0 0 3px var(--aqua-glow);
+    }
+    .prefix {
+      padding: 0.85rem 0.9rem;
+      font-size: 0.95rem;
+      color: var(--aqua);
+      font-weight: 500;
+      border-right: 1px solid rgba(72,201,176,0.15);
+      white-space: nowrap;
+      background: rgba(72,201,176,0.07);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .prefix img { width: 20px; border-radius: 2px; }
+    .phone-wrap input {
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+    .phone-wrap input:focus { box-shadow: none; background: transparent; }
+
+    .btn {
+      width: 100%;
+      margin-top: 2rem;
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--aqua) 0%, #1a8fd1 100%);
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      box-shadow: 0 8px 24px rgba(72,201,176,0.3);
+      transition: transform 0.18s, box-shadow 0.18s, filter 0.18s;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(72,201,176,0.4); filter: brightness(1.05); }
+    .btn:active { transform: translateY(0); }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    /* ── THANK YOU SCREEN ── */
+    .thanks {
+      display: none;
+      text-align: center;
+      animation: fadeUp 0.6s ease both;
+    }
+    .thanks.visible { display: block; }
+    .check-circle {
+      width: 72px; height: 72px;
+      background: linear-gradient(135deg, var(--aqua), #1a8fd1);
+      border-radius: 50%;
+      margin: 0 auto 1.5rem;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 32px var(--aqua-glow);
+      animation: pulse 2s ease infinite;
+    }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 32px var(--aqua-glow); }
+      50%      { box-shadow: 0 0 56px rgba(72,201,176,0.45); }
+    }
+    .check-circle svg { width: 36px; height: 36px; stroke: white; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+    .thanks h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem;
+      color: var(--white);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .thanks p {
+      font-size: 0.97rem;
+      color: var(--text);
+      line-height: 1.7;
+      margin-bottom: 0.9rem;
+    }
+    .thanks .name-highlight {
+      color: var(--aqua);
+      font-weight: 500;
+    }
+    .divider {
+      width: 40px; height: 2px;
+      background: linear-gradient(90deg, var(--aqua), transparent);
+      margin: 1.2rem auto;
+      border-radius: 2px;
+    }
+    .whatsapp-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 1.4rem;
+      padding: 0.75rem 1.5rem;
+      background: #25D366;
+      color: white;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      box-shadow: 0 6px 20px rgba(37,211,102,0.3);
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+    .whatsapp-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(37,211,102,0.4); }
+    .whatsapp-btn svg { width: 20px; height: 20px; fill: white; }
+
+    .error-msg {
+      display: none;
+      color: #ff6b6b;
+      font-size: 0.8rem;
+      margin-top: 0.4rem;
+    }
+
+    @media (max-width: 480px) {
+      .card { padding: 2.2rem 1.5rem 2rem; }
+      h1 { font-size: 1.7rem; }
+    }
+
+    .logo-wrap {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.logo-img {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 0.8rem;
+  border-radius: 16px; /* opcional (quita si lo quieres 100% cuadrado) */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff; /* opcional fondo */
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+.logo-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* 🔥 mantiene proporción */
+}
+
+/* 📱 responsive */
+@media (max-width: 600px) {
+  .logo-img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .logo-wrap h1 {
+    font-size: 1.2rem;
+  }
+
+  .tagline {
+    font-size: 0.75rem;
+  }
+}
   </style>
 </head>
 <body>
 
-<header>
-  <div class="logo">
-    <svg viewBox="0 0 24 24"><path d="M12 2C12 2 4 10.5 4 15.5C4 19.642 7.582 23 12 23C16.418 23 20 19.642 20 15.5C20 10.5 12 2 12 2Z"/></svg>
-  </div>
-  <div class="brand">
-    <h1>Distribuidora Galvez Admin</h1>
-    <p>Registros de clientes</p>
-  </div>
-  <div class="header-actions">
-    <button class="btn btn-pdf" id="pdfBtn" onclick="exportPDF()" disabled>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-      Descargar PDF
-    </button>
-  </div>
-</header>
-
-<!-- CONFIG -->
-
-    <button class="btn btn-primary" onclick="loadData()" style="margin-bottom:1.5rem;">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      Cargar datos
-    </button>
-<!-- STATS -->
-<div class="stats">
-  <div class="stat-card"><div class="num" id="statTotal">—</div><div class="lbl">Total registros</div></div>
-  <div class="stat-card"><div class="num" id="statToday">—</div><div class="lbl">Hoy</div></div>
-  <div class="stat-card"><div class="num" id="statWeek">—</div><div class="lbl">Esta semana</div></div>
-</div>
-
-<!-- TOOLBAR -->
-<div class="toolbar">
-  <div class="search-wrap">
-    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    <input type="text" id="searchInput" placeholder="Buscar por nombre o teléfono..." oninput="filterTable()"/>
-  </div>
-</div>
-
-<!-- TABLE -->
-<div class="table-wrap">
-  <table id="dataTable">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Fecha y hora</th>
-        <th>Nombre</th>
-        <th>WhatsApp</th>
-      </tr>
-    </thead>
-    <tbody id="tableBody">
-      <tr><td colspan="4">
-        <div class="state-box">
-          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          Ingresa el ID de tu hoja y presiona <strong>Cargar datos</strong>
-          <p>Asegúrate de que el Spreadsheet sea público (Cualquiera con el enlace puede ver)</p>
-        </div>
-      </td></tr>
-    </tbody>
-  </table>
-</div>
-
-<div id="toast"></div>
-
-<script>
-  let allRows = [];
-
-  // ── LOAD DATA ──────────────────────────────────────────────
-  async function loadData() {
-
-    setTableLoading();
-    document.getElementById('pdfBtn').disabled = true;
-
-    const url = `https://docs.google.com/spreadsheets/d/1dEikA9W1MGOdSXpTiPONdKSK4txLUoOsky00yEyRzTs/export?format=csv&gid=0`;
-
-    try {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error('No se pudo acceder al Spreadsheet');
-      const csv = await res.text();
-      allRows = parseCSV(csv);
-      renderTable(allRows);
-      updateStats(allRows);
-      document.getElementById('pdfBtn').disabled = allRows.length === 0;
-      showToast(`✓ ${allRows.length} registros cargados`, 'success');
-    } catch (err) {
-      setTableError('No se pudo cargar la hoja. Verifica el ID y que sea pública.');
-      showToast('Error al cargar datos', 'error');
-      console.error(err);
-    }
-  }
-
-  // ── CSV PARSER ─────────────────────────────────────────────
-  function parseCSV(csv) {
-    const lines = csv.trim().split('\n');
-    // skip header row if exists (col A = Fecha/Date)
-    const start = lines[0].toLowerCase().includes('fecha') || lines[0].toLowerCase().includes('date') ? 1 : 0;
-    return lines.slice(start).map(line => {
-      const cols = line.split(',').map(c => c.replace(/^"|"$/g, '').trim());
-      return { fecha: cols[0] || '', nombre: cols[1] || '', telefono: cols[2] || '' };
-    }).filter(r => r.nombre);
-  }
-
-  // ── RENDER TABLE ───────────────────────────────────────────
-  function renderTable(rows) {
-    const tbody = document.getElementById('tableBody');
-    if (!rows.length) {
-      tbody.innerHTML = `<tr><td colspan="4"><div class="state-box">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        No se encontraron registros
-      </div></td></tr>`;
-      return;
-    }
-    tbody.innerHTML = rows.map((r, i) => `
-      <tr>
-        <td class="num-col" style="color:var(--muted);font-size:.8rem;">${i + 1}</td>
-        <td class="num-col">${formatDate(r.fecha)}</td>
-        <td><strong>${escHtml(r.nombre)}</strong></td>
-        <td>
-          <span class="badge">
-            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z M12.004 2C6.486 2 2 6.486 2 12.004c0 1.775.464 3.441 1.273 4.891L2 22l5.237-1.249A9.953 9.953 0 0012.004 22C17.519 22 22 17.514 22 12.004 22 6.487 17.519 2 12.004 2z"/></svg>
-            ${escHtml(r.telefono)}
-          </span>
-        </td>
-      </tr>`).join('');
-  }
-
-  // ── FILTER ────────────────────────────────────────────────
-  function filterTable() {
-    const q = document.getElementById('searchInput').value.toLowerCase();
-    const filtered = allRows.filter(r =>
-      r.nombre.toLowerCase().includes(q) || r.telefono.toLowerCase().includes(q)
-    );
-    renderTable(filtered);
-  }
-
-  // ── STATS ─────────────────────────────────────────────────
-function parseFecha(fechaStr) {
-  if (!fechaStr) return null;
-
-  // separa fecha y hora
-  const [fecha, hora] = fechaStr.split(' ');
-
-  if (!fecha) return null;
-
-  const [d, m, y] = fecha.split('/');
-
-  if (!d || !m || !y) return null;
-
-  let h = 0, min = 0;
-  if (hora) {
-    const parts = hora.split(':');
-    h = parseInt(parts[0]) || 0;
-    min = parseInt(parts[1]) || 0;
-  }
-
-  return new Date(y, m - 1, d, h, min);
-}
-
-function isSameDay(d1, d2) {
-  return d1 && d2 &&
-    d1.getFullYear() === d2.getFullYear() &&
-    d1.getMonth() === d2.getMonth() &&
-    d1.getDate() === d2.getDate();
-}
-
-function updateStats(rows) {
-  document.getElementById('statTotal').textContent = rows.length;
-
-  const now = new Date();
-  const weekAgo = new Date(now - 7 * 86400000);
-
-  document.getElementById('statToday').textContent =
-    rows.filter(r => {
-      const d = parseFecha(r.fecha);
-      return isSameDay(d, now);
-    }).length;
-
-  document.getElementById('statWeek').textContent =
-    rows.filter(r => {
-      const d = parseFecha(r.fecha);
-      return d && d >= weekAgo;
-    }).length;
-}
-
-  // ── EXPORT PDF ────────────────────────────────────────────
-  function exportPDF() {
-    if (!allRows.length) return;
-
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'letter' });
-    const pageW = doc.internal.pageSize.getWidth();
-
-    // ── header band ──
-    doc.setFillColor(10, 37, 64);
-    doc.rect(0, 0, pageW, 38, 'F');
-
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(20);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Distribuidora Galvez — Agua Pura', 34, 17);
-
-    doc.setFontSize(9);
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(174, 214, 241);
-    doc.text('Reporte de clientes registrados', 34, 25);
-
-    // date
-    const now = new Date();
-    const dateStr = now.toLocaleDateString('es-GT', { day:'2-digit', month:'long', year:'numeric' });
-    doc.setFontSize(8);
-    doc.setTextColor(174, 214, 241);
-    doc.text(`Generado: ${dateStr}`, pageW - 10, 17, { align: 'right' });
-    doc.text(`Total: ${allRows.length} registros`, pageW - 10, 24, { align: 'right' });
-
-    // ── summary boxes ──
-    const today    = allRows.filter(r => new Date(r.fecha).toDateString() === now.toDateString()).length;
-    const weekAgo  = new Date(now - 7 * 86400000);
-    const thisWeek = allRows.filter(r => new Date(r.fecha) >= weekAgo).length;
-
-    const boxes = [
-      { label: 'Total', value: allRows.length },
-      { label: 'Hoy',   value: today },
-      { label: 'Semana',value: thisWeek }
-    ];
-    const bw = 50, bx0 = 14, by = 44;
-    boxes.forEach((b, i) => {
-      const x = bx0 + i * (bw + 6);
-      doc.setFillColor(240, 246, 255);
-      doc.setDrawColor(214, 230, 245);
-      doc.roundedRect(x, by, bw, 18, 3, 3, 'FD');
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(16);
-      doc.setTextColor(10, 37, 64);
-      doc.text(String(b.value), x + bw / 2, by + 11, { align: 'center' });
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(7);
-      doc.setTextColor(93, 122, 138);
-      doc.text(b.label.toUpperCase(), x + bw / 2, by + 16, { align: 'center' });
+  <!-- Bubbles -->
+  <script>
+    const sizes = [30,50,20,70,40,25,60,35,45,55];
+    const delays = [0,2,4,1,6,3,5,8,7,9];
+    const durations = [12,18,14,20,16,22,13,19,15,17];
+    sizes.forEach((s,i) => {
+      const b = document.createElement('div');
+      b.className = 'bubble';
+      b.style.cssText = `width:${s}px;height:${s}px;left:${Math.random()*100}%;animation-delay:${delays[i]}s;animation-duration:${durations[i]}s;`;
+      document.body.appendChild(b);
     });
+  </script>
 
-    // ── table ──
-    doc.autoTable({
-      startY: 70,
-      head: [['#', 'Fecha y Hora', 'Nombre completo', 'WhatsApp']],
-      body: allRows.map((r, i) => [
-        i + 1,
-        formatDate(r.fecha),
-        r.nombre,
-        r.telefono
-      ]),
-      styles: {
-        font: 'helvetica',
-        fontSize: 9,
-        cellPadding: 4,
-        lineColor: [214, 230, 245],
-        lineWidth: 0.3,
-      },
-      headStyles: {
-        fillColor: [26, 82, 118],
-        textColor: 255,
-        fontStyle: 'bold',
-        fontSize: 8,
-        halign: 'left',
-      },
-      alternateRowStyles: { fillColor: [247, 251, 255] },
-      columnStyles: {
-        0: { cellWidth: 12, halign: 'center', textColor: [93, 122, 138] },
-        1: { cellWidth: 42, font: 'courier', fontSize: 8 },
-        2: { cellWidth: 'auto', fontStyle: 'bold' },
-        3: { cellWidth: 45, font: 'courier', fontSize: 8, textColor: [14, 122, 95] },
-      },
-      didDrawPage: (data) => {
-        // footer
-        const pg = doc.internal.getCurrentPageInfo().pageNumber;
-        const total = doc.internal.getNumberOfPages();
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(7.5);
-        doc.setTextColor(150);
-        doc.text(
-          `Distribuidora Galvez  |  Página ${pg} de ${total}`,
-          pageW / 2,
-          doc.internal.pageSize.getHeight() - 8,
-          { align: 'center' }
-        );
-      }
-    });
 
-    const filename = `scandia_registros_${now.toISOString().slice(0,10)}.pdf`;
-    doc.save(filename);
-    showToast(`✓ PDF generado: ${filename}`, 'success');
-  }
+    <!-- FORM -->
+<div id="formSection">
+    <div class="card">
+  <div class="logo-wrap">
+    
+    <div class="logo-img">
+      <img src="logo.png" alt="Distribuidora Galvez">
+    </div>
 
-  // ── HELPERS ───────────────────────────────────────────────
-  function formatDate(raw) {
-    if (!raw) return '—';
-    const d = parseFecha(raw);
-    if (isNaN(d)) return raw;
-    return d.toLocaleString('es-GT', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
-  }
+    <h1>Distribuidora Galvez</h1>
+    <p class="tagline">Agua Pura de Calidad</p>
+    
+  </div>
 
-  function escHtml(s) {
-    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  }
 
-  function setTableLoading() {
-    document.getElementById('tableBody').innerHTML = `<tr><td colspan="4">
-      <div class="state-box"><div class="spinner"></div>Cargando datos...</div>
-    </td></tr>`;
-  }
-
-  function setTableError(msg) {
-    document.getElementById('tableBody').innerHTML = `<tr><td colspan="4">
-      <div class="state-box">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        <strong style="color:var(--danger)">Error al cargar</strong>
-        <p>${msg}</p>
+      <div class="form-group">
+        <label for="nombre">Tu nombre completo</label>
+        <input type="text" id="nombre" placeholder="Juan Perez" autocomplete="name"/>
+        <p class="error-msg" id="err-nombre">Por favor ingresa tu nombre.</p>
       </div>
-    </td></tr>`;
-  }
 
-  function showToast(msg, type = 'success') {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.className = `show ${type}`;
-    setTimeout(() => t.className = '', 3200);
-  }
-</script>
+      <div class="form-group">
+        <label for="telefono">Número de WhatsApp</label>
+        <div class="phone-wrap">
+          <div class="prefix">
+            <span>🇬🇹</span>
+            <span>+502</span>
+          </div>
+          <input type="tel" id="telefono" placeholder="1234 1234" maxlength="8" inputmode="numeric"/>
+        </div>
+        <p class="error-msg" id="err-tel">Por favor ingresa un número válido (8 dígitos).</p>
+      </div>
+
+      <button class="btn" id="submitBtn" onclick="handleSubmit()">Registrarme →</button>
+    </div>
+    </div>
+
+    <!-- THANKS -->
+    <div class="thanks" id="thanksSection">
+      <div class="check-circle">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h2>¡Gracias, <span class="name-highlight" id="displayName"></span>!</h2>
+      <p>Has dado el primer paso hacia una vida más saludable. En <strong>Scandia</strong> nos llena de orgullo que hayas depositado tu confianza en nosotros.</p>
+      <div class="divider"></div>
+      <p>Cuidar tu salud comienza con lo más esencial: el agua que consumes cada día. Nuestra agua pura de calidad está diseñada para hidratarte de la mejor manera, libre de impurezas y con el sabor limpio que mereces.</p>
+      <p>💧 <em>Porque tu bienestar es nuestra misión.</em></p>
+      <a class="whatsapp-btn" id="waLink" href="#" target="_blank">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <path d="M12.004 2C6.486 2 2 6.486 2 12.004c0 1.775.464 3.441 1.273 4.891L2 22l5.237-1.249A9.953 9.953 0 0012.004 22C17.519 22 22 17.514 22 12.004 22 6.487 17.519 2 12.004 2zm0 18.16a8.116 8.116 0 01-4.264-1.207l-.305-.181-3.109.741.77-3.025-.2-.31A8.109 8.109 0 013.84 12.004C3.84 7.497 7.497 3.84 12.004 3.84c4.504 0 8.16 3.657 8.16 8.164 0 4.506-3.656 8.156-8.16 8.156z"/>
+        </svg>
+        Continuar
+      </a>
+    </div>
+
+  </div>
+
+  <script>
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzBj-IgWTDmx_YHk8sjOFQVbACfZkDhTPVUhuGqb25tYBM3h79_ESCy6fr--4JTJtIm/exec";
+
+    // Número de WhatsApp de Scandia para el botón
+
+
+    async function handleSubmit() {
+      const nombreEl  = document.getElementById('nombre');
+      const telefonoEl = document.getElementById('telefono');
+      const errNombre = document.getElementById('err-nombre');
+      const errTel    = document.getElementById('err-tel');
+
+      let valid = true;
+
+      // Validación nombre
+      if (!nombreEl.value.trim()) {
+        errNombre.style.display = 'block';
+        valid = false;
+      } else {
+        errNombre.style.display = 'none';
+      }
+
+      // Validación teléfono (8 dígitos)
+      const tel = telefonoEl.value.replace(/\s/g, '');
+      if (!/^\d{8}$/.test(tel)) {
+        errTel.style.display = 'block';
+        valid = false;
+      } else {
+        errTel.style.display = 'none';
+      }
+
+      if (!valid) return;
+
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Guardando...';
+
+      const nombre   = nombreEl.value.trim();
+      const telefono = tel;
+      const fullPhone = "+502" + telefono;
+      const SCANDIA_WHATSAPP = "502".concat(telefono); // ← cambia por tu número real
+
+      try {
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nombre, telefono })
+        });
+      } catch (e) {
+        console.warn('Error al guardar (no-cors ignorado):', e);
+      }
+
+      // Mostrar pantalla de agradecimiento
+      document.getElementById('formSection').style.display = 'none';
+      const thanks = document.getElementById('thanksSection');
+      thanks.classList.add('visible');
+      document.getElementById('displayName').textContent = nombre.split(' ')[0];
+
+      // Link de WhatsApp
+    const msg = encodeURIComponent(
+      `¡Hola ${nombre}! Gracias por visitarnos. Gracias por elegir agua de calidad Scandia ¡Pronto tendremos novedades para ti!`
+    );
+      document.getElementById('waLink').href = `https://wa.me/${SCANDIA_WHATSAPP}?text=${msg}`;
+    }
+
+    // Solo permitir números en teléfono
+    document.getElementById('telefono').addEventListener('input', function() {
+      this.value = this.value.replace(/[^\d\s]/g, '');
+    });
+  </script>
 </body>
 </html>
