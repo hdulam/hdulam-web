@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Distribuidora Galvez — Admin · Registros</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <!-- jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #f0f6ff;
+      --surface:  #ffffff;
+      --border:   #d6e6f5;
+      --blue:     #0a2540;
+      --mid:      #1a5276;
+      --aqua:     #1abc9c;
+      --aqua-lt:  #e8faf5;
+      --text:     #0d1f2d;
+      --muted:    #5d7a8a;
+      --danger:   #e74c3c;
+      --row-odd:  #f7fbff;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    /* ── HEADER ── */
+    header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .logo {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, var(--aqua), #1a8fd1);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .logo svg { width: 22px; height: 22px; fill: white; }
+    .brand h1 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--blue); }
+    .brand p  { font-size: 0.78rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+    .header-actions { margin-left: auto; display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 0.6rem 1.2rem;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem; font-weight: 500;
+      cursor: pointer; border: none;
+      transition: transform .15s, box-shadow .15s, filter .15s;
+    }
+    .btn:hover  { transform: translateY(-1px); filter: brightness(1.06); }
+    .btn:active { transform: translateY(0); }
+    .btn svg { width: 16px; height: 16px; }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--aqua), #1a8fd1);
+      color: white;
+      box-shadow: 0 4px 14px rgba(26,188,156,.3);
+    }
+    .btn-outline {
+      background: white;
+      color: var(--blue);
+      border: 1.5px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+    .btn-pdf {
+      background: linear-gradient(135deg, #c0392b, #e74c3c);
+      color: white;
+      box-shadow: 0 4px 14px rgba(231,76,60,.3);
+    }
+    .btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+    /* ── CONFIG PANEL ── */
+    .config-panel {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,.05);
+    }
+    .config-panel h2 { font-size: 0.82rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+    .config-row { display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end; }
+    .config-field { flex: 1; min-width: 260px; }
+    .config-field label { display: block; font-size: 0.78rem; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: .4rem; }
+    .config-field input {
+      width: 100%;
+      padding: .65rem .9rem;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--text);
+      background: var(--bg);
+      outline: none;
+      transition: border-color .2s;
+    }
+    .config-field input:focus { border-color: var(--aqua); }
+    .hint { font-size: 0.74rem; color: var(--muted); margin-top: .35rem; }
+
+    /* ── STATS ── */
+    .stats { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .stat-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.4rem;
+      flex: 1; min-width: 140px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.04);
+    }
+    .stat-card .num { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--blue); }
+    .stat-card .lbl { font-size: 0.76rem; color: var(--muted); margin-top: .15rem; text-transform: uppercase; letter-spacing: .07em; }
+
+    /* ── SEARCH ── */
+    .toolbar {
+      display: flex; gap: .75rem; align-items: center; flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    .search-wrap { position: relative; flex: 1; min-width: 200px; }
+    .search-wrap svg { position: absolute; left: .8rem; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; stroke: var(--muted); fill: none; stroke-width: 2; stroke-linecap: round; }
+    .search-wrap input {
+      width: 100%; padding: .6rem .9rem .6rem 2.3rem;
+      border: 1.5px solid var(--border); border-radius: 10px;
+      font-family: 'DM Sans', sans-serif; font-size: .9rem;
+      background: var(--surface); outline: none;
+      transition: border-color .2s;
+    }
+    .search-wrap input:focus { border-color: var(--aqua); }
+
+    /* ── TABLE ── */
+    .table-wrap {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(0,0,0,.06);
+    }
+    table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+    thead tr { background: var(--blue); }
+    thead th {
+      padding: .85rem 1.1rem;
+      text-align: left;
+      font-size: .72rem; font-weight: 600;
+      color: rgba(255,255,255,.75);
+      text-transform: uppercase; letter-spacing: .09em;
+    }
+    thead th:first-child { border-radius: 0; }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background .12s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:nth-child(odd)  { background: var(--row-odd); }
+    tbody tr:nth-child(even) { background: var(--surface); }
+    tbody tr:hover { background: var(--aqua-lt); }
+    td { padding: .8rem 1.1rem; vertical-align: middle; }
+    td.num-col { font-family: 'DM Mono', monospace; font-size: .85rem; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: .25rem .65rem; border-radius: 20px;
+      font-size: .75rem; font-weight: 500;
+      background: var(--aqua-lt); color: #0e7a5f;
+    }
+    .badge svg { width: 12px; height: 12px; fill: currentColor; }
+
+    /* ── STATES ── */
+    .state-box {
+      text-align: center; padding: 3rem 2rem;
+      color: var(--muted); font-size: .95rem;
+    }
+    .state-box svg { width: 40px; height: 40px; margin: 0 auto 1rem; display: block; stroke: var(--border); fill: none; stroke-width: 1.5; }
+    .state-box p { margin-top: .4rem; font-size: .85rem; }
+
+    .spinner {
+      width: 36px; height: 36px; margin: 0 auto 1rem;
+      border: 3px solid var(--border);
+      border-top-color: var(--aqua);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed; bottom: 2rem; right: 2rem;
+      padding: .75rem 1.25rem; border-radius: 12px;
+      font-size: .88rem; font-weight: 500; color: white;
+      box-shadow: 0 8px 24px rgba(0,0,0,.2);
+      transform: translateY(80px); opacity: 0;
+      transition: transform .3s, opacity .3s;
+      z-index: 999;
+    }
+    #toast.show { transform: translateY(0); opacity: 1; }
+    #toast.success { background: #1abc9c; }
+    #toast.error   { background: #e74c3c; }
+
+    @media (max-width: 600px) {
+      .header-actions { width: 100%; }
+      .btn { flex: 1; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <svg viewBox="0 0 24 24"><path d="M12 2C12 2 4 10.5 4 15.5C4 19.642 7.582 23 12 23C16.418 23 20 19.642 20 15.5C20 10.5 12 2 12 2Z"/></svg>
+  </div>
+  <div class="brand">
+    <h1>Distribuidora Galvez Admin</h1>
+    <p>Registros de clientes</p>
+  </div>
+  <div class="header-actions">
+    <button class="btn btn-pdf" id="pdfBtn" onclick="exportPDF()" disabled>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Descargar PDF
+    </button>
+  </div>
+</header>
+
+<!-- CONFIG -->
+
+    <button class="btn btn-primary" onclick="loadData()" style="margin-bottom:1.5rem;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      Cargar datos
+    </button>
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-card"><div class="num" id="statTotal">—</div><div class="lbl">Total registros</div></div>
+  <div class="stat-card"><div class="num" id="statToday">—</div><div class="lbl">Hoy</div></div>
+  <div class="stat-card"><div class="num" id="statWeek">—</div><div class="lbl">Esta semana</div></div>
+</div>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <div class="search-wrap">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="searchInput" placeholder="Buscar por nombre o teléfono..." oninput="filterTable()"/>
+  </div>
+</div>
+
+<!-- TABLE -->
+<div class="table-wrap">
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Fecha y hora</th>
+        <th>Nombre</th>
+        <th>WhatsApp</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody">
+      <tr><td colspan="4">
+        <div class="state-box">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Ingresa el ID de tu hoja y presiona <strong>Cargar datos</strong>
+          <p>Asegúrate de que el Spreadsheet sea público (Cualquiera con el enlace puede ver)</p>
+        </div>
+      </td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="toast"></div>
+
+<script>
+  let allRows = [];
+
+  // ── LOAD DATA ──────────────────────────────────────────────
+  async function loadData() {
+
+    setTableLoading();
+    document.getElementById('pdfBtn').disabled = true;
+
+    const url = `https://docs.google.com/spreadsheets/d/1dEikA9W1MGOdSXpTiPONdKSK4txLUoOsky00yEyRzTs/export?format=csv&gid=0`;
+
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('No se pudo acceder al Spreadsheet');
+      const csv = await res.text();
+      allRows = parseCSV(csv);
+      renderTable(allRows);
+      updateStats(allRows);
+      document.getElementById('pdfBtn').disabled = allRows.length === 0;
+      showToast(`✓ ${allRows.length} registros cargados`, 'success');
+    } catch (err) {
+      setTableError('No se pudo cargar la hoja. Verifica el ID y que sea pública.');
+      showToast('Error al cargar datos', 'error');
+      console.error(err);
+    }
+  }
+
+  // ── CSV PARSER ─────────────────────────────────────────────
+  function parseCSV(csv) {
+    const lines = csv.trim().split('\n');
+    // skip header row if exists (col A = Fecha/Date)
+    const start = lines[0].toLowerCase().includes('fecha') || lines[0].toLowerCase().includes('date') ? 1 : 0;
+    return lines.slice(start).map(line => {
+      const cols = line.split(',').map(c => c.replace(/^"|"$/g, '').trim());
+      return { fecha: cols[0] || '', nombre: cols[1] || '', telefono: cols[2] || '' };
+    }).filter(r => r.nombre);
+  }
+
+  // ── RENDER TABLE ───────────────────────────────────────────
+  function renderTable(rows) {
+    const tbody = document.getElementById('tableBody');
+    if (!rows.length) {
+      tbody.innerHTML = `<tr><td colspan="4"><div class="state-box">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        No se encontraron registros
+      </div></td></tr>`;
+      return;
+    }
+    tbody.innerHTML = rows.map((r, i) => `
+      <tr>
+        <td class="num-col" style="color:var(--muted);font-size:.8rem;">${i + 1}</td>
+        <td class="num-col">${formatDate(r.fecha)}</td>
+        <td><strong>${escHtml(r.nombre)}</strong></td>
+        <td>
+          <span class="badge">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z M12.004 2C6.486 2 2 6.486 2 12.004c0 1.775.464 3.441 1.273 4.891L2 22l5.237-1.249A9.953 9.953 0 0012.004 22C17.519 22 22 17.514 22 12.004 22 6.487 17.519 2 12.004 2z"/></svg>
+            ${escHtml(r.telefono)}
+          </span>
+        </td>
+      </tr>`).join('');
+  }
+
+  // ── FILTER ────────────────────────────────────────────────
+  function filterTable() {
+    const q = document.getElementById('searchInput').value.toLowerCase();
+    const filtered = allRows.filter(r =>
+      r.nombre.toLowerCase().includes(q) || r.telefono.toLowerCase().includes(q)
+    );
+    renderTable(filtered);
+  }
+
+  // ── STATS ─────────────────────────────────────────────────
+function parseFecha(fechaStr) {
+  if (!fechaStr) return null;
+
+  // separa fecha y hora
+  const [fecha, hora] = fechaStr.split(' ');
+
+  if (!fecha) return null;
+
+  const [d, m, y] = fecha.split('/');
+
+  if (!d || !m || !y) return null;
+
+  let h = 0, min = 0;
+  if (hora) {
+    const parts = hora.split(':');
+    h = parseInt(parts[0]) || 0;
+    min = parseInt(parts[1]) || 0;
+  }
+
+  return new Date(y, m - 1, d, h, min);
+}
+
+function isSameDay(d1, d2) {
+  return d1 && d2 &&
+    d1.getFullYear() === d2.getFullYear() &&
+    d1.getMonth() === d2.getMonth() &&
+    d1.getDate() === d2.getDate();
+}
+
+function updateStats(rows) {
+  document.getElementById('statTotal').textContent = rows.length;
+
+  const now = new Date();
+  const weekAgo = new Date(now - 7 * 86400000);
+
+  document.getElementById('statToday').textContent =
+    rows.filter(r => {
+      const d = parseFecha(r.fecha);
+      return isSameDay(d, now);
+    }).length;
+
+  document.getElementById('statWeek').textContent =
+    rows.filter(r => {
+      const d = parseFecha(r.fecha);
+      return d && d >= weekAgo;
+    }).length;
+}
+
+  // ── EXPORT PDF ────────────────────────────────────────────
+  function exportPDF() {
+    if (!allRows.length) return;
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'letter' });
+    const pageW = doc.internal.pageSize.getWidth();
+
+    // ── header band ──
+    doc.setFillColor(10, 37, 64);
+    doc.rect(0, 0, pageW, 38, 'F');
+
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(20);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Distribuidora Galvez — Agua Pura', 34, 17);
+
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(174, 214, 241);
+    doc.text('Reporte de clientes registrados', 34, 25);
+
+    // date
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('es-GT', { day:'2-digit', month:'long', year:'numeric' });
+    doc.setFontSize(8);
+    doc.setTextColor(174, 214, 241);
+    doc.text(`Generado: ${dateStr}`, pageW - 10, 17, { align: 'right' });
+    doc.text(`Total: ${allRows.length} registros`, pageW - 10, 24, { align: 'right' });
+
+    // ── summary boxes ──
+    const today    = allRows.filter(r => new Date(r.fecha).toDateString() === now.toDateString()).length;
+    const weekAgo  = new Date(now - 7 * 86400000);
+    const thisWeek = allRows.filter(r => new Date(r.fecha) >= weekAgo).length;
+
+    const boxes = [
+      { label: 'Total', value: allRows.length },
+      { label: 'Hoy',   value: today },
+      { label: 'Semana',value: thisWeek }
+    ];
+    const bw = 50, bx0 = 14, by = 44;
+    boxes.forEach((b, i) => {
+      const x = bx0 + i * (bw + 6);
+      doc.setFillColor(240, 246, 255);
+      doc.setDrawColor(214, 230, 245);
+      doc.roundedRect(x, by, bw, 18, 3, 3, 'FD');
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(16);
+      doc.setTextColor(10, 37, 64);
+      doc.text(String(b.value), x + bw / 2, by + 11, { align: 'center' });
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(7);
+      doc.setTextColor(93, 122, 138);
+      doc.text(b.label.toUpperCase(), x + bw / 2, by + 16, { align: 'center' });
+    });
+
+    // ── table ──
+    doc.autoTable({
+      startY: 70,
+      head: [['#', 'Fecha y Hora', 'Nombre completo', 'WhatsApp']],
+      body: allRows.map((r, i) => [
+        i + 1,
+        formatDate(r.fecha),
+        r.nombre,
+        r.telefono
+      ]),
+      styles: {
+        font: 'helvetica',
+        fontSize: 9,
+        cellPadding: 4,
+        lineColor: [214, 230, 245],
+        lineWidth: 0.3,
+      },
+      headStyles: {
+        fillColor: [26, 82, 118],
+        textColor: 255,
+        fontStyle: 'bold',
+        fontSize: 8,
+        halign: 'left',
+      },
+      alternateRowStyles: { fillColor: [247, 251, 255] },
+      columnStyles: {
+        0: { cellWidth: 12, halign: 'center', textColor: [93, 122, 138] },
+        1: { cellWidth: 42, font: 'courier', fontSize: 8 },
+        2: { cellWidth: 'auto', fontStyle: 'bold' },
+        3: { cellWidth: 45, font: 'courier', fontSize: 8, textColor: [14, 122, 95] },
+      },
+      didDrawPage: (data) => {
+        // footer
+        const pg = doc.internal.getCurrentPageInfo().pageNumber;
+        const total = doc.internal.getNumberOfPages();
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(7.5);
+        doc.setTextColor(150);
+        doc.text(
+          `Distribuidora Galvez  |  Página ${pg} de ${total}`,
+          pageW / 2,
+          doc.internal.pageSize.getHeight() - 8,
+          { align: 'center' }
+        );
+      }
+    });
+
+    const filename = `scandia_registros_${now.toISOString().slice(0,10)}.pdf`;
+    doc.save(filename);
+    showToast(`✓ PDF generado: ${filename}`, 'success');
+  }
+
+  // ── HELPERS ───────────────────────────────────────────────
+  function formatDate(raw) {
+    if (!raw) return '—';
+    const d = parseFecha(raw);
+    if (isNaN(d)) return raw;
+    return d.toLocaleString('es-GT', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
+  }
+
+  function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function setTableLoading() {
+    document.getElementById('tableBody').innerHTML = `<tr><td colspan="4">
+      <div class="state-box"><div class="spinner"></div>Cargando datos...</div>
+    </td></tr>`;
+  }
+
+  function setTableError(msg) {
+    document.getElementById('tableBody').innerHTML = `<tr><td colspan="4">
+      <div class="state-box">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <strong style="color:var(--danger)">Error al cargar</strong>
+        <p>${msg}</p>
+      </div>
+    </td></tr>`;
+  }
+
+  function showToast(msg, type = 'success') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = `show ${type}`;
+    setTimeout(() => t.className = '', 3200);
+  }
+</script>
+</body>
+</html>
