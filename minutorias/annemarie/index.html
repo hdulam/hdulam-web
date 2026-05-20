@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algebra 2 Crash Course — Exam Survival Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131c;
+    --card: #1a1a28;
+    --border: #2a2a40;
+    --accent1: #f9a825;
+    --accent2: #00e5ff;
+    --accent3: #ea4c89;
+    --accent4: #69f0ae;
+    --accent5: #bf86ff;
+    --text: #e8e8f0;
+    --muted: #8888aa;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Lora', serif;
+    overflow-x: hidden;
+  }
+  .mono { font-family: 'DM Mono', monospace; }
+  .syne { font-family: 'Syne', sans-serif; }
+
+  /* NAV */
+  #nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,10,15,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1.5rem;
+    display: flex; align-items: center; gap: 0.5rem;
+    height: 56px; overflow-x: auto;
+    scrollbar-width: none;
+  }
+  #nav::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    white-space: nowrap;
+    padding: 0.35rem 0.9rem;
+    border-radius: 9999px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    background: var(--accent1);
+    border-color: var(--accent1);
+    color: #000;
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--accent1);
+    margin-right: 1rem;
+    flex-shrink: 0;
+  }
+
+  /* SLIDES */
+  .slide {
+    min-height: 100vh;
+    padding: 80px 1.5rem 4rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* HERO */
+  #hero {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; min-height: 100vh;
+    background: radial-gradient(ellipse at 50% 40%, rgba(249,168,37,0.12) 0%, transparent 70%);
+  }
+  .hero-badge {
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    border: 1px solid var(--accent3);
+    border-radius: 9999px;
+    color: var(--accent3);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.5rem, 8vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, #f9a825 0%, #ff6b6b 50%, #bf86ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+  }
+  .hero-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem; width: 100%; max-width: 760px; margin-bottom: 3rem;
+  }
+  .hero-chip {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s;
+    letter-spacing: 0.03em;
+  }
+  .hero-chip:hover { transform: translateY(-3px); border-color: var(--accent1); color: var(--accent1); }
+  .hero-chip .icon { font-size: 1.6rem; display: block; margin-bottom: 0.4rem; }
+
+  /* SECTION HEADERS */
+  .section-tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.8rem;
+    border-radius: 4px;
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+  .section-desc {
+    color: var(--muted);
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
+    max-width: 640px;
+    line-height: 1.6;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: rgba(249,168,37,0.3); }
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 0.75rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+
+  /* FORMULA BOX */
+  .formula {
+    background: rgba(0,229,255,0.07);
+    border: 1px solid rgba(0,229,255,0.25);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 1rem;
+    color: var(--accent2);
+    margin: 0.75rem 0;
+    text-align: center;
+  }
+  .formula-sm {
+    background: rgba(0,229,255,0.05);
+    border: 1px solid rgba(0,229,255,0.2);
+    border-radius: 8px;
+    padding: 0.5rem 0.9rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.88rem;
+    color: var(--accent2);
+    display: inline-block;
+    margin: 0.2rem 0;
+  }
+
+  /* STEP LIST */
+  .step-list { counter-reset: steps; }
+  .step {
+    display: flex; gap: 1rem; align-items: flex-start;
+    margin-bottom: 1rem; padding: 0.85rem 1rem;
+    background: rgba(255,255,255,0.03);
+    border-radius: 10px;
+    border-left: 3px solid var(--accent1);
+    counter-increment: steps;
+  }
+  .step-num {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 1.3rem; color: var(--accent1); flex-shrink: 0; min-width: 1.5rem;
+  }
+  .step-content { font-size: 0.95rem; line-height: 1.6; }
+  .step-content strong { color: var(--accent1); }
+
+  /* BADGE TYPES */
+  .badge {
+    display: inline-block; padding: 0.2rem 0.6rem;
+    border-radius: 6px; font-size: 0.72rem;
+    font-family: 'DM Mono', monospace; font-weight: 500;
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .badge-easy { background: rgba(105,240,174,0.15); color: var(--accent4); border: 1px solid rgba(105,240,174,0.3); }
+  .badge-med { background: rgba(0,229,255,0.15); color: var(--accent2); border: 1px solid rgba(0,229,255,0.3); }
+  .badge-hard { background: rgba(234,76,137,0.15); color: var(--accent3); border: 1px solid rgba(234,76,137,0.3); }
+  .badge-tip { background: rgba(249,168,37,0.15); color: var(--accent1); border: 1px solid rgba(249,168,37,0.3); }
+  .badge-warn { background: rgba(234,76,137,0.15); color: var(--accent3); border: 1px solid rgba(234,76,137,0.3); }
+
+  /* CALLOUT BOXES */
+  .tip-box {
+    border-radius: 10px; padding: 1rem 1.25rem; margin: 1rem 0;
+    font-size: 0.93rem; line-height: 1.6;
+  }
+  .tip-box.yellow { background: rgba(249,168,37,0.1); border-left: 3px solid var(--accent1); }
+  .tip-box.red { background: rgba(234,76,137,0.1); border-left: 3px solid var(--accent3); }
+  .tip-box.green { background: rgba(105,240,174,0.1); border-left: 3px solid var(--accent4); }
+  .tip-box.blue { background: rgba(0,229,255,0.1); border-left: 3px solid var(--accent2); }
+  .tip-box.purple { background: rgba(191,134,255,0.1); border-left: 3px solid var(--accent5); }
+
+  /* GRID LAYOUTS */
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; }
+  .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+
+  /* TABLE */
+  .styled-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin: 1rem 0; }
+  .styled-table th {
+    background: rgba(249,168,37,0.15); color: var(--accent1);
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    padding: 0.65rem 1rem; text-align: left; border-bottom: 1px solid var(--border);
+  }
+  .styled-table td { padding: 0.6rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: top; }
+  .styled-table tr:hover td { background: rgba(255,255,255,0.03); }
+  .styled-table code { font-family: 'DM Mono', monospace; font-size: 0.85rem; color: var(--accent2); }
+
+  /* CONIC SHAPES VIS */
+  .conic-visual {
+    width: 100%; height: 120px; border-radius: 10px;
+    background: var(--surface); display: flex; align-items: center; justify-content: center;
+    margin-bottom: 0.75rem; overflow: hidden;
+  }
+
+  /* PROGRESS BAR */
+  .prog-bar {
+    position: fixed; top: 56px; left: 0; right: 0; height: 3px; z-index: 99;
+    background: var(--border);
+  }
+  .prog-fill {
+    height: 100%; background: linear-gradient(90deg, var(--accent1), var(--accent3));
+    width: 0%; transition: width 0.3s ease;
+  }
+
+  /* ACCORDION */
+  .accord-item { margin-bottom: 0.75rem; }
+  .accord-head {
+    width: 100%; text-align: left; padding: 1rem 1.25rem;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; cursor: pointer; font-family: 'Syne', sans-serif;
+    font-weight: 700; font-size: 0.95rem; color: var(--text);
+    display: flex; justify-content: space-between; align-items: center;
+    transition: all 0.2s;
+  }
+  .accord-head:hover { border-color: var(--accent1); color: var(--accent1); }
+  .accord-head .chevron { transition: transform 0.3s; flex-shrink: 0; }
+  .accord-head.open .chevron { transform: rotate(180deg); }
+  .accord-body {
+    overflow: hidden; max-height: 0; transition: max-height 0.4s ease, padding 0.3s;
+    background: rgba(255,255,255,0.02); border-radius: 0 0 10px 10px;
+    border: 0px solid var(--border);
+    padding: 0 1.25rem;
+  }
+  .accord-body.open {
+    max-height: 2000px; padding: 1.25rem;
+    border-width: 0 1px 1px 1px;
+  }
+
+  /* CHEAT SHEET */
+  .cheat-row {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 0.7rem 1rem; border-radius: 8px; margin-bottom: 0.5rem;
+    background: rgba(255,255,255,0.03);
+  }
+  .cheat-label {
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 0.82rem; color: var(--muted); width: 110px; flex-shrink: 0;
+  }
+  .cheat-formula {
+    font-family: 'DM Mono', monospace; font-size: 0.88rem;
+    color: var(--accent2); flex: 1;
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 2rem 0;
+  }
+
+  /* SURVIVAL TIPS */
+  .tip-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 1.25rem; text-align: center;
+    transition: all 0.25s;
+  }
+  .tip-card:hover { transform: translateY(-4px); border-color: var(--accent4); }
+  .tip-card .num {
+    font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800;
+    color: var(--accent4); margin-bottom: 0.5rem;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity:0; transform: translateY(24px); } to { opacity:1; transform: translateY(0); } }
+  .animate-up { animation: fadeUp 0.5s ease forwards; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* EXAMPLE BLOCK */
+  .example-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.25rem; margin: 1rem 0;
+  }
+  .example-title {
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem;
+    margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;
+  }
+
+  /* WORD PROBLEM */
+  .problem-box {
+    background: rgba(191,134,255,0.07);
+    border: 1px solid rgba(191,134,255,0.25);
+    border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem;
+  }
+  .problem-q {
+    font-style: italic; color: var(--text); font-size: 0.95rem;
+    line-height: 1.6; margin-bottom: 1rem; padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(191,134,255,0.2);
+  }
+
+  /* PROBABILITY TABLE */
+  .prob-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.88rem; }
+  .prob-table th, .prob-table td { border: 1px solid var(--border); padding: 0.55rem 0.85rem; text-align: center; }
+  .prob-table th { background: rgba(105,240,174,0.12); color: var(--accent4); font-family: 'Syne', sans-serif; font-weight: 700; }
+  .prob-table td { background: rgba(255,255,255,0.02); }
+
+  /* VENN */
+  .venn-wrap { display: flex; justify-content: center; margin: 1rem 0; }
+
+  /* HIGHLIGHT */
+  .hl-yellow { color: var(--accent1); font-weight: 600; }
+  .hl-blue { color: var(--accent2); font-weight: 600; }
+  .hl-pink { color: var(--accent3); font-weight: 600; }
+  .hl-green { color: var(--accent4); font-weight: 600; }
+  .hl-purple { color: var(--accent5); font-weight: 600; }
+
+  /* RECOGNITION BOX */
+  .recog-box {
+    background: rgba(249,168,37,0.08);
+    border: 1px solid rgba(249,168,37,0.3);
+    border-radius: 10px; padding: 1rem 1.25rem; margin: 1rem 0;
+  }
+  .recog-box .icon { font-size: 1.2rem; margin-right: 0.5rem; }
+
+  /* SVG SHAPES */
+  .shape-svg { width: 100%; height: 100px; }
+
+</style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo">A2 ⚡</div>
+  <button class="nav-btn" onclick="scrollTo('hero')">Home</button>
+  <button class="nav-btn" onclick="scrollTo('conics')">Conics</button>
+  <button class="nav-btn" onclick="scrollTo('completing')">Compl. Square</button>
+  <button class="nav-btn" onclick="scrollTo('circle')">Circle</button>
+  <button class="nav-btn" onclick="scrollTo('parabola')">Parabola</button>
+  <button class="nav-btn" onclick="scrollTo('ellipse')">Ellipse</button>
+  <button class="nav-btn" onclick="scrollTo('identify')">ID Conics</button>
+  <button class="nav-btn" onclick="scrollTo('wordprobs')">Word Problems</button>
+  <button class="nav-btn" onclick="scrollTo('settheory')">Sets</button>
+  <button class="nav-btn" onclick="scrollTo('probability')">Probability</button>
+  <button class="nav-btn" onclick="scrollTo('conceptual')">Concepts</button>
+  <button class="nav-btn" onclick="scrollTo('survival')">Survival Guide</button>
+  <button class="nav-btn" onclick="scrollTo('cheatsheet')">Cheat Sheet</button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <br><br>
+  <h1 class="hero-title">Algebra 2<br>Test Prep</h1>
+  <p class="hero-sub">Everything you need to know — conics, probability, set theory, and more.</p>
+  <div class="hero-grid">
+    <div class="hero-chip" onclick="scrollTo('conics')"><span class="icon">🔵</span>Conics</div>
+    <div class="hero-chip" onclick="scrollTo('completing')"><span class="icon">✏️</span>Completing Square</div>
+    <div class="hero-chip" onclick="scrollTo('parabola')"><span class="icon">📐</span>Parabola</div>
+    <div class="hero-chip" onclick="scrollTo('ellipse')"><span class="icon">⭕</span>Ellipse</div>
+    <div class="hero-chip" onclick="scrollTo('wordprobs')"><span class="icon">📝</span>Word Problems</div>
+    <div class="hero-chip" onclick="scrollTo('settheory')"><span class="icon">⋂</span>Set Theory</div>
+    <div class="hero-chip" onclick="scrollTo('probability')"><span class="icon">🎲</span>Probability</div>
+    <div class="hero-chip" onclick="scrollTo('survival')"><span class="icon">🛟</span>Survival Tips</div>
+  </div>
+  <p style="color:var(--muted);font-size:0.8rem;font-family:'DM Mono',monospace;">Scroll down or click any topic ↓</p>
+</section>
+
+<!-- ===== CONICS OVERVIEW ===== -->
+<section id="conics" class="slide">
+  <div class="section-tag" style="background:rgba(0,229,255,0.1);color:var(--accent2);">Section 1</div>
+  <h2 class="section-title">Conic Sections</h2>
+  <p class="section-desc">A conic section is what you get when you slice a cone at different angles. There are 4 types — and you need to recognize each one instantly.</p>
+
+  <div class="tip-box yellow">
+    <strong>🧠 The Big Picture:</strong> Every conic section comes from the same general equation: <span class="formula-sm">Ax² + Cy² + Dx + Ey + F = 0</span>. The values of A and C tell you what shape it is.
+  </div>
+
+  <div class="grid-4" style="margin-top:1.5rem;">
+    <div class="card" style="border-top: 3px solid var(--accent2);">
+      <div style="text-align:center; padding: 1rem 0;">
+        <svg viewBox="0 0 120 80" width="120" height="80">
+          <circle cx="60" cy="40" r="30" fill="none" stroke="#00e5ff" stroke-width="2.5"/>
+          <circle cx="60" cy="40" r="3" fill="#00e5ff"/>
+          <text x="60" y="72" text-anchor="middle" fill="#8888aa" font-size="9" font-family="DM Mono">center</text>
+        </svg>
+      </div>
+      <div class="card-title" style="justify-content:center;color:var(--accent2);">⬤ Circle</div>
+      <div style="font-size:0.85rem;color:var(--muted);text-align:center;">A = C (same, non-zero)</div>
+      <div class="formula-sm" style="margin:0.5rem auto;display:block;text-align:center;">x² + y² = r²</div>
+    </div>
+    <div class="card" style="border-top: 3px solid var(--accent3);">
+      <div style="text-align:center; padding: 1rem 0;">
+        <svg viewBox="0 0 120 80" width="120" height="80">
+          <path d="M 10 70 Q 60 5 110 70" fill="none" stroke="#ea4c89" stroke-width="2.5"/>
+          <circle cx="60" cy="25" r="3" fill="#ea4c89"/>
+          <line x1="60" y1="5" x2="60" y2="45" stroke="#ea4c89" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="60" y="76" text-anchor="middle" fill="#8888aa" font-size="9" font-family="DM Mono">vertex</text>
+        </svg>
+      </div>
+      <div class="card-title" style="justify-content:center;color:var(--accent3);">∪ Parabola</div>
+      <div style="font-size:0.85rem;color:var(--muted);text-align:center;">Only x² OR only y²</div>
+      <div class="formula-sm" style="margin:0.5rem auto;display:block;text-align:center;">y = a(x−h)² + k</div>
+    </div>
+    <div class="card" style="border-top: 3px solid var(--accent4);">
+      <div style="text-align:center; padding: 1rem 0;">
+        <svg viewBox="0 0 120 80" width="120" height="80">
+          <ellipse cx="60" cy="40" rx="48" ry="25" fill="none" stroke="#69f0ae" stroke-width="2.5"/>
+          <circle cx="60" cy="40" r="3" fill="#69f0ae"/>
+          <line x1="12" y1="40" x2="108" y2="40" stroke="#69f0ae" stroke-width="1" stroke-dasharray="3,3"/>
+          <line x1="60" y1="15" x2="60" y2="65" stroke="#69f0ae" stroke-width="1" stroke-dasharray="3,3"/>
+        </svg>
+      </div>
+      <div class="card-title" style="justify-content:center;color:var(--accent4);">⬭ Ellipse</div>
+      <div style="font-size:0.85rem;color:var(--muted);text-align:center;">A ≠ C, same sign</div>
+      <div class="formula-sm" style="margin:0.5rem auto;display:block;text-align:center;">x²/a² + y²/b² = 1</div>
+    </div>
+    <div class="card" style="border-top: 3px solid var(--accent5);">
+      <div style="text-align:center; padding: 1rem 0;">
+        <svg viewBox="0 0 120 80" width="120" height="80">
+          <path d="M 10 5 Q 60 40 110 5" fill="none" stroke="#bf86ff" stroke-width="2.5"/>
+          <path d="M 10 75 Q 60 40 110 75" fill="none" stroke="#bf86ff" stroke-width="2.5"/>
+          <circle cx="60" cy="40" r="3" fill="#bf86ff"/>
+          <line x1="5" y1="40" x2="115" y2="40" stroke="#bf86ff" stroke-width="1" stroke-dasharray="3,3"/>
+        </svg>
+      </div>
+      <div class="card-title" style="justify-content:center;color:var(--accent5);">⌇ Hyperbola</div>
+      <div style="font-size:0.85rem;color:var(--muted);text-align:center;">A and C opposite signs</div>
+      <div class="formula-sm" style="margin:0.5rem auto;display:block;text-align:center;">x²/a² − y²/b² = 1</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h3 class="syne" style="font-weight:700;font-size:1.2rem;margin-bottom:1rem;">🔍 Identification Table</h3>
+  <div style="overflow-x:auto;">
+  <table class="styled-table">
+    <thead>
+      <tr><th>Shape</th><th>A vs C Rule</th><th>Quick Sign</th><th>Example</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>⬤ Circle</td><td>A = C (equal, same sign)</td><td>Same number in front of x² and y²</td><td><code>x² + y² = 25</code></td></tr>
+      <tr><td>⬭ Ellipse</td><td>A ≠ C but same sign</td><td>Different denominators under x² and y²</td><td><code>4x² + 9y² = 36</code></td></tr>
+      <tr><td>∪ Parabola</td><td>A = 0 OR C = 0</td><td>Only ONE squared term</td><td><code>y = x² − 3x + 2</code></td></tr>
+      <tr><td>⌇ Hyperbola</td><td>A and C opposite signs</td><td>One positive, one negative</td><td><code>x² − y² = 1</code></td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ===== COMPLETING THE SQUARE ===== -->
+<section id="completing" class="slide">
+  <div class="section-tag" style="background:rgba(249,168,37,0.1);color:var(--accent1);">Core Skill</div>
+  <h2 class="section-title">Completing the Square</h2>
+  <p class="section-desc">This is THE most important skill for conics. Master this and you can convert any messy equation into a form you can read.</p>
+
+  <div class="recog-box">
+    <span class="icon">💡</span><strong>When do you use this?</strong> When you see something like <span class="hl-blue">x² + 6x + y² − 4y = 3</span> and need to find the center and radius. You "complete" each squared group into a perfect square.
+  </div>
+
+  <h3 class="syne" style="font-weight:700;font-size:1.1rem;margin:1.5rem 0 1rem;">📐 The Formula</h3>
+  <div class="formula">x² + bx + (b/2)² = (x + b/2)²</div>
+  <div class="tip-box blue">
+    <strong>The trick:</strong> Take the coefficient of x (call it b), divide by 2, square it → add to both sides. You just "completed the square."
+  </div>
+
+  <h3 class="syne" style="font-weight:700;font-size:1.1rem;margin:1.5rem 0 1rem;">Step-by-Step Method</h3>
+  <div class="step-list">
+    <div class="step"><div class="step-num">1</div><div class="step-content">Group x terms together and y terms together. Move the constant to the right side.<br><span class="formula-sm">x² + 6x + ___ + y² − 4y + ___ = 3</span></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-content">For each group: take the middle coefficient, divide by 2, square it.<br>x group: 6÷2 = 3 → 3² = <strong>9</strong> | y group: −4÷2 = −2 → (−2)² = <strong>4</strong></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-content">Add those numbers <strong>inside</strong> the blank AND <strong>add them to the right side too</strong> (balance the equation).<br><span class="formula-sm">x² + 6x + 9 + y² − 4y + 4 = 3 + 9 + 4</span></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-content">Factor each group into a perfect square trinomial.<br><span class="formula-sm">(x + 3)² + (y − 2)² = 16</span></div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-content">Read the answer! Center = (−3, 2), r = √16 = <strong>4</strong></div></div>
+  </div>
+
+  <div class="grid-2" style="margin-top:1.5rem;">
+    <div class="example-block">
+      <div class="example-title"><span class="badge badge-easy">Easy</span> One Variable</div>
+      <p style="font-size:0.9rem;margin-bottom:0.75rem;">Complete the square: <span class="hl-blue">x² + 8x</span></p>
+      <div class="step-list">
+        <div class="step"><div class="step-num">1</div><div class="step-content">Take 8, divide by 2 → 4, square it → <strong>16</strong></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content">x² + 8x + <strong>16</strong> = (x + 4)² ✅</div></div>
+      </div>
+    </div>
+    <div class="example-block">
+      <div class="example-title"><span class="badge badge-med">Medium</span> Full Circle</div>
+      <p style="font-size:0.9rem;margin-bottom:0.75rem;">Convert: <span class="hl-blue">x² + y² − 10x + 4y − 7 = 0</span></p>
+      <div class="step-list">
+        <div class="step"><div class="step-num">1</div><div class="step-content">(x²−10x + ___) + (y²+4y + ___) = 7</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content">x: (−10/2)² = 25 | y: (4/2)² = 4</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content">(x−5)² + (y+2)² = 7+25+4 = <strong>36</strong></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-content">Center = (5,−2), r = <strong>6</strong> ✅</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tip-box red" style="margin-top:1rem;">
+    <strong>⚠️ Common Mistake:</strong> Don't forget to add your completion numbers to the RIGHT side too! If you add 9 inside, you MUST add 9 to the other side or the equation is wrong.
+  </div>
+
+  <div class="tip-box yellow">
+    <strong>🎯 Quick Tip:</strong> If the coefficient of x² or y² is NOT 1, factor it out first before completing the square.
+    <br>Example: <span class="formula-sm">2x² + 8x</span> → factor: <span class="formula-sm">2(x² + 4x)</span> → complete inside: <span class="formula-sm">2(x+2)² − 8</span>
+  </div>
+</section>
+
+<!-- ===== CIRCLE ===== -->
+<section id="circle" class="slide">
+  <div class="section-tag" style="background:rgba(0,229,255,0.1);color:var(--accent2);">Section 2</div>
+  <h2 class="section-title">⬤ Circles</h2>
+  <p class="section-desc">A circle is all points equidistant from a center. The distance from center to edge is the radius.</p>
+
+  <div class="grid-2">
+    <div class="card" style="border-left:3px solid var(--accent2);">
+      <div class="card-title" style="color:var(--accent2);">Standard Form</div>
+      <div class="formula">(x − h)² + (y − k)² = r²</div>
+      <ul style="font-size:0.9rem;line-height:1.8;list-style:none;">
+        <li>• <span class="hl-yellow">(h, k)</span> = center</li>
+        <li>• <span class="hl-blue">r</span> = radius</li>
+        <li>• Watch signs: (x−<span class="hl-yellow">3</span>)² means center x = <span class="hl-yellow">+3</span></li>
+        <li>• (x+<span class="hl-yellow">3</span>)² = (x−(−3))² means center x = <span class="hl-yellow">−3</span></li>
+      </ul>
+    </div>
+    <div class="card" style="border-left:3px solid var(--accent3);">
+      <div class="card-title" style="color:var(--accent3);">General Form</div>
+      <div class="formula">x² + y² + Dx + Ey + F = 0</div>
+      <div class="tip-box blue" style="margin-top:0.5rem;">
+        <strong>To use this:</strong> Complete the square to convert to standard form. Then read center and radius.
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h3 class="syne" style="font-weight:700;font-size:1.1rem;margin-bottom:1rem;">Distance Formula (Essential!)</h3>
+  <div class="formula">d = √[(x₂−x₁)² + (y₂−y₁)²]</div>
+  <div class="tip-box green">
+    <strong>💡 Use this to find the radius</strong> when given the center and a point on the circle, or the distance between any two points.
+  </div>
+
+  <div class="grid-2" style="margin-top:1.5rem;">
+    <div class="example-block">
+      <div class="example-title"><span class="badge badge-easy">Easy</span> Read Standard Form</div>
+      <p style="font-size:0.9rem;margin-bottom:0.75rem;font-style:italic;">Given: <span class="hl-blue">(x − 4)² + (y + 1)² = 49</span><br>Find center and radius.</p>
+      <div class="step-list">
+        <div class="step"><div class="step-num">1</div><div class="step-content">h = 4, k = −1 → Center = <strong>(4, −1)</strong></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content">r² = 49 → r = <strong>7</strong></div></div>
+      </div>
+    </div>
+    <div class="example-block">
+      <div class="example-title"><span class="badge badge-med">Medium</span> From General Form</div>
+      <p style="font-size:0.9rem;margin-bottom:0.75rem;font-style:italic;">Given: <span class="hl-blue">x² + y² − 6x + 8y − 11 = 0</span></p>
+      <div class="step-list">
+        <div class="step"><div class="step-num">1</div><div class="step-content">Rearrange: (x²−6x) + (y²+8y) = 11</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content">Complete: +9 for x, +16 for y</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content">(x−3)² + (y+4)² = 11+9+16 = <strong>36</strong></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-content">Center = <strong>(3, −4)</strong>, r = <strong>6</strong> ✅</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="example-block" style="margin-top:1rem;">
+    <div class="example-title"><span class="badge badge-hard">Exam Level</span> Write Equation from Center + Point</div>
+    <div class="problem-q">A circle has center (2, −3) and passes through the point (5, 1). Write the standard form equation.</div>
+    <div class="step-list">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Find radius</strong> using distance formula: r = √[(5−2)² + (1−(−3))²] = √[9 + 16] = √25 = <strong>5</strong></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Write equation:</strong> (x−2)² + (y+3)² = 25 ✅</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PARABOLA ===== -->
+<section id="parabola" class="slide">
+  <div class="section-tag" style="background:rgba(234,76,137,0.1);color:var(--accent3);">Section 3</div>
+  <h2 class="section-title">∪ Parabola</h2>
+  <p class="section-desc">A parabola is the set of all points equidistant from the focus and the directrix. The vertex is the midpoint between them.</p>
+
+  <div class="grid-2">
+    <div class="card" style="border-left:3px solid var(--accent3);">
+      <div class="card-title" style="color:var(--accent3);">Vertex Form</div>
+      <div class="formula">y = a(x − h)² + k</div>
+      <ul style="font-size:0.9rem;line-height:1.8;list-style:none;">
+        <li>• Vertex = <span class="hl-yellow">(h, k)</span></li>
+        <li>• a > 0 → opens <span class="hl-green">up ↑</span></li>
+        <li>• a &lt; 0 → opens <span class="hl-pink">down ↓</span></li>
+        <li>• |a| large → <strong>narrow</strong> | |a| small → <strong>wide</strong></li>
+      </ul>
+    </div>
+    <div class="card" style="border-left:3px solid var(--accent1);">
+      <div class="card-title" style="color:var(--accent1);">Standard Forms with Focus & Directrix</div>
+      <div class="formula" style="text-align:left;font-size:0.85rem;">(x−h)² = 4p(y−k) <span style="color:var(--muted);font-size:0.75rem;">← vertical (up/down)</span></div>
+      <div class="formula" style="text-align:left;font-size:0.85rem;">(y−k)² = 4p(x−h) <span style="color:var(--muted);font-size:0.75rem;">← horizontal (left/right)</span></div>
+      <div class="tip-box yellow" style="margin-top:0.75rem;font-size:0.85rem;">
+        <strong>p</strong> = distance from vertex to focus (and vertex to directrix)
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1.25rem;background:rgba(234,76,137,0.05);">
+    <div class="card-title" style="color:var(--accent3);">🎯 Focus, Vertex, Directrix Rules</div>
+    <div class="grid-3">
+      <div>
+        <p class="syne" style="font-weight:700;font-size:0.85rem;margin-bottom:0.5rem;">Vertical Parabola (x² term)</p>
+        <ul style="font-size:0.85rem;line-height:1.8;list-style:none;color:var(--muted);">
+          <li>• Vertex: <span class="hl-yellow">(h, k)</span></li>
+          <li>• Focus: <span class="hl-blue">(h, k+p)</span></li>
+          <li>• Directrix: <span class="hl-pink">y = k − p</span></li>
+          <li>• p > 0 → opens up | p &lt; 0 → opens down</li>
+        </ul>
+      </div>
+      <div>
+        <p class="syne" style="font-weight:700;font-size:0.85rem;margin-bottom:0.5rem;">Horizontal Parabola (y² term)</p>
+        <ul style="font-size:0.85rem;line-height:1.8;list-style:none;color:var(--muted);">
+          <li>• Vertex: <span class="hl-yellow">(h, k)</span></li>
+          <li>• Focus: <span class="hl-blue">(h+p, k)</span></li>
+          <li>• Directrix: <span class="hl-pink">x = h − p</span></li>
+          <li>• p > 0 → opens right | p &lt; 0 → opens left</li>
+        </ul>
+      </div>
+      <div class="tip-box blue" style="margin:0;">
+        <strong>Key Relationship:</strong><br>Every point on a parabola is the <em>same distance</em> from the focus as it is from the directrix.<br><br>
+        <strong>Axis of Symmetry</strong> passes through vertex and focus.
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-top:1.5rem;">
+    <div class="example-block">
+      <div class="example-title"><span class="badge badge-easy">Easy</span> Read Vertex Form</div>
+      <p style="font-size:0.9rem;margin-bottom:0.75rem;font-style:italic;">y = 2(x − 3)² + 5</p>
+      <div class="step-list">
+        <div class="step"><div class="step-num">1</div><div class="step-content">Vertex: <strong>(3, 5)</strong></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content">a = 2 > 0 → opens <strong>up</strong></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content">Narrow (|a|=2 > 1)</div></div>
+      </div>
+    </div>
+    <div class="example-block">
+      <div class="example-title"><span class="badge badge-med">Medium</span> Find Focus & Directrix</div>
+      <p style="font-size:0.9rem;margin-bottom:0.75rem;font-style:italic;">(x − 2)² = 12(y + 1)</p>
+      <div class="step-list">
+        <div class="step"><div class="step-num">1</div><div class="step-content">Vertex: (2, −1). 4p = 12 → <strong>p = 3</strong></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content">Focus: (2, −1+3) = <strong>(2, 2)</strong></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content">Directrix: y = −1−3 = <strong>y = −4</strong></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="example-block" style="margin-top:1rem;">
+    <div class="example-title"><span class="badge badge-hard">Exam Level</span> Write Equation from Vertex & Focus</div>
+    <div class="problem-q">Write the equation of a parabola with vertex (1, 3) and focus (1, 5).</div>
+    <div class="step-list">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Find p:</strong> Focus is directly above vertex → vertical parabola. p = 5 − 3 = <strong>2</strong></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><strong>4p = 8</strong>. Opens up (p > 0).</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Equation:</strong> (x − 1)² = 8(y − 3) ✅</div></div>
+    </div>
+  </div>
+
+  <div class="tip-box red" style="margin-top:1rem;">
+    <strong>⚠️ Common Mistakes:</strong><br>
+    • Confusing which variable is squared (x² = vertical parabola | y² = horizontal parabola)<br>
+    • Forgetting that p can be negative (changes direction of opening)<br>
+    • Mixing up focus and directrix directions
+  </div>
+</section>
+
+<!-- ===== ELLIPSE ===== -->
+<section id="ellipse" class="slide">
+  <div class="section-tag" style="background:rgba(105,240,174,0.1);color:var(--accent4);">Section 4</div>
+  <h2 class="section-title">⬭ Ellipse</h2>
+  <p class="section-desc">An ellipse is the set of all points where the sum of distances to two foci is constant. Think of it as a "stretched circle."</p>
+
+  <div class="grid-2">
+    <div class="card" style="border-left:3px solid var(--accent4);">
+      <div class="card-title" style="color:var(--accent4);">Horizontal Ellipse (wider)</div>
+      <div class="formula">x²/a² + y²/b² = 1 <br><span style="font-size:0.75rem;color:var(--muted)">(a > b, a² under x²)</span></div>
+      <ul style="font-size:0.88rem;line-height:1.8;list-style:none;">
+        <li>• Center: <span class="hl-yellow">(0,0)</span> or <span class="hl-yellow">(h,k)</span></li>
+        <li>• Major axis: <strong>horizontal</strong>, length = 2a</li>
+        <li>• Minor axis: vertical, length = 2b</li>
+        <li>• Foci: <span class="hl-blue">(±c, 0)</span> where <span class="hl-blue">c² = a² − b²</span></li>
+      </ul>
+    </div>
+    <div class="card" style="border-left:3px solid var(--accent2);">
+      <div class="card-title" style="color:var(--accent2);">Vertical Ellipse (taller)</div>
+      <div class="formula">x²/b² + y²/a² = 1 <br><span style="font-size:0.75rem;color:var(--muted)">(a > b, a² under y²)</span></div>
+      <ul style="font-size:0.88rem;line-height:1.8;list-style:none;">
+        <li>• Center: <span class="hl-yellow">(0,0)</span> or <span class="hl-yellow">(h,k)</span></li>
+        <li>• Major axis: <strong>vertical</strong>, length = 2a</li>
+        <li>• Minor axis: horizontal, length = 2b</li>
+        <li>• Foci: <span class="hl-blue">(0, ±c)</span> where <span class="hl-blue">c² = a² − b²</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tip-box yellow" style="margin-top:1.25rem;">
+    <strong>🔑 The Golden Rule:</strong> <span class="formula-sm">c² = a² − b²</span> &nbsp;|&nbsp; a is ALWAYS the biggest denominator. The foci are always on the major axis. c &lt; a always.
+  </div>
+
+  <div class="formula" style="margin-top:1rem;">
+    With center (h,k): &nbsp; (x−h)²/a² + (y−k)²/b² = 1
+  </div>
+
+  <div class="grid-2" style="margin-top:1.5rem;">
+    <div class="example-block">
+      <div class="example-title"><span class="badge badge-easy">Easy</span> Read an Ellipse</div>
+      <p style="font-size:0.9rem;margin-bottom:0.75rem;font-style:italic;">x²/25 + y²/9 = 1</p>
+      <div class="step-list">
+        <div class="step"><div class="step-num">1</div><div class="step-content">a² = 25 → a = 5, b² = 9 → b = 3</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content">a² under x² → horizontal ellipse</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content">c² = 25−9 = 16 → c = <strong>4</strong></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-content">Foci: <strong>(±4, 0)</strong> | Major axis: 2(5)=10</div></div>
+      </div>
+    </div>
+    <div class="example-block">
+      <div class="example-title"><span class="badge badge-hard">Exam Level</span> Write from Axes</div>
+      <p style="font-size:0.9rem;margin-bottom:0.75rem;font-style:italic;">Ellipse with center (1,2), major axis = 8 (vertical), minor axis = 4.</p>
+      <div class="step-list">
+        <div class="step"><div class="step-num">1</div><div class="step-content">a = 8/2 = 4, b = 4/2 = 2</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content">Vertical → a² under y²</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><strong>(x−1)²/4 + (y−2)²/16 = 1</strong> ✅</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-content">c² = 16−4 = 12 → c = 2√3, Foci: (1, 2±2√3)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tip-box red" style="margin-top:1rem;">
+    <strong>⚠️ Common Mistakes:</strong><br>
+    • a² is ALWAYS the LARGEST denominator — don't just assume it's under x²<br>
+    • The equation must equal 1 (not 4 or 25) — divide if needed<br>
+    • c² = a² − b² (not a² + b²)
+  </div>
+</section>
+
+<!-- ===== IDENTIFY CONICS ===== -->
+<section id="identify" class="slide">
+  <div class="section-tag" style="background:rgba(191,134,255,0.1);color:var(--accent5);">Key Skill</div>
+  <h2 class="section-title">🔍 Identifying Conics Fast</h2>
+  <p class="section-desc">Given <span class="hl-blue">Ax² + Cy² + Dx + Ey + F = 0</span>, you can identify any conic in 3 seconds using the rules below.</p>
+
+  <div class="formula">Look at the coefficients A and C (the ones in front of x² and y²)</div>
+
+  <div class="grid-4" style="margin-top:1.5rem;">
+    <div class="card" style="border-top:3px solid var(--accent2);text-align:center;">
+      <div style="font-size:2rem;margin-bottom:0.5rem;">⬤</div>
+      <div class="syne" style="font-weight:800;color:var(--accent2);margin-bottom:0.5rem;">Circle</div>
+      <div class="formula-sm">A = C</div>
+      <p style="font-size:0.82rem;color:var(--muted);margin-top:0.5rem;">Same number, same sign in front of both x² and y²</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent4);text-align:center;">
+      <div style="font-size:2rem;margin-bottom:0.5rem;">⬭</div>
+      <div class="syne" style="font-weight:800;color:var(--accent4);margin-bottom:0.5rem;">Ellipse</div>
+      <div class="formula-sm">A·C > 0, A≠C</div>
+      <p style="font-size:0.82rem;color:var(--muted);margin-top:0.5rem;">Both x² and y² present, same sign, different numbers</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent3);text-align:center;">
+      <div style="font-size:2rem;margin-bottom:0.5rem;">∪</div>
+      <div class="syne" style="font-weight:800;color:var(--accent3);margin-bottom:0.5rem;">Parabola</div>
+      <div class="formula-sm">A=0 or C=0</div>
+      <p style="font-size:0.82rem;color:var(--muted);margin-top:0.5rem;">Only ONE of x² or y² is present</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent5);text-align:center;">
+      <div style="font-size:2rem;margin-bottom:0.5rem;">⌇</div>
+      <div class="syne" style="font-weight:800;color:var(--accent5);margin-bottom:0.5rem;">Hyperbola</div>
+      <div class="formula-sm">A·C &lt; 0</div>
+      <p style="font-size:0.82rem;color:var(--muted);margin-top:0.5rem;">One positive, one negative (opposite signs)</p>
+    </div>
+  </div>
+
+  <h3 class="syne" style="font-weight:700;font-size:1.1rem;margin:2rem 0 1rem;">⚡ Practice — Identify These Instantly</h3>
+  <div class="accord-item">
+    <button class="accord-head" onclick="toggleAccord(this)">1) &nbsp; x² + y² − 4x + 6y − 12 = 0 <span class="chevron">▾</span></button>
+    <div class="accord-body"><div class="tip-box green"><strong>CIRCLE</strong> — A = 1, C = 1. Both equal ✅. Complete the square to find center and radius.</div></div>
+  </div>
+  <div class="accord-item">
+    <button class="accord-head" onclick="toggleAccord(this)">2) &nbsp; 4x² + 9y² − 16x − 18y − 11 = 0 <span class="chevron">▾</span></button>
+    <div class="accord-body"><div class="tip-box green"><strong>ELLIPSE</strong> — A = 4, C = 9. Both positive, not equal. Different values = ellipse ✅</div></div>
+  </div>
+  <div class="accord-item">
+    <button class="accord-head" onclick="toggleAccord(this)">3) &nbsp; x² − 4x − 8y + 20 = 0 <span class="chevron">▾</span></button>
+    <div class="accord-body"><div class="tip-box green"><strong>PARABOLA</strong> — Only x² is present, no y² term. A=1, C=0 ✅</div></div>
+  </div>
+  <div class="accord-item">
+    <button class="accord-head" onclick="toggleAccord(this)">4) &nbsp; x² − y² − 2x + 4y − 4 = 0 <span class="chevron">▾</span></button>
+    <div class="accord-body"><div class="tip-box green"><strong>HYPERBOLA</strong> — A=1, C=−1. Opposite signs! A·C = −1 &lt; 0 ✅</div></div>
+  </div>
+  <div class="accord-item">
+    <button class="accord-head" onclick="toggleAccord(this)">5) &nbsp; 3x² + 3y² − 12x + 6y − 9 = 0 <span class="chevron">▾</span></button>
+    <div class="accord-body"><div class="tip-box green"><strong>CIRCLE</strong> — A = 3, C = 3. Same value! Factor out 3 first, then complete the square ✅</div></div>
+  </div>
+</section>
+
+<!-- ===== WORD PROBLEMS ===== -->
+<section id="wordprobs" class="slide">
+  <div class="section-tag" style="background:rgba(234,76,137,0.1);color:var(--accent3);">Section 5</div>
+  <h2 class="section-title">📝 Word Problems</h2>
+  <p class="section-desc">This is where exams test you. Read carefully, draw a sketch, and set up coordinates. The math is always simpler than it looks.</p>
+
+  <!-- WP 1: Parabola Reflector -->
+  <div class="problem-box">
+    <div class="example-title"><span class="badge badge-hard">Exam Level</span> 🔭 Satellite Dish / Reflector Problem</div>
+    <div class="problem-q">A satellite dish is parabolic with the opening facing up. The dish is 12 feet wide and 3 feet deep. Where should the receiver be placed? (Find the focus.)</div>
+    <div class="step-list">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Set up coordinates:</strong> Place vertex at origin (0,0). Dish opens up → equation (x²) = 4p·y</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Use a point on the rim:</strong> Width = 12, so edge is at x = 6. Depth = 3, so that point is (6, 3).</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Substitute (6, 3):</strong> 6² = 4p(3) → 36 = 12p → <strong>p = 3</strong></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><strong>Focus at (0, p) = (0, 3)</strong> → The receiver should be placed <strong>3 feet above the vertex</strong> ✅</div></div>
+    </div>
+  </div>
+
+  <!-- WP 2: Tunnel Parabola -->
+  <div class="problem-box">
+    <div class="example-title"><span class="badge badge-hard">Exam Level</span> 🌉 Tunnel / Bridge Problem</div>
+    <div class="problem-q">A parabolic tunnel is 20 m wide and 8 m high at its center. A truck 5 m wide and 6 m tall wants to pass through. Will the truck fit? How much clearance is there at the truck's edge?</div>
+    <div class="step-list">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Set up:</strong> Center of tunnel at (0, 8). Opens down. Width = 20, so edges at x = ±10, y = 0.</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Vertex form:</strong> y = a(x − 0)² + 8 = ax² + 8</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Use point (10, 0):</strong> 0 = a(100) + 8 → a = −8/100 = <strong>−0.08</strong></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><strong>Truck edge at x = 2.5</strong> (half of 5m wide): y = −0.08(2.5)² + 8 = −0.5 + 8 = <strong>7.5 m</strong></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content">Truck height = 6 m &lt; 7.5 m → <strong>Yes, it fits!</strong> Clearance = 7.5 − 6 = <strong>1.5 m</strong> ✅</div></div>
+    </div>
+  </div>
+
+  <!-- WP 3: Ellipse Real World -->
+  <div class="problem-box">
+    <div class="example-title"><span class="badge badge-hard">Exam Level</span> 🏟️ Whispering Gallery (Ellipse)</div>
+    <div class="problem-q">A whispering gallery is elliptical. The room is 100 ft long and 40 ft wide. How far from the center are the foci? (This is where people must stand to whisper.)</div>
+    <div class="step-list">
+      <div class="step"><div class="step-num">1</div><div class="step-content">Length = 100 → a = 50 | Width = 40 → b = 20</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content">c² = a² − b² = 2500 − 400 = <strong>2100</strong></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content">c = √2100 ≈ <strong>45.8 ft</strong> from center (each focus)</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content">People must stand <strong>≈45.8 ft from center</strong> along the major axis ✅</div></div>
+    </div>
+  </div>
+
+  <!-- WP 4: Circle from 3 Points (concept only) -->
+  <div class="problem-box">
+    <div class="example-title"><span class="badge badge-hard">Exam Level</span> ⬤ Circle from 3 Points</div>
+    <div class="problem-q">Find the equation of the circle passing through (1,0), (0,1), and (−1,0).</div>
+    <div class="step-list">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><strong>General form:</strong> x² + y² + Dx + Ey + F = 0. Substitute each point to get a system of equations.</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content">Point (1,0): 1 + 0 + D + 0 + F = 0 → <strong>D + F = −1</strong></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content">Point (0,1): 0 + 1 + 0 + E + F = 0 → <strong>E + F = −1</strong></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content">Point (−1,0): 1 + 0 − D + 0 + F = 0 → <strong>−D + F = −1</strong></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content">From D+F=−1 and −D+F=−1 → D=0, F=−1, E=0</div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-content">Equation: x² + y² − 1 = 0 → <strong>x² + y² = 1</strong> (unit circle, center (0,0), r=1) ✅</div></div>
+    </div>
+  </div>
+
+  <!-- WP 5: Parabola vertex + landing -->
+  <div class="problem-box">
+    <div class="example-title"><span class="badge badge-hard">Exam Level</span> 🏈 Parabola from Vertex + Landing</div>
+    <div class="problem-q">A ball is kicked from the ground (0,0), reaches a max height of 20 ft at x=40, and lands at x=80. Write the equation.</div>
+    <div class="step-list">
+      <div class="step"><div class="step-num">1</div><div class="step-content">Vertex = (40, 20) → y = a(x−40)² + 20</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content">Use landing point (80, 0): 0 = a(80−40)² + 20 = 1600a + 20</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content">1600a = −20 → a = <strong>−1/80</strong></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content">Equation: <strong>y = −(1/80)(x−40)² + 20</strong> ✅</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SET THEORY ===== -->
+<section id="settheory" class="slide">
+  <div class="section-tag" style="background:rgba(0,229,255,0.1);color:var(--accent2);">Section 6</div>
+  <h2 class="section-title">⋂ Set Theory</h2>
+  <p class="section-desc">Sets are just collections of elements. The operations — union, intersection, complement — describe how sets combine or relate.</p>
+
+  <div class="grid-3">
+    <div class="card" style="border-top:3px solid var(--accent1);">
+      <div style="text-align:center;font-size:3rem;margin-bottom:0.5rem;">A ∪ B</div>
+      <div class="card-title" style="color:var(--accent1);justify-content:center;">Union</div>
+      <p style="font-size:0.88rem;color:var(--muted);text-align:center;margin-bottom:0.75rem;">Everything in A <strong>OR</strong> B (or both)</p>
+      <div class="formula-sm" style="display:block;text-align:center;">A = {1,2,3} B = {3,4,5}<br>A∪B = {1,2,3,4,5}</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent2);">
+      <div style="text-align:center;font-size:3rem;margin-bottom:0.5rem;">A ∩ B</div>
+      <div class="card-title" style="color:var(--accent2);justify-content:center;">Intersection</div>
+      <p style="font-size:0.88rem;color:var(--muted);text-align:center;margin-bottom:0.75rem;">Only what's in A <strong>AND</strong> B</p>
+      <div class="formula-sm" style="display:block;text-align:center;">A = {1,2,3} B = {3,4,5}<br>A∩B = {3}</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent3);">
+      <div style="text-align:center;font-size:3rem;margin-bottom:0.5rem;">A'</div>
+      <div class="card-title" style="color:var(--accent3);justify-content:center;">Complement</div>
+      <p style="font-size:0.88rem;color:var(--muted);text-align:center;margin-bottom:0.75rem;">Everything in universe <strong>NOT</strong> in A</p>
+      <div class="formula-sm" style="display:block;text-align:center;">U={1..5} A={1,2,3}<br>A'={4,5}</div>
+    </div>
+  </div>
+
+  <h3 class="syne" style="font-weight:700;font-size:1.1rem;margin:2rem 0 1rem;">Complex Expressions</h3>
+  <div class="card">
+    <p style="font-size:0.9rem;margin-bottom:1rem;color:var(--muted);">Evaluate step by step — always do what's inside parentheses first.</p>
+    <div class="example-block">
+      <div class="example-title"><span class="badge badge-med">Example</span> A ∪ (B ∩ C)</div>
+      <div class="step-list">
+        <div class="step"><div class="step-num">1</div><div class="step-content">A = {1,2,3}, B = {2,3,4}, C = {3,4,5}</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><strong>First do B ∩ C</strong>: elements in both B and C = <strong>{3,4}</strong></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Then A ∪ {3,4}</strong>: everything in A or {3,4} = <strong>{1,2,3,4}</strong> ✅</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="example-block" style="margin-top:1rem;">
+    <div class="example-title"><span class="badge badge-hard">Exam Level</span> 👩‍🎓 Student Groups Problem</div>
+    <div class="problem-q">In a class of 30: 18 play soccer, 12 play basketball, 6 play both. How many play neither? How many play only soccer?</div>
+    <div class="step-list">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Total in S∪B</strong> = 18 + 12 − 6 = <strong>24</strong> (subtract those counted twice)</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Neither</strong> = 30 − 24 = <strong>6 students</strong></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Only soccer</strong> = 18 − 6 (both) = <strong>12 students</strong></div></div>
+    </div>
+  </div>
+
+  <div class="tip-box blue" style="margin-top:1rem;">
+    <strong>📐 Inclusion-Exclusion Formula:</strong><br>
+    <span class="formula-sm">|A ∪ B| = |A| + |B| − |A ∩ B|</span><br>
+    This prevents double-counting the overlap.
+  </div>
+
+  <div class="tip-box yellow" style="margin-top:1rem;">
+    <strong>🎯 How to recognize this:</strong> Any problem mentioning "both", "either", "neither", "or" with groups/sets → Draw a Venn diagram! Fill in the overlap (both) first, then work outward.
+  </div>
+</section>
+
+<!-- ===== PROBABILITY ===== -->
+<section id="probability" class="slide">
+  <div class="section-tag" style="background:rgba(105,240,174,0.1);color:var(--accent4);">Section 7</div>
+  <h2 class="section-title">🎲 Probability</h2>
+  <p class="section-desc">Probability is the chance of an event occurring. Values always range from 0 (impossible) to 1 (certain).</p>
+
+  <div class="formula">P(event) = (favorable outcomes) / (total outcomes)</div>
+
+  <div class="grid-2" style="margin-top:1.5rem;">
+    <div class="card" style="border-left:3px solid var(--accent4);">
+      <div class="card-title" style="color:var(--accent4);">Key Rules</div>
+      <div class="step-list">
+        <div class="step"><div class="step-num">∪</div><div class="step-content"><strong>Union (OR):</strong> <span class="formula-sm">P(A∪B) = P(A)+P(B)−P(A∩B)</span></div></div>
+        <div class="step"><div class="step-num">∩</div><div class="step-content"><strong>Intersection (AND):</strong> <span class="formula-sm">P(A∩B) = P(A)·P(B|A)</span></div></div>
+        <div class="step"><div class="step-num">′</div><div class="step-content"><strong>Complement:</strong> <span class="formula-sm">P(A') = 1 − P(A)</span></div></div>
+      </div>
+    </div>
+    <div class="card" style="border-left:3px solid var(--accent2);">
+      <div class="card-title" style="color:var(--accent2);">Independent vs Dependent</div>
+      <div class="tip-box blue" style="margin:0 0 0.75rem;">
+        <strong>Independent:</strong> One event doesn't affect the other.<br>
+        P(A and B) = P(A) · P(B)
+      </div>
+      <div class="tip-box purple" style="margin:0;">
+        <strong>Dependent:</strong> First event changes the pool.<br>
+        P(A then B) = P(A) · P(B|A)
+      </div>
+    </div>
+  </div>
+
+  <h3 class="syne" style="font-weight:700;font-size:1.1rem;margin:2rem 0 1rem;">Conditional Probability</h3>
+  <div class="formula">P(B|A) = P(A ∩ B) / P(A) &nbsp;&nbsp; "Probability of B GIVEN A already happened"</div>
+  <div class="tip-box blue" style="margin-top:0.75rem;">
+    <strong>Think of it as:</strong> You've shrunk the sample space. Given A happened, what fraction of those cases have B too?
+  </div>
+
+  <div class="divider"></div>
+
+  <h3 class="syne" style="font-weight:700;font-size:1.1rem;margin-bottom:1rem;">🃏 Card Problems (Standard Deck: 52 cards)</h3>
+  <div class="grid-2">
+    <div class="tip-box green">
+      <strong>Know these:</strong><br>
+      • 52 total cards<br>
+      • 4 suits: ♠ ♥ ♦ ♣ (13 each)<br>
+      • 13 ranks per suit (A,2–10,J,Q,K)<br>
+      • 26 red (♥♦), 26 black (♠♣)<br>
+      • 4 of each rank (e.g., 4 aces)
+    </div>
+    <div class="example-block">
+      <div class="example-title"><span class="badge badge-med">Example</span> Without Replacement</div>
+      <p style="font-size:0.88rem;margin-bottom:0.75rem;font-style:italic;">P(ace then king), no replacement</p>
+      <div class="step-list">
+        <div class="step"><div class="step-num">1</div><div class="step-content">P(ace) = 4/52</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content">P(king | ace drawn) = 4/51 (51 left)</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content">P(ace then king) = (4/52)·(4/51) = <strong>16/2652 ≈ 0.006</strong></div></div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="syne" style="font-weight:700;font-size:1.1rem;margin:2rem 0 1rem;">📊 Table-Based Probability</h3>
+  <div class="card">
+    <p style="font-size:0.88rem;color:var(--muted);margin-bottom:1rem;">Always find totals for rows and columns first!</p>
+    <table class="prob-table">
+      <thead><tr><th></th><th>Math ✓</th><th>Math ✗</th><th>Total</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Science ✓</strong></td><td>15</td><td>10</td><td>25</td></tr>
+        <tr><td><strong>Science ✗</strong></td><td>8</td><td>17</td><td>25</td></tr>
+        <tr><td><strong>Total</strong></td><td>23</td><td>27</td><td>50</td></tr>
+      </tbody>
+    </table>
+    <div class="grid-2" style="margin-top:1rem;">
+      <div class="tip-box blue" style="margin:0;">
+        <strong>P(Math):</strong> 23/50 = 0.46<br>
+        <strong>P(Sci AND Math):</strong> 15/50 = 0.30<br>
+        <strong>P(Sci OR Math):</strong> 23/50 + 25/50 − 15/50 = 33/50
+      </div>
+      <div class="tip-box yellow" style="margin:0;">
+        <strong>P(Math | Science):</strong><br>
+        Given science, look only at science row (25 total).<br>
+        15 also do math → 15/25 = <strong>0.60</strong>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="syne" style="font-weight:700;font-size:1.1rem;margin:2rem 0 1rem;">🧮 Bayes' Theorem</h3>
+  <div class="formula">P(A|B) = [P(B|A) · P(A)] / P(B)</div>
+  <div class="example-block">
+    <div class="example-title"><span class="badge badge-hard">Exam Level</span> Medical Test</div>
+    <div class="problem-q">1% of people have a disease. A test is 90% accurate (true positive). If someone tests positive, what's the probability they actually have the disease?</div>
+    <div class="step-list">
+      <div class="step"><div class="step-num">1</div><div class="step-content">P(Disease) = 0.01, P(No Disease) = 0.99</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content">P(+ | Disease) = 0.90 | P(+ | No Disease) = 0.10 (false positive)</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content">P(+) = (0.90)(0.01) + (0.10)(0.99) = 0.009 + 0.099 = <strong>0.108</strong></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content">P(Disease|+) = (0.90 × 0.01) / 0.108 = 0.009/0.108 ≈ <strong>8.3%</strong> ✅</div></div>
+    </div>
+  </div>
+
+  <h3 class="syne" style="font-weight:700;font-size:1.1rem;margin:2rem 0 1rem;">🔍 Checking Independence</h3>
+  <div class="tip-box yellow">
+    <strong>Two events A and B are independent IF:</strong><br>
+    <span class="formula-sm">P(A ∩ B) = P(A) · P(B)</span><br><br>
+    Check: calculate both sides. If equal → independent. If not → dependent.
+  </div>
+</section>
+
+<!-- ===== CONCEPTUAL ===== -->
+<section id="conceptual" class="slide">
+  <div class="section-tag" style="background:rgba(191,134,255,0.1);color:var(--accent5);">Section 8</div>
+  <h2 class="section-title">💡 Conceptual Questions</h2>
+  <p class="section-desc">Exams often ask you to explain concepts, not just calculate. Here's how to answer these perfectly.</p>
+
+  <div class="accord-item">
+    <button class="accord-head" onclick="toggleAccord(this)">Independent vs. Mutually Exclusive Events — What's the difference? <span class="chevron">▾</span></button>
+    <div class="accord-body">
+      <div class="grid-2">
+        <div class="tip-box green" style="margin:0;">
+          <strong>Independent:</strong> One event happening does NOT change the probability of the other.<br><br>
+          Example: Flipping a coin and rolling a die. Getting heads doesn't affect what you roll.<br><br>
+          <span class="formula-sm">P(A∩B) = P(A)·P(B)</span>
+        </div>
+        <div class="tip-box purple" style="margin:0;">
+          <strong>Mutually Exclusive:</strong> They CANNOT happen at the same time. P(A∩B) = 0.<br><br>
+          Example: Rolling a 3 OR rolling a 5 on one die — can't get both at once.<br><br>
+          <span class="formula-sm">P(A∪B) = P(A)+P(B)</span> (no overlap to subtract)
+        </div>
+      </div>
+      <div class="tip-box red" style="margin-top:0.75rem;">
+        <strong>⚠️ Trick:</strong> Mutually exclusive events are NEVER independent (unless one has P=0). If they can't happen together, knowing one happened tells you the other definitely didn't!
+      </div>
+    </div>
+  </div>
+
+  <div class="accord-item">
+    <button class="accord-head" onclick="toggleAccord(this)">What does P(B|A) mean? <span class="chevron">▾</span></button>
+    <div class="accord-body">
+      <div class="tip-box blue">
+        <strong>P(B|A) = "The probability of B, given that A already happened."</strong><br><br>
+        When A happens, we shrink our sample space to only the cases where A occurred. Then we ask: within those cases, how many also have B?<br><br>
+        <strong>Real-world example:</strong> P(it rains tomorrow | it's cloudy today) — you're not asking about all days, only cloudy ones.<br><br>
+        Formula: <span class="formula-sm">P(B|A) = P(A∩B) / P(A)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="accord-item">
+    <button class="accord-head" onclick="toggleAccord(this)">Ellipse: What happens to the foci as it becomes more circular? <span class="chevron">▾</span></button>
+    <div class="accord-body">
+      <div class="tip-box green">
+        <strong>The foci move closer together → toward the center.</strong><br><br>
+        As a → b (major and minor axes become equal), c = √(a²−b²) → 0. When c = 0, there's only one focus — the center — and the ellipse IS a circle.<br><br>
+        A circle is just a perfect ellipse where both foci are the same point (the center).
+      </div>
+    </div>
+  </div>
+
+  <div class="accord-item">
+    <button class="accord-head" onclick="toggleAccord(this)">Parabola: What's the relationship between the focus, vertex, and directrix? <span class="chevron">▾</span></button>
+    <div class="accord-body">
+      <div class="tip-box yellow">
+        <strong>The vertex is the midpoint between the focus and directrix.</strong><br><br>
+        • The focus is a point <em>inside</em> the parabola.<br>
+        • The directrix is a line <em>outside</em> the parabola, on the opposite side from the focus.<br>
+        • Every point on the parabola is equidistant from the focus and the directrix.<br>
+        • The vertex is the point on the parabola closest to both the focus and directrix.<br>
+        • Distance from vertex to focus = distance from vertex to directrix = |p|
+      </div>
+    </div>
+  </div>
+
+  <div class="accord-item">
+    <button class="accord-head" onclick="toggleAccord(this)">How do the coefficients A and C determine the conic shape? <span class="chevron">▾</span></button>
+    <div class="accord-body">
+      <div class="tip-box purple">
+        In <span class="formula-sm">Ax² + Cy² + Dx + Ey + F = 0</span>:<br><br>
+        • <strong>A = C (both same sign, non-zero):</strong> Circle — equal "stretch" in both directions<br>
+        • <strong>A ≠ C (both same sign):</strong> Ellipse — different stretch, but still closed curve<br>
+        • <strong>A = 0 or C = 0 (not both):</strong> Parabola — only one dimension is squared → open curve<br>
+        • <strong>A and C have opposite signs:</strong> Hyperbola — the equation has a minus sign making two separate branches<br><br>
+        Think of it as: same sign = closed shape, opposite sign = open/split shape, missing squared term = parabola.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SURVIVAL GUIDE ===== -->
+<section id="survival" class="slide">
+  <div class="section-tag" style="background:rgba(249,168,37,0.15);color:var(--accent1);">Final Section</div>
+  <h2 class="section-title">🛟 Exam Survival Guide</h2>
+  <p class="section-desc">4 steps to solve ANY problem, plus the mindset that will carry you through tomorrow.</p>
+
+  <div class="card" style="background: linear-gradient(135deg, rgba(249,168,37,0.1), rgba(234,76,137,0.05)); border-color: rgba(249,168,37,0.3); margin-bottom:2rem;">
+    <div class="card-title" style="color:var(--accent1);font-size:1.2rem;">⚡ How to Solve ANY Problem in 4 Steps</div>
+    <div class="step-list">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><strong>IDENTIFY the type.</strong> What shape/topic is this? Look at the equation structure. Does it have x² and y²? One or two? Are they equal? Are the signs the same?</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><strong>CONVERT to standard form.</strong> If it's messy (general form), complete the square. Get it to the clean form you memorized.</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><strong>READ the answer.</strong> Once it's in standard form, just match to the formula. Center, radius, vertex, a, b, p — read it directly.</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><strong>CALCULATE what's asked.</strong> Foci? Use c² = a² − b². Focus of parabola? Use p. Distance? Use the distance formula.</div></div>
+    </div>
+  </div>
+
+  <h3 class="syne" style="font-weight:700;font-size:1.2rem;margin-bottom:1.25rem;">🌙 Last-Day Tips</h3>
+  <div class="grid-4">
+    <div class="tip-card"><div class="num">01</div><div class="syne" style="font-weight:700;margin-bottom:0.4rem;">Draw First</div><p style="font-size:0.82rem;color:var(--muted);">Sketch the shape before anything. A drawing tells you direction, where the focus goes, which axis is major.</p></div>
+    <div class="tip-card"><div class="num">02</div><div class="syne" style="font-weight:700;margin-bottom:0.4rem;">Watch Signs</div><p style="font-size:0.82rem;color:var(--muted);">(x−3)² → center at +3. (y+5)² → center at −5. Signs flip when you move it to the other side.</p></div>
+    <div class="tip-card"><div class="num">03</div><div class="syne" style="font-weight:700;margin-bottom:0.4rem;">Probability: List First</div><p style="font-size:0.82rem;color:var(--muted);">For "without replacement", reduce the denominator by 1 each time you draw.</p></div>
+    <div class="tip-card"><div class="num">04</div><div class="syne" style="font-weight:700;margin-bottom:0.4rem;">Set Up Axes</div><p style="font-size:0.82rem;color:var(--muted);">For word problems, place the vertex or center at the origin when possible. Makes the math much easier.</p></div>
+    <div class="tip-card"><div class="num">05</div><div class="syne" style="font-weight:700;margin-bottom:0.4rem;">Standard Form First</div><p style="font-size:0.82rem;color:var(--muted);">NEVER try to read a general form directly. Always complete the square first, then read.</p></div>
+    <div class="tip-card"><div class="num">06</div><div class="syne" style="font-weight:700;margin-bottom:0.4rem;">Check Both Sides</div><p style="font-size:0.82rem;color:var(--muted);">When completing the square, always add the same number to BOTH sides of the equation.</p></div>
+    <div class="tip-card"><div class="num">07</div><div class="syne" style="font-weight:700;margin-bottom:0.4rem;">Venn Diagrams</div><p style="font-size:0.82rem;color:var(--muted);">Always draw a Venn diagram for set theory problems. Fill in overlap first, then outer regions.</p></div>
+    <div class="tip-card"><div class="num">08</div><div class="syne" style="font-weight:700;margin-bottom:0.4rem;">Don't Panic</div><p style="font-size:0.82rem;color:var(--muted);">If stuck, write what you know, identify the type, and try to get to standard form. Partial credit counts!</p></div>
+  </div>
+
+  <div class="tip-box green" style="margin-top:2rem;font-size:1rem;">
+    <strong>🏆 You've got this.</strong> Conics follow patterns. Probability follows rules. Once you recognize the type of problem, you always know exactly what to do. That's all math is — pattern recognition + a few formulas.
+  </div>
+</section>
+
+<!-- ===== CHEAT SHEET ===== -->
+<section id="cheatsheet" class="slide">
+  <div class="section-tag" style="background:rgba(105,240,174,0.1);color:var(--accent4);">Reference</div>
+  <h2 class="section-title">📋 Formula Cheat Sheet</h2>
+  <p class="section-desc">Every formula you need, in one place.</p>
+
+  <div class="grid-2">
+    <div>
+      <div class="card-title" style="color:var(--accent2);font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:0.75rem;">⬤ Circle</div>
+      <div class="cheat-row"><div class="cheat-label">Standard</div><div class="cheat-formula">(x−h)² + (y−k)² = r²</div></div>
+      <div class="cheat-row"><div class="cheat-label">Center</div><div class="cheat-formula">(h, k)</div></div>
+      <div class="cheat-row"><div class="cheat-label">Radius</div><div class="cheat-formula">r = √(r²)</div></div>
+      <div class="cheat-row"><div class="cheat-label">Distance</div><div class="cheat-formula">d = √[(x₂−x₁)²+(y₂−y₁)²]</div></div>
+
+      <div class="card-title" style="color:var(--accent3);font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-top:1.5rem;margin-bottom:0.75rem;">∪ Parabola</div>
+      <div class="cheat-row"><div class="cheat-label">Vertex form</div><div class="cheat-formula">y = a(x−h)² + k</div></div>
+      <div class="cheat-row"><div class="cheat-label">Vertical std</div><div class="cheat-formula">(x−h)² = 4p(y−k)</div></div>
+      <div class="cheat-row"><div class="cheat-label">Horizontal std</div><div class="cheat-formula">(y−k)² = 4p(x−h)</div></div>
+      <div class="cheat-row"><div class="cheat-label">Focus (vert)</div><div class="cheat-formula">(h, k+p)</div></div>
+      <div class="cheat-row"><div class="cheat-label">Directrix (vert)</div><div class="cheat-formula">y = k−p</div></div>
+      <div class="cheat-row"><div class="cheat-label">Focus (horiz)</div><div class="cheat-formula">(h+p, k)</div></div>
+      <div class="cheat-row"><div class="cheat-label">Directrix (horiz)</div><div class="cheat-formula">x = h−p</div></div>
+    </div>
+
+    <div>
+      <div class="card-title" style="color:var(--accent4);font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:0.75rem;">⬭ Ellipse</div>
+      <div class="cheat-row"><div class="cheat-label">Standard</div><div class="cheat-formula">(x−h)²/a² + (y−k)²/b² = 1</div></div>
+      <div class="cheat-row"><div class="cheat-label">Foci rule</div><div class="cheat-formula">c² = a² − b²</div></div>
+      <div class="cheat-row"><div class="cheat-label">a is always</div><div class="cheat-formula">LARGEST denominator</div></div>
+      <div class="cheat-row"><div class="cheat-label">Major axis</div><div class="cheat-formula">under a²</div></div>
+      <div class="cheat-row"><div class="cheat-label">Foci (horiz)</div><div class="cheat-formula">(h±c, k)</div></div>
+      <div class="cheat-row"><div class="cheat-label">Foci (vert)</div><div class="cheat-formula">(h, k±c)</div></div>
+
+      <div class="card-title" style="color:var(--accent4);font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-top:1.5rem;margin-bottom:0.75rem;">🎲 Probability</div>
+      <div class="cheat-row"><div class="cheat-label">Basic</div><div class="cheat-formula">P = favorable/total</div></div>
+      <div class="cheat-row"><div class="cheat-label">Complement</div><div class="cheat-formula">P(A') = 1 − P(A)</div></div>
+      <div class="cheat-row"><div class="cheat-label">Union</div><div class="cheat-formula">P(A∪B)=P(A)+P(B)−P(A∩B)</div></div>
+      <div class="cheat-row"><div class="cheat-label">Conditional</div><div class="cheat-formula">P(B|A) = P(A∩B)/P(A)</div></div>
+      <div class="cheat-row"><div class="cheat-label">Independent</div><div class="cheat-formula">P(A∩B)=P(A)·P(B)</div></div>
+      <div class="cheat-row"><div class="cheat-label">Bayes</div><div class="cheat-formula">P(A|B)=P(B|A)·P(A)/P(B)</div></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h3 class="syne" style="font-weight:700;font-size:1.1rem;margin-bottom:1rem;">⚡ Identification Quick Reference</h3>
+  <div style="overflow-x:auto;">
+  <table class="styled-table">
+    <thead><tr><th>Conic</th><th>A vs C</th><th>Equation Pattern</th><th>Key Feature</th></tr></thead>
+    <tbody>
+      <tr><td>⬤ Circle</td><td>A = C</td><td><code>x² + y² = r²</code></td><td>Constant radius in all directions</td></tr>
+      <tr><td>⬭ Ellipse</td><td>A ≠ C, same sign</td><td><code>x²/a² + y²/b² = 1</code></td><td>Two foci, sum of distances constant</td></tr>
+      <tr><td>∪ Parabola</td><td>A=0 or C=0</td><td><code>y=ax²+bx+c or x=ay²+by+c</code></td><td>One focus, equidistant from directrix</td></tr>
+      <tr><td>⌇ Hyperbola</td><td>Opposite signs</td><td><code>x²/a² − y²/b² = 1</code></td><td>Difference of distances constant</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="tip-box yellow" style="margin-top:1.5rem;font-size:1rem;text-align:center;">
+    <strong>🌟 Good luck on your exam! You've reviewed everything. Trust yourself.</strong><br>
+    <span style="color:var(--muted);font-size:0.88rem;">Remember: Identify → Convert → Read → Calculate</span>
+  </div>
+
+  <div style="text-align:center;padding:2rem;color:var(--muted);font-family:'DM Mono',monospace;font-size:0.75rem;margin-top:2rem;">
+    Minutorias 2026 | Made by HDulam
+  </div>
+</section>
+
+<script>
+// NAV ACTIVE STATE
+function scrollTo(id) {
+  document.getElementById(id).scrollIntoView({ behavior:'smooth' });
+}
+
+// PROGRESS BAR
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const total = document.body.scrollHeight - window.innerHeight;
+  const pct = (scrolled / total) * 100;
+  document.getElementById('progFill').style.width = pct + '%';
+
+  // Update active nav button
+  const sections = ['hero','conics','completing','circle','parabola','ellipse','identify','wordprobs','settheory','probability','conceptual','survival','cheatsheet'];
+  const btns = document.querySelectorAll('.nav-btn');
+  sections.forEach((s, i) => {
+    const el = document.getElementById(s);
+    if (el) {
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= 80 && rect.bottom > 80) {
+        btns.forEach(b => b.classList.remove('active'));
+        if (btns[i]) btns[i].classList.add('active');
+      }
+    }
+  });
+});
+
+// ACCORDION
+function toggleAccord(head) {
+  const body = head.nextElementSibling;
+  const isOpen = head.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.accord-head').forEach(h => {
+    h.classList.remove('open');
+    h.nextElementSibling.classList.remove('open');
+  });
+  if (!isOpen) {
+    head.classList.add('open');
+    body.classList.add('open');
+  }
+}
+
+// ANIMATE SECTIONS ON SCROLL
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.05 });
+
+document.querySelectorAll('.card, .example-block, .problem-box, .tip-card').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
