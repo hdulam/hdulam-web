@@ -523,18 +523,17 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   padding-bottom: 14px;
   border-bottom: 1px solid rgba(255,255,255,0.08);
 }
-.schedule-row { display: flex; justify-content: space-between; gap: 10px; padding: 10px 0; font-size: 14.5px; border-bottom: 1px dashed rgba(255,255,255,0.08); }
-.schedule-row:last-child { border-bottom: none; }
-.schedule-row span:first-child { color: var(--gray-300); font-weight: 600; }
-.schedule-row span:last-child { color: var(--gray-500); text-align: right; }
-.schedule-note {
-  margin-top: 20px;
-  font-size: 13px;
-  color: var(--gray-500);
-  background: rgba(227,30,36,0.08);
-  border: 1px dashed rgba(227,30,36,0.4);
-  padding: 12px 14px;
-  border-radius: var(--radius-sm);
+.schedule-times { display: flex; flex-wrap: wrap; gap: 10px; }
+.schedule-times span {
+  background: rgba(227, 30, 36, 0.12);
+  border: 1px solid rgba(227, 30, 36, 0.3);
+  color: var(--white);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  padding: 8px 14px;
+  border-radius: 999px;
 }
 
 /* ---------- Ubicación ---------- */

@@ -33,9 +33,9 @@ Recomendado: fotos en formato `.jpg` o `.webp`, máximo ~300-500KB cada una (usa
 
 En `index.html`, busca la sección `<!-- ============ TESTIMONIOS ============ -->`. Los textos entre corchetes `[Nombre del alumno]` y `[Escribe aquí...]` son placeholders — reemplázalos con reseñas y nombres reales antes de publicar. No publiques testimonios inventados.
 
-## 3. Confirmar horarios reales
+## 3. Horarios
 
-En la sección `<!-- ============ HORARIOS ============ -->` se usaron horarios de ejemplo (lunes a viernes, sábado, domingo). Ajusta las horas exactas del club antes de publicar — hay una nota visible en la página que recuerda esto; puedes borrarla una vez confirmados los horarios reales.
+Ya están los horarios reales del club (lunes a viernes, sábados, domingos) en la sección `<!-- ============ HORARIOS ============ -->`. Si cambian, edita los `<span>` dentro de cada `.schedule-times`.
 
 ## 4. Configurar Meta Pixel (Meta Ads)
 
@@ -85,7 +85,6 @@ Cualquier hosting estático funciona (no requiere backend ni base de datos): Net
 
 - [ ] Fotos y video reales agregados en `assets/`
 - [ ] Testimonios reales (no los de ejemplo)
-- [ ] Horarios reales confirmados
 - [ ] Meta Pixel ID configurado
 - [ ] Google Analytics 4 ID configurado
 - [ ] Número de WhatsApp verificado
