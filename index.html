@@ -5,1574 +5,521 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>HDulam | Soluciones Digitales Premium</title>
+    <title>HDulam | Diseño Web y Marketing Digital en Guatemala</title>
 
     <meta name="description"
-        content="Diseño web, redes sociales, branding y soluciones digitales para empresas que quieren crecer.">
-
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+        content="Páginas web desde Q3,500 con dominio y hosting incluido por un año, y paquetes de marketing digital desde Q595. Diseño web, redes sociales y estrategias que hacen crecer tu negocio.">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap"
-        rel="stylesheet">
-
-    <!-- Bootstrap Icons -->
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,500&family=Inter:wght@400;500;600;700&display=swap"
         rel="stylesheet">
 
     <!-- CSS -->
     <link rel="stylesheet" href="index.css">
-
 </head>
 
 <body>
 
-    <!-- Background -->
-
-    <div class="bg-gradient"></div>
-
-    <div class="bg-grid"></div>
-
-    <div class="bg-blur blur-one"></div>
-
-    <div class="bg-blur blur-two"></div>
-
     <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-inner">
 
-    <nav class="navbar navbar-expand-lg fixed-top hd-navbar">
+            <a href="#" class="brand">HDulam</a>
 
-        <div class="container">
+            <ul class="nav-links">
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#precios">Precios</a></li>
+                <li><a href="#proceso">Proceso</a></li>
+                <li><a href="#testimonios">Clientes</a></li>
+                <li><a href="#faq">Preguntas</a></li>
+            </ul>
 
-            <a class="navbar-brand" href="#">
-
-                <span>HD</span>ulam
-
-            </a>
-
-            <button class="navbar-toggler"
-                data-bs-toggle="collapse"
-                data-bs-target="#menu">
-
-                <span class="navbar-toggler-icon"></span>
-
-            </button>
-
-            <div class="collapse navbar-collapse"
-                id="menu">
-
-                <ul class="navbar-nav ms-auto align-items-lg-center">
-
-                    <li class="nav-item">
-
-                        <a href="#services" class="nav-link">
-
-                            Servicios
-
-                        </a>
-
-                    </li>
-
-                    <li class="nav-item">
-
-                        <a href="#projects" class="nav-link">
-
-                            Proyectos
-
-                        </a>
-
-                    </li>
-
-                    <li class="nav-item">
-
-                        <a href="#about" class="nav-link">
-
-                            Nosotros
-
-                        </a>
-
-                    </li>
-
-                    <li class="nav-item">
-
-                        <a href="#contact" class="nav-link">
-
-                            Contacto
-
-                        </a>
-
-                    </li>
-
-                </ul>
-
-                <a href="https://wa.me/50234427911"
-                    class="btn btn-primary ms-lg-4 btn-talk">
-
-                    Hablemos
-
+            <div class="nav-actions">
+                <a href="https://wa.me/50234427911?text=Hola%2C%20quiero%20cotizar%20un%20proyecto"
+                    target="_blank" class="btn btn-primary">
+                    Cotizar ahora
                 </a>
-
+                <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
             </div>
 
         </div>
-
     </nav>
 
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-close" id="mobileClose" aria-label="Cerrar menú">✕</button>
+        <a href="#servicios">Servicios</a>
+        <a href="#precios">Precios</a>
+        <a href="#proceso">Proceso</a>
+        <a href="#testimonios">Clientes</a>
+        <a href="#faq">Preguntas</a>
+        <a href="https://wa.me/50234427911?text=Hola%2C%20quiero%20cotizar%20un%20proyecto" target="_blank"
+            class="btn btn-primary btn-block" style="margin-top:20px;">
+            Escribir por WhatsApp
+        </a>
+    </div>
+
     <!-- HERO -->
-
     <header class="hero">
-
         <div class="container">
 
-            <div class="row align-items-center">
+            <span class="eyebrow hero-eyebrow reveal">Agencia digital en Guatemala</span>
 
-                <div class="col-lg-6">
+            <div class="hero-top reveal">
+                <h1>
+                    Sitios web y marketing
+                    <span class="highlight">que venden</span>,
+                    no que solo se ven bien.
+                </h1>
+            </div>
 
-                    <span class="hero-tag">
+            <p class="hero-lead reveal">
+                Diseñamos tu página web, cuidamos tus redes sociales y te ayudamos
+                a que más clientes te encuentren. Sin complicaciones técnicas
+                ni sorpresas en el precio.
+            </p>
 
-                        DIGITAL AGENCY
+            <div class="hero-cta-row reveal">
+                <a href="https://wa.me/50234427911?text=Hola%2C%20quiero%20cotizar%20un%20proyecto"
+                    target="_blank" class="btn btn-primary btn-lg">
+                    Escribir por WhatsApp
+                </a>
+                <a href="#precios" class="btn btn-line btn-lg">Ver precios →</a>
+            </div>
 
-                    </span>
+            <div class="hero-rule"></div>
 
-                    <h1>
-
-                        Creamos
-
-                        <span>
-
-                            experiencias digitales
-
-                        </span>
-
-                        que venden.
-
-                    </h1>
-
-                    <p>
-
-                        Diseñamos páginas web modernas,
-                        administramos redes sociales y ayudamos
-                        a empresas a destacar con una presencia
-                        digital profesional.
-
-                    </p>
-
-                    <div class="hero-buttons">
-
-                        <a href="#contact"
-                            class="btn btn-primary btn-lg">
-
-                            Comenzar
-
-                        </a>
-
-                        <a href="#projects"
-                            class="btn btn-outline-light btn-lg">
-
-                            Ver proyectos
-
-                        </a>
-
-                    </div>
-
-                    <div class="hero-stats">
-
-                        <div>
-
-                            <h2>150+</h2>
-
-                            <span>
-
-                                Proyectos
-
-                            </span>
-
-                        </div>
-
-                        <div>
-
-                            <h2>98%</h2>
-
-                            <span>
-
-                                Clientes felices
-
-                            </span>
-
-                        </div>
-
-                        <div>
-
-                            <h2>24h</h2>
-
-                            <span>
-
-                                Respuesta
-
-                            </span>
-
-                        </div>
-
-                    </div>
-
+            <div class="hero-bottom reveal">
+                <div>
+                    <h3>150+</h3>
+                    <span>Proyectos entregados</span>
                 </div>
-
-                <div class="col-lg-6">
-
-                    <div class="hero-card">
-
-                        <div class="window-bar">
-
-                            <span></span>
-
-                            <span></span>
-
-                            <span></span>
-
-                        </div>
-
-                        <div class="dashboard">
-
-                            <div class="dashboard-left">
-
-                                <div class="menu-item active"></div>
-
-                                <div class="menu-item"></div>
-
-                                <div class="menu-item"></div>
-
-                                <div class="menu-item"></div>
-
-                            </div>
-
-                            <div class="dashboard-right">
-
-                                <div class="graph graph-big"></div>
-
-                                <div class="graph-row">
-
-                                    <div class="graph"></div>
-
-                                    <div class="graph"></div>
-
-                                </div>
-
-                                <div class="graph graph-wide"></div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
+                <div>
+                    <h3>98%</h3>
+                    <span>Clientes satisfechos</span>
                 </div>
-
+                <div>
+                    <h3>24h</h3>
+                    <span>Tiempo de respuesta</span>
+                </div>
             </div>
 
         </div>
-
     </header>
 
+    <!-- TRUST -->
+    <section class="trust">
+        <div class="container">
+            <div class="trust-row">
+                <span>HTML5 &amp; CSS3</span>
+                <span>WordPress</span>
+                <span>Meta Ads</span>
+                <span>Google Ads</span>
+                <span>Instagram / TikTok</span>
+                <span>Canva Pro</span>
+            </div>
+        </div>
+    </section>
+
     <main>
-        <!-- ===================================== -->
-<!-- TRUST BAR -->
-<!-- ===================================== -->
 
-<section class="trusted-section">
+        <!-- SERVICIOS -->
+        <section id="servicios" class="section">
+            <div class="container">
 
-    <div class="container">
+                <div class="section-head reveal">
+                    <div>
+                        <span class="eyebrow">Servicios</span>
+                        <h2>En qué te podemos ayudar</h2>
+                    </div>
+                    <div class="side">
+                        <p>Desde tu primera página web hasta la estrategia que mantiene tu marca activa todos los días.</p>
+                    </div>
+                </div>
 
-        <p class="trusted-title">
+                <div class="service-grid reveal">
 
-            Tecnologías y herramientas con las que trabajamos
+                    <article class="service-card">
+                        <span class="service-tag">Web</span>
+                        <h3>Diseño Web</h3>
+                        <p>Sitios y tiendas en línea rápidos, fáciles de usar y pensados para convertir visitas en clientes.</p>
+                    </article>
 
-        </p>
+                    <article class="service-card">
+                        <span class="service-tag">Redes</span>
+                        <h3>Gestión de Redes Sociales</h3>
+                        <p>Contenido, calendario y publicaciones para que tu marca esté presente todos los días.</p>
+                    </article>
 
-        <div class="trusted-logos">
+                    <article class="service-card">
+                        <span class="service-tag">Marketing</span>
+                        <h3>Marketing Digital</h3>
+                        <p>Campañas en Meta y Google enfocadas en traer clientes, no solo alcance.</p>
+                    </article>
 
-            <span>HTML5</span>
+                    <article class="service-card">
+                        <span class="service-tag">Contenido</span>
+                        <h3>Copywriting</h3>
+                        <p>Textos que explican bien lo que ofreces y ayudan a que la gente decida comprar.</p>
+                    </article>
 
-            <span>CSS3</span>
+                    <article class="service-card">
+                        <span class="service-tag">Idiomas</span>
+                        <h3>Traducción Profesional</h3>
+                        <p>Español, inglés, italiano y portugués, para contenido y documentos de negocio.</p>
+                    </article>
 
-            <span>Bootstrap</span>
+                    <article class="service-card">
+                        <span class="service-tag">Incluido</span>
+                        <h3>Dominio y Hosting</h3>
+                        <p>Va incluido en tu página web durante el primer año. Sin configuraciones raras ni sorpresas.</p>
+                    </article>
 
-            <span>JavaScript</span>
+                </div>
+            </div>
+        </section>
 
-            <span>WordPress</span>
+        <!-- PRECIOS -->
+        <section id="precios" class="section alt">
+            <div class="container">
 
-            <span>Meta Ads</span>
+                <div class="section-head reveal">
+                    <div>
+                        <span class="eyebrow">Precios</span>
+                        <h2>Precios claros, sin letra pequeña</h2>
+                    </div>
+                    <div class="side">
+                        <p>Elige el plan que tu negocio necesita hoy. Sin sorpresas, sin costos escondidos.</p>
+                    </div>
+                </div>
 
-            <span>Google</span>
+                <div class="pricing-grid reveal">
 
-            <span>Canva Pro</span>
+                    <article class="price-card" id="marketingCard">
+                        <div class="price-top">
+                            <span class="price-badge">Mensual</span>
+                        </div>
+                        <h3>Paquete de Marketing — <span id="planName">Emprende</span></h3>
+                        <p class="plan-desc">Presencia constante y activa en redes sociales para tu negocio.</p>
 
-        </div>
+                        <div class="plan-tabs">
+                            <button class="plan-tab active" data-plan="Emprende" data-price="595" data-posts="6" data-reels="1">Emprende</button>
+                            <button class="plan-tab" data-plan="Construye" data-price="950" data-posts="8" data-reels="2">Construye</button>
+                            <button class="plan-tab" data-plan="Lidera" data-price="1395" data-posts="12" data-reels="3">Lidera</button>
+                        </div>
 
-    </div>
+                        <div class="price-tag">
+                            <span class="currency">Q</span>
+                            <span class="amount" id="planPrice">595</span>
+                            <span class="period">/ mes</span>
+                        </div>
+                        <div class="price-from">Facturado mensualmente</div>
 
-</section>
+                        <div class="price-divider"></div>
 
-<!-- ===================================== -->
-<!-- ABOUT -->
-<!-- ===================================== -->
+                        <ul class="price-features">
+                            <li><strong id="planPosts">6</strong>&nbsp;publicaciones diseñadas al mes</li>
+                            <li><strong id="planReels">1</strong>&nbsp;<span id="planReelsLabel">reel editado</span> al mes</li>
+                            <li>Calendario de publicaciones mensual</li>
+                            <li>Gestión de Instagram y Facebook</li>
+                            <li>Estrategia de crecimiento de marca</li>
+                            <li>Reporte de resultados mensual</li>
+                        </ul>
 
-<section id="about" class="about-section">
+                        <a href="https://wa.me/50234427911?text=Hola%2C%20me%20interesa%20el%20paquete%20de%20Marketing%20Emprende%20por%20Q595%2Fmes"
+                            target="_blank" class="btn btn-line btn-block" id="planCta">
+                            Quiero este plan
+                        </a>
+                    </article>
 
-    <div class="container">
+                    <article class="price-card featured">
+                        <div class="price-top">
+                            <span class="price-badge">Más elegido</span>
+                        </div>
+                        <h3>Página Web Profesional</h3>
+                        <p class="plan-desc">Tu sitio completo, publicado y listo para recibir clientes.</p>
 
-        <div class="row align-items-center">
+                        <div class="price-tag">
+                            <span class="currency">Q</span>
+                            <span class="amount">3,500</span>
+                            <span class="period">desde</span>
+                        </div>
+                        <div class="price-from">Pago único · dominio y hosting incluidos por 1 año</div>
 
-            <div class="col-lg-6">
+                        <div class="price-divider"></div>
 
-                <span class="section-tag">
+                        <ul class="price-features">
+                            <li>Diseño web moderno y 100% responsivo</li>
+                            <li>Dominio propio incluido (.com)</li>
+                            <li>Hosting incluido por 1 año</li>
+                            <li>Optimizado para convertir visitantes en clientes</li>
+                            <li>Botón directo a WhatsApp</li>
+                            <li>Entrega en pocos días</li>
+                        </ul>
 
-                    QUIÉNES SOMOS
+                        <a href="https://wa.me/50234427911?text=Hola%2C%20me%20interesa%20la%20p%C3%A1gina%20web%20desde%20Q3500"
+                            target="_blank" class="btn btn-primary btn-block">
+                            Quiero mi página web
+                        </a>
+                    </article>
 
-                </span>
+                </div>
 
-                <h2>
-
-                    Transformamos ideas en
-
-                    <span>
-
-                        experiencias digitales.
-
-                    </span>
-
-                </h2>
-
-                <p>
-
-                    En HDulam ayudamos a emprendedores y empresas
-                    a construir una presencia digital que inspire
-                    confianza y genere resultados.
-
-                </p>
-
-                <p>
-
-                    No solo diseñamos páginas web.
-
-                    Creamos herramientas que trabajan por tu negocio
-                    las 24 horas del día.
-
+                <p class="pricing-note reveal">
+                    ¿Necesitas algo más específico? <a href="https://wa.me/50234427911?text=Hola%2C%20quiero%20una%20cotizaci%C3%B3n%20personalizada" target="_blank">Escríbenos y armamos una propuesta a tu medida.</a>
                 </p>
 
             </div>
+        </section>
 
-            <div class="col-lg-6">
+        <!-- PROCESO -->
+        <section id="proceso" class="section tight">
+            <div class="container">
 
-                <div class="about-grid">
+                <div class="section-head reveal">
+                    <div>
+                        <span class="eyebrow">Proceso</span>
+                        <h2>Así construimos cada proyecto</h2>
+                    </div>
+                    <div class="side">
+                        <p>Un proceso simple y transparente, de principio a fin.</p>
+                    </div>
+                </div>
 
-                    <div class="mini-card">
+                <div class="process-list reveal">
 
-                        <i class="bi bi-lightning-charge-fill"></i>
-
-                        <h4>
-
-                            Rápidos
-
-                        </h4>
-
-                        <p>
-
-                            Entregas ágiles sin sacrificar calidad.
-
-                        </p>
-
+                    <div class="process-row">
+                        <span class="index-num">01</span>
+                        <h4>Descubrimiento</h4>
+                        <p>Conocemos tu negocio, tus objetivos y tu público ideal.</p>
                     </div>
 
-                    <div class="mini-card">
-
-                        <i class="bi bi-award-fill"></i>
-
-                        <h4>
-
-                            Calidad
-
-                        </h4>
-
-                        <p>
-
-                            Interfaces modernas y profesionales.
-
-                        </p>
-
+                    <div class="process-row">
+                        <span class="index-num">02</span>
+                        <h4>Diseño</h4>
+                        <p>Creamos una propuesta visual moderna enfocada en conversión.</p>
                     </div>
 
-                    <div class="mini-card">
-
-                        <i class="bi bi-globe-americas"></i>
-
-                        <h4>
-
-                            Global
-
-                        </h4>
-
-                        <p>
-
-                            Trabajamos en varios idiomas.
-
-                        </p>
-
+                    <div class="process-row">
+                        <span class="index-num">03</span>
+                        <h4>Desarrollo</h4>
+                        <p>Construimos cada detalle cuidando velocidad y experiencia.</p>
                     </div>
 
-                    <div class="mini-card">
-
-                        <i class="bi bi-graph-up-arrow"></i>
-
-                        <h4>
-
-                            Resultados
-
-                        </h4>
-
-                        <p>
-
-                            Pensamos en crecimiento y conversión.
-
-                        </p>
-
+                    <div class="process-row">
+                        <span class="index-num">04</span>
+                        <h4>Lanzamiento</h4>
+                        <p>Publicamos tu proyecto, tu dominio y hosting, y damos seguimiento.</p>
                     </div>
 
                 </div>
-
             </div>
+        </section>
 
-        </div>
+        <!-- TESTIMONIOS -->
+        <section id="testimonios" class="section tight alt">
+            <div class="container">
 
-    </div>
-
-</section>
-
-<!-- ===================================== -->
-<!-- SERVICES -->
-<!-- ===================================== -->
-
-<section id="services" class="services">
-
-    <div class="container">
-
-        <div class="section-header">
-
-            <span class="section-tag">
-
-                SERVICIOS
-
-            </span>
-
-            <h2>
-
-                Todo lo que necesitas para crecer
-                en internet.
-
-            </h2>
-
-        </div>
-
-        <div class="bento-grid">
-
-            <article class="bento large">
-
-                <div>
-
-                    <span class="service-icon">
-
-                        <i class="bi bi-instagram"></i>
-
-                    </span>
-
-                    <h3>
-
-                        Gestión de Redes Sociales
-
-                    </h3>
-
-                    <p>
-
-                        Diseñamos contenido,
-                        administramos tus redes,
-                        desarrollamos estrategias
-                        y hacemos crecer tu marca.
-
-                    </p>
-
+                <div class="section-head reveal">
+                    <div>
+                        <span class="eyebrow">Testimonios</span>
+                        <h2>Lo que dicen nuestros clientes</h2>
+                    </div>
                 </div>
 
-                <a href="#contact">
+                <div class="testi-grid testi-grid-2 reveal">
 
-                    Más información
+                    <article class="testi-card">
+                        <div class="testi-stars">★★★★★</div>
+                        <p class="quote">Mucho más de 5 estrellas. Estoy sumamente agradecido por sus excelentes servicios y por la alta calidad de su trabajo. ¡Continúen así!</p>
+                        <div class="testi-person">
+                            <strong>Luis Felipe</strong>
+                            <span>Construcción</span>
+                        </div>
+                    </article>
 
-                </a>
-
-            </article>
-
-            <article class="bento">
-
-                <span class="service-icon">
-
-                    <i class="bi bi-code-slash"></i>
-
-                </span>
-
-                <h3>
-
-                    Diseño Web
-
-                </h3>
-
-                <p>
-
-                    Landing Pages,
-                    sitios corporativos,
-                    tiendas online
-                    y páginas premium.
-
-                </p>
-
-            </article>
-
-            <article class="bento">
-
-                <span class="service-icon">
-
-                    <i class="bi bi-pencil-square"></i>
-
-                </span>
-
-                <h3>
-
-                    Copywriting
-
-                </h3>
-
-                <p>
-
-                    Escribimos textos que venden
-                    y conectan con tus clientes.
-
-                </p>
-
-            </article>
-
-            <article class="bento wide">
-
-                <span class="service-icon">
-
-                    <i class="bi bi-translate"></i>
-
-                </span>
-
-                <h3>
-
-                    Traducción Profesional
-
-                </h3>
-
-                <p>
-
-                    Español · Inglés · Italiano · Portugués
-
-                </p>
-
-            </article>
-
-            <article class="bento">
-
-                <span class="service-icon">
-
-                    <i class="bi bi-bar-chart-line-fill"></i>
-
-                </span>
-
-                <h3>
-
-                    Marketing
-
-                </h3>
-
-                <p>
-
-                    Estrategias para atraer más clientes.
-
-                </p>
-
-            </article>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- ===================================== -->
-<!-- STATS -->
-<!-- ===================================== -->
-
-<section class="stats-section">
-
-    <div class="container">
-
-        <div class="row">
-
-            <div class="col-md-3">
-
-                <div class="stat-box">
-
-                    <h2>
-
-                        150+
-
-                    </h2>
-
-                    <p>
-
-                        Proyectos
-
-                    </p>
+                    <article class="testi-card">
+                        <div class="testi-stars">★★★★★</div>
+                        <p class="quote">Se merecen un 10. Su servicio es excelente y uno de sus mayores fuertes es la atención personalizada y la asesoría que brindan para potencializar a las empresas. Cubren un nicho de mercado que hoy por hoy nadie tiene identificado, y eso los hace únicos.</p>
+                        <div class="testi-person">
+                            <strong>Romeo Rodríguez</strong>
+                            <span>Tienda digital de productos varios</span>
+                        </div>
+                    </article>
 
                 </div>
-
             </div>
+        </section>
 
-            <div class="col-md-3">
+        <!-- FAQ -->
+        <section id="faq" class="section tight">
+            <div class="container">
 
-                <div class="stat-box">
-
-                    <h2>
-
-                        98%
-
-                    </h2>
-
-                    <p>
-
-                        Clientes satisfechos
-
-                    </p>
-
+                <div class="section-head reveal">
+                    <div>
+                        <span class="eyebrow">Preguntas frecuentes</span>
+                        <h2>Resolvemos tus dudas</h2>
+                    </div>
                 </div>
 
-            </div>
+                <div class="faq-list reveal">
 
-            <div class="col-md-3">
-
-                <div class="stat-box">
-
-                    <h2>
-
-                        24h
-
-                    </h2>
-
-                    <p>
-
-                        Tiempo de respuesta
-
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="col-md-3">
-
-                <div class="stat-box">
-
-                    <h2>
-
-                        4
-
-                    </h2>
-
-                    <p>
-
-                        Idiomas
-
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-<!-- ===================================== -->
-<!-- PROJECTS -->
-<!-- ===================================== -->
-
-<section id="projects" class="projects-section">
-
-    <div class="container">
-
-        <div class="section-header">
-
-            <span class="section-tag">
-
-                PORTAFOLIO
-
-            </span>
-
-            <h2>
-
-                Algunos proyectos
-                que representan nuestra forma de trabajar.
-
-            </h2>
-
-        </div>
-
-        <div class="row g-4">
-
-            <div class="col-lg-8">
-
-                <article class="project-card featured">
-
-                    <div class="project-image">
-
-                        <div class="browser">
-
-                            <div class="browser-top">
-
-                                <span></span>
-                                <span></span>
-                                <span></span>
-
+                    <div class="faq-item open">
+                        <button class="faq-question">
+                            ¿Qué incluye el paquete de página web de Q3,500?
+                            <span class="plus">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                Incluye el diseño completo de tu sitio web, tu dominio propio y hosting por un año,
+                                totalmente listo para publicar y recibir clientes. El precio puede variar según
+                                el número de páginas y funcionalidades que necesite tu proyecto.
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="browser-body">
-
-                                <div class="mockup mockup-large"></div>
-
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            ¿Qué incluye el paquete de marketing de Q595?
+                            <span class="plus">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                Diseño de contenido, calendario de publicaciones, gestión de tus redes sociales
+                                y un reporte mensual de resultados. Es un servicio mensual, ideal para mantener
+                                tu marca activa y creciendo.
                             </div>
-
                         </div>
-
                     </div>
 
-                    <div class="project-content">
-
-                        <span>
-
-                            Diseño Web
-
-                        </span>
-
-                        <h3>
-
-                            Landing Page Corporativa
-
-                        </h3>
-
-                        <p>
-
-                            Diseño moderno,
-                            responsive y optimizado
-                            para convertir visitantes
-                            en clientes.
-
-                        </p>
-
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            ¿Cuánto tarda un proyecto?
+                            <span class="plus">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                Depende del proyecto, pero normalmente entre una y cuatro semanas.
+                            </div>
+                        </div>
                     </div>
 
-                </article>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            ¿Trabajan fuera de Guatemala?
+                            <span class="plus">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                Sí. Trabajamos completamente online y podemos hacer proyectos hacia cualquier
+                                parte del mundo. Tenemos diversas formas de pago compatibles con clientes
+                                internacionales, todo adaptado para tu comodidad.
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            ¿Puedo contratar ambos servicios juntos?
+                            <span class="plus">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                Claro que sí. Muchos clientes combinan su página web con el paquete de marketing
+                                mensual para tener presencia completa: un sitio que convierte y redes sociales
+                                que atraen tráfico constante.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
+        </section>
 
-            <div class="col-lg-4">
+        <!-- CTA FINAL -->
+        <section class="final-cta reveal">
+            <div class="container">
+              <div class="final-cta-inner">
+                <span class="eyebrow">Comencemos</span>
+                <h2>Hagamos que tu negocio destaque en internet</h2>
+                <p>Cuéntanos tu idea y prepararemos una propuesta adaptada a tus objetivos y presupuesto.</p>
 
-                <article class="project-card">
-
-                    <div class="project-image small">
-
-                        <div class="mockup mobile"></div>
-
-                    </div>
-
-                    <div class="project-content">
-
-                        <span>
-
-                            Redes Sociales
-
-                        </span>
-
-                        <h3>
-
-                            Gestión de Marca
-
-                        </h3>
-
-                        <p>
-
-                            Contenido visual
-                            y estrategia.
-
-                        </p>
-
-                    </div>
-
-                </article>
-
-                <article class="project-card mt-4">
-
-                    <div class="project-image small">
-
-                        <div class="mockup analytics"></div>
-
-                    </div>
-
-                    <div class="project-content">
-
-                        <span>
-
-                            Marketing
-
-                        </span>
-
-                        <h3>
-
-                            Campañas Digitales
-
-                        </h3>
-
-                        <p>
-
-                            Orientadas
-                            a resultados.
-
-                        </p>
-
-                    </div>
-
-                </article>
-
+                <div class="final-cta-actions">
+                    <a href="https://wa.me/50234427911?text=Hola%2C%20quiero%20cotizar%20un%20proyecto"
+                        target="_blank" class="btn btn-primary">
+                        Escribir por WhatsApp
+                    </a>
+                    <a href="mailto:hector@hdulam.com" class="btn btn-line-light">
+                        Enviar correo
+                    </a>
+                </div>
+              </div>
             </div>
+        </section>
 
-        </div>
+    </main>
 
-    </div>
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
 
-</section>
+            <div class="footer-grid">
 
-<!-- ===================================== -->
-<!-- PROCESS -->
-<!-- ===================================== -->
-
-<section class="process-section">
-
-    <div class="container">
-
-        <div class="section-header">
-
-            <span class="section-tag">
-
-                PROCESO
-
-            </span>
-
-            <h2>
-
-                Así construimos
-                cada proyecto.
-
-            </h2>
-
-        </div>
-
-        <div class="timeline">
-
-            <div class="timeline-item">
-
-                <div class="number">
-
-                    01
-
+                <div class="footer-brand">
+                    <a href="#" class="brand">HDulam</a>
+                    <p>Diseño web y marketing digital para negocios en Guatemala, sin complicaciones y con precios claros.</p>
                 </div>
 
                 <div>
-
-                    <h4>
-
-                        Descubrimiento
-
-                    </h4>
-
-                    <p>
-
-                        Conocemos tu negocio,
-                        tus objetivos
-                        y tu público.
-
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="timeline-item">
-
-                <div class="number">
-
-                    02
-
+                    <h5>Empresa</h5>
+                    <ul>
+                        <li><a href="#servicios">Servicios</a></li>
+                        <li><a href="#precios">Precios</a></li>
+                        <li><a href="#testimonios">Clientes</a></li>
+                    </ul>
                 </div>
 
                 <div>
-
-                    <h4>
-
-                        Diseño
-
-                    </h4>
-
-                    <p>
-
-                        Creamos una propuesta
-                        visual moderna
-                        enfocada en conversión.
-
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="timeline-item">
-
-                <div class="number">
-
-                    03
-
+                    <h5>Servicios</h5>
+                    <ul>
+                        <li>Diseño Web</li>
+                        <li>Redes Sociales</li>
+                        <li>Marketing</li>
+                        <li>Traducción</li>
+                    </ul>
                 </div>
 
                 <div>
-
-                    <h4>
-
-                        Desarrollo
-
-                    </h4>
-
-                    <p>
-
-                        Construimos
-                        cada detalle
-                        cuidando velocidad
-                        y experiencia.
-
-                    </p>
-
+                    <h5>Contacto</h5>
+                    <ul>
+                        <li>hector@hdulam.com</li>
+                        <li>+502 3442-7911</li>
+                        <li>Guatemala</li>
+                    </ul>
                 </div>
 
             </div>
 
-            <div class="timeline-item">
-
-                <div class="number">
-
-                    04
-
-                </div>
-
-                <div>
-
-                    <h4>
-
-                        Lanzamiento
-
-                    </h4>
-
-                    <p>
-
-                        Publicamos
-                        tu proyecto
-                        y damos seguimiento.
-
-                    </p>
-
-                </div>
-
+            <div class="footer-bottom">
+                <p>© 2026 HDulam · Todos los derechos reservados.</p>
+                <p>Diseñado por HDulam.</p>
             </div>
 
         </div>
-
-    </div>
-
-</section>
-
-<!-- ===================================== -->
-<!-- TESTIMONIALS -->
-<!-- ===================================== -->
-
-<section class="testimonials">
-
-    <div class="container">
-
-        <div class="section-header">
-
-            <span class="section-tag">
-
-                TESTIMONIOS
-
-            </span>
-
-            <h2>
-
-                Lo que dicen
-                nuestros clientes.
-
-            </h2>
-
-        </div>
-
-        <div class="row g-4">
-
-            <div class="col-lg-4">
-
-                <article class="testimonial">
-
-                    <div class="stars">
-
-                        ★★★★★
-
-                    </div>
-
-                    <p>
-
-                        El cambio fue enorme.
-                        Nuestra página ahora transmite
-                        mucha más confianza.
-
-                    </p>
-
-                    <div class="client">
-
-                        <div class="avatar"></div>
-
-                        <div>
-
-                            <strong>
-
-                                Carlos Méndez
-
-                            </strong>
-
-                            <span>
-
-                                Restaurante
-
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-            <div class="col-lg-4">
-
-                <article class="testimonial">
-
-                    <div class="stars">
-
-                        ★★★★★
-
-                    </div>
-
-                    <p>
-
-                        Las redes sociales
-                        empezaron a generar
-                        muchos más contactos.
-
-                    </p>
-
-                    <div class="client">
-
-                        <div class="avatar"></div>
-
-                        <div>
-
-                            <strong>
-
-                                María López
-
-                            </strong>
-
-                            <span>
-
-                                Boutique
-
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-            <div class="col-lg-4">
-
-                <article class="testimonial">
-
-                    <div class="stars">
-
-                        ★★★★★
-
-                    </div>
-
-                    <p>
-
-                        Muy profesionales.
-                        Todo fue rápido
-                        y el resultado superó
-                        nuestras expectativas.
-
-                    </p>
-
-                    <div class="client">
-
-                        <div class="avatar"></div>
-
-                        <div>
-
-                            <strong>
-
-                                Alejandro Ruiz
-
-                            </strong>
-
-                            <span>
-
-                                Empresa Tecnológica
-
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-<!-- ===================================== -->
-<!-- FAQ -->
-<!-- ===================================== -->
-
-<section class="faq-section">
-
-    <div class="container">
-
-        <div class="section-header">
-
-            <span class="section-tag">
-
-                PREGUNTAS FRECUENTES
-
-            </span>
-
-            <h2>
-
-                Resolvemos tus dudas.
-
-            </h2>
-
-        </div>
-
-        <div class="accordion accordion-flush" id="faqAccordion">
-
-            <div class="accordion-item">
-
-                <h2 class="accordion-header">
-
-                    <button class="accordion-button collapsed"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#faq1">
-
-                        ¿Cuánto tarda un proyecto?
-
-                    </button>
-
-                </h2>
-
-                <div id="faq1"
-                    class="accordion-collapse collapse"
-                    data-bs-parent="#faqAccordion">
-
-                    <div class="accordion-body">
-
-                        Depende del proyecto, pero normalmente entre
-                        una y cuatro semanas.
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="accordion-item">
-
-                <h2 class="accordion-header">
-
-                    <button class="accordion-button collapsed"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#faq2">
-
-                        ¿Trabajan fuera de Guatemala?
-
-                    </button>
-
-                </h2>
-
-                <div id="faq2"
-                    class="accordion-collapse collapse"
-                    data-bs-parent="#faqAccordion">
-
-                    <div class="accordion-body">
-
-                        Sí. Trabajamos completamente online. Podemos hacer proyectos hacia cualquier parte del mundo. Tenemos diversas formas de pago que son compatibles con clientes internacionales. Todo adaptado para tu comodidad.
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="accordion-item">
-
-                <h2 class="accordion-header">
-
-                    <button class="accordion-button collapsed"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#faq3">
-
-                        ¿También administran redes?
-
-                    </button>
-
-                </h2>
-
-                <div id="faq3"
-                    class="accordion-collapse collapse"
-                    data-bs-parent="#faqAccordion">
-
-                    <div class="accordion-body">
-
-                        Sí. Creamos contenido,
-                        diseñamos publicaciones,
-                        administramos campañas
-                        y analizamos resultados.
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- ===================================== -->
-<!-- CTA -->
-<!-- ===================================== -->
-
-<section id="contact" class="cta-section">
-
-    <div class="container text-center">
-
-        <span class="section-tag">
-
-            COMENCEMOS
-
-        </span>
-
-        <h2>
-
-            Hagamos que tu negocio
-            destaque en internet.
-
-        </h2>
-
-        <p>
-
-            Cuéntanos tu idea y prepararemos una propuesta
-            adaptada a tus objetivos.
-
-        </p>
-
-        <div class="cta-buttons">
-
-            <a href="https://wa.me/50234427911"
-                target="_blank"
-                class="btn btn-primary btn-lg">
-
-                <i class="bi bi-whatsapp"></i>
-
-                Escribir por WhatsApp
-
-            </a>
-
-            <a href="mailto:hector@hdulam.com"
-                class="btn btn-outline-light btn-lg">
-
-                <i class="bi bi-envelope"></i>
-
-                Enviar correo
-
-            </a>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- ===================================== -->
-<!-- FOOTER -->
-<!-- ===================================== -->
-
-<footer class="footer">
-
-    <div class="container">
-
-        <div class="row gy-5">
-
-            <div class="col-lg-4">
-
-                <a href="#"
-                    class="footer-logo">
-
-                    HDulam
-
-                </a>
-
-                <p>
-
-                    Creamos experiencias digitales,
-                    diseño web, redes sociales
-                    y estrategias que ayudan
-                    a crecer negocios.
-
-                </p>
-
-            </div>
-
-            <div class="col-lg-2">
-
-                <h5>
-
-                    Empresa
-
-                </h5>
-
-                <ul>
-
-                    <li>
-
-                        <a href="#about">
-
-                            Nosotros
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="#projects">
-
-                            Proyectos
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="#services">
-
-                            Servicios
-
-                        </a>
-
-                    </li>
-
-                </ul>
-
-            </div>
-
-            <div class="col-lg-3">
-
-                <h5>
-
-                    Servicios
-
-                </h5>
-
-                <ul>
-
-                    <li>
-
-                        Diseño Web
-
-                    </li>
-
-                    <li>
-
-                        Redes Sociales
-
-                    </li>
-
-                    <li>
-
-                        Marketing
-
-                    </li>
-
-                    <li>
-
-                        Traducción
-
-                    </li>
-
-                </ul>
-
-            </div>
-
-            <div class="col-lg-3">
-
-                <h5>
-
-                    Contacto
-
-                </h5>
-
-                <ul>
-
-                    <li>
-
-                        hector@hdulam.com
-
-                    </li>
-
-                    <li>
-
-                        +502 3442-7911
-
-                    </li>
-
-                    <li>
-
-                        Guatemala
-
-                    </li>
-
-                </ul>
-
-                <div class="footer-social">
-
-                    <a href="#">
-
-                        <i class="bi bi-facebook"></i>
-
-                    </a>
-
-                    <a href="#">
-
-                        <i class="bi bi-instagram"></i>
-
-                    </a>
-
-                    <a href="#">
-
-                        <i class="bi bi-linkedin"></i>
-
-                    </a>
-
-                    <a href="#">
-
-                        <i class="bi bi-whatsapp"></i>
-
-                    </a>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <hr>
-
-        <div class="footer-bottom">
-
-            <p>
-
-                © 2026 HDulam · Todos los derechos reservados.
-
-            </p>
-
-            <p>
-
-                Diseñado con ❤️ por HDulam.
-
-            </p>
-
-        </div>
-
-    </div>
-
-</footer>
-
-<!-- Botón flotante -->
-
-<a href="https://wa.me/50234427911"
-    target="_blank"
-    class="floating-whatsapp">
-
-    <i class="bi bi-whatsapp"></i>
-
-</a>
-
-<!-- Bootstrap -->
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- GSAP -->
-
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-
-<!-- Script -->
-
-<script src="script.js"></script>
-
-</main>
+    </footer>
+
+    <!-- WhatsApp flotante -->
+    <a href="https://wa.me/50234427911?text=Hola%2C%20quiero%20cotizar%20un%20proyecto" target="_blank"
+        class="wa-float" aria-label="Escribir por WhatsApp">
+        <svg viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16.004 3C9.377 3 4 8.373 4 15c0 2.34.652 4.527 1.786 6.393L4 29l7.786-1.744A11.93 11.93 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3Zm6.994 16.87c-.294.826-1.46 1.512-2.386 1.71-.635.135-1.464.243-4.257-.914-3.575-1.48-5.875-5.106-6.055-5.343-.173-.237-1.454-1.937-1.454-3.696s.913-2.62 1.238-2.978c.325-.358.71-.447.947-.447.237 0 .474.003.68.013.219.01.512-.083.8.61.294.706 1 2.437 1.088 2.615.087.178.145.386.029.622-.115.237-.173.386-.34.593-.168.207-.353.462-.505.62-.168.176-.343.366-.148.716.196.35.87 1.437 1.868 2.328 1.284 1.147 2.367 1.503 2.717 1.673.35.17.554.145.758-.087.204-.232.874-1.02 1.108-1.37.235-.35.47-.29.79-.174.32.116 2.036.96 2.386 1.135.35.174.583.26.669.406.087.145.087.84-.207 1.666Z"/>
+        </svg>
+    </a>
+
+    <!-- Script -->
+    <script src="script.js"></script>
 
 </body>
 
