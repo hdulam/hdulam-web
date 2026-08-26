@@ -627,10 +627,75 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 .final-cta h2 { font-size: clamp(30px, 5vw, 48px); margin-bottom: 14px; }
 .final-cta p { color: var(--gray-300); font-size: 17px; margin-bottom: 30px; max-width: 560px; margin-left: auto; margin-right: auto; }
 
+/* ---------- Entrena desde casa (Skool) ---------- */
+.skool-feature {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  align-items: center;
+  background: linear-gradient(135deg, #221414 0%, var(--black-card) 100%);
+  border: 1px solid rgba(227, 30, 36, 0.35);
+  border-radius: var(--radius);
+  padding: 28px;
+  box-shadow: var(--shadow-red);
+}
+@media (min-width: 860px) {
+  .skool-feature { grid-template-columns: 1fr 1.2fr; padding: 40px; }
+}
+.skool-feature-media { aspect-ratio: 4 / 3; }
+.skool-feature-body .eyebrow { margin-bottom: 10px; }
+.skool-feature-body h2 { font-size: clamp(26px, 4vw, 38px); margin-bottom: 14px; }
+.skool-feature-body p { color: var(--gray-300); font-size: 16px; margin-bottom: 22px; }
+.skool-feature-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+.skool-feature-list li { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--gray-300); }
+.skool-feature-list svg { width: 20px; height: 20px; color: var(--red); flex-shrink: 0; }
+
+/* ---------- Síguenos ---------- */
+.social-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 280px));
+  justify-content: center;
+  gap: 16px;
+}
+.social-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 30px 22px;
+  background: var(--black-card);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius);
+  transition: border-color 200ms ease, transform 200ms ease, background-color 200ms ease;
+}
+.social-card:hover { border-color: var(--red); background: #221515; transform: translateY(-3px); }
+.social-icon {
+  width: 52px; height: 52px;
+  border-radius: 999px;
+  background: rgba(227, 30, 36, 0.12);
+  display: flex; align-items: center; justify-content: center;
+}
+.social-icon svg { width: 26px; height: 26px; color: var(--red); }
+.social-card h3 { font-size: 18px; }
+.social-card p { color: var(--gray-500); font-size: 14px; }
+
 /* ---------- Footer ---------- */
 .footer { padding: 48px 0 32px; border-top: 1px solid rgba(255,255,255,0.08); }
 .footer-inner { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; }
 .footer-links { display: flex; gap: 20px; flex-wrap: wrap; font-size: 14px; color: var(--gray-500); }
+.footer-social { display: flex; gap: 12px; }
+.footer-social a {
+  width: 40px; height: 40px;
+  border-radius: 999px;
+  background: var(--black-card);
+  border: 1px solid rgba(255,255,255,0.08);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gray-300);
+  transition: color 200ms ease, border-color 200ms ease, background-color 200ms ease;
+}
+.footer-social a:hover { color: var(--white); border-color: var(--red); background: #221515; }
+.footer-social svg { width: 20px; height: 20px; }
 .footer-copy { font-size: 13px; color: var(--gray-700); width: 100%; margin-top: 24px; text-align: center; }
 
 /* ---------- Botón flotante de WhatsApp ---------- */

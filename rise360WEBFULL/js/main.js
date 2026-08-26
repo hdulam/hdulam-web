@@ -50,6 +50,22 @@
     });
   });
 
+  /* ---------- Tracking de clics hacia la comunidad de Skool ----------
+     Mide cuánta gente sale del sitio hacia Skool, para saber qué tan
+     bien está convirtiendo cada lugar donde se promociona.
+  ------------------------------------------------------------- */
+  document.querySelectorAll(".skool-cta").forEach(function (link) {
+    link.addEventListener("click", function () {
+      var label = link.getAttribute("data-goal") || "skool";
+      if (typeof gtag === "function") {
+        gtag("event", "skool_click", {
+          event_category: "engagement",
+          event_label: label,
+        });
+      }
+    });
+  });
+
   /* ---------- Placeholders de fotos/videos ----------
      La imagen/video real siempre se dibuja encima de la etiqueta de
      placeholder (ver z-index en css/styles.css). Si el archivo no existe
