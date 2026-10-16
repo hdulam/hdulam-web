@@ -229,6 +229,44 @@ img {
     gap: 18px;
 }
 
+.region-switch {
+    display: flex;
+    gap: 4px;
+    padding: 3px;
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.55);
+}
+
+.region-btn {
+    width: 34px;
+    height: 34px;
+    padding: 2px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    background: none;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.25s var(--ease), border-color 0.25s var(--ease), transform 0.25s var(--ease);
+}
+
+.region-btn svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.region-btn:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+}
+
+.region-btn.active {
+    opacity: 1;
+    border-color: var(--blue);
+}
+
 .nav-toggle {
     display: none;
     width: 42px;
@@ -630,6 +668,16 @@ img {
     font-size: 0.92rem;
     color: var(--ink-mute);
     align-self: flex-end;
+}
+
+.price-tag.is-quote .currency,
+.price-tag.is-quote .period {
+    display: none;
+}
+
+.price-tag.is-quote .amount {
+    font-size: 2.4rem;
+    line-height: 1.5;
 }
 
 .price-from {
@@ -1041,6 +1089,7 @@ img {
 }
 
 @media (max-width: 576px) {
+    .nav-actions .btn { display: none; }
     .hero-bottom { grid-template-columns: 1fr; }
     .hero-bottom > div { border-right: none !important; padding-right: 0; }
     .hero-cta-row { flex-direction: column; align-items: stretch; }

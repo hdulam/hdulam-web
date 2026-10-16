@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>HDulam | Diseño Web y Marketing Digital en Guatemala</title>
+    <title>HDulam | Diseño Web y Marketing Digital en Guatemala y Argentina</title>
 
     <meta name="description"
-        content="Páginas web desde Q3,500 con dominio y hosting incluido por un año, y paquetes de marketing digital desde Q595. Diseño web, redes sociales y estrategias que hacen crecer tu negocio.">
+        content="Páginas web con dominio y hosting incluido por un año y paquetes de marketing digital. Diseño web, redes sociales y estrategias que hacen crecer tu negocio en Guatemala y Argentina.">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,8 +37,27 @@
             </ul>
 
             <div class="nav-actions">
+                <div class="region-switch" role="group" aria-label="Elegir país">
+                    <button type="button" class="region-btn active" data-region="gt" aria-pressed="true"
+                        aria-label="Guatemala" title="Guatemala">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <rect width="24" height="24" fill="#4997d0" />
+                            <rect x="8" width="8" height="24" fill="#fff" />
+                            <circle cx="12" cy="12" r="3.3" fill="#fff" stroke="#3f8a4f" stroke-width="1.3" />
+                            <circle cx="12" cy="12" r="1.2" fill="#c9a227" />
+                        </svg>
+                    </button>
+                    <button type="button" class="region-btn" data-region="ar" aria-pressed="false"
+                        aria-label="Argentina" title="Argentina">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <rect width="24" height="24" fill="#74acdf" />
+                            <rect y="8" width="24" height="8" fill="#fff" />
+                            <circle cx="12" cy="12" r="2.6" fill="#f6b40e" />
+                        </svg>
+                    </button>
+                </div>
                 <a href="https://wa.me/50234427911?text=Hola%2C%20quiero%20cotizar%20un%20proyecto"
-                    target="_blank" class="btn btn-primary">
+                    target="_blank" class="btn btn-primary" data-wa="Hola, quiero cotizar un proyecto">
                     Cotizar ahora
                 </a>
                 <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
@@ -56,7 +75,7 @@
         <a href="#testimonios">Clientes</a>
         <a href="#faq">Preguntas</a>
         <a href="https://wa.me/50234427911?text=Hola%2C%20quiero%20cotizar%20un%20proyecto" target="_blank"
-            class="btn btn-primary btn-block" style="margin-top:20px;">
+            class="btn btn-primary btn-block" style="margin-top:20px;" data-wa="Hola, quiero cotizar un proyecto">
             Escribir por WhatsApp
         </a>
     </div>
@@ -65,7 +84,7 @@
     <header class="hero">
         <div class="container">
 
-            <span class="eyebrow hero-eyebrow reveal">Agencia digital en Guatemala</span>
+            <span class="eyebrow hero-eyebrow reveal"><span>Agencia digital en <span data-bind="country">Guatemala</span></span></span>
 
             <div class="hero-top reveal">
                 <h1>
@@ -83,7 +102,7 @@
 
             <div class="hero-cta-row reveal">
                 <a href="https://wa.me/50234427911?text=Hola%2C%20quiero%20cotizar%20un%20proyecto"
-                    target="_blank" class="btn btn-primary btn-lg">
+                    target="_blank" class="btn btn-primary btn-lg" data-wa="Hola, quiero cotizar un proyecto">
                     Escribir por WhatsApp
                 </a>
                 <a href="#precios" class="btn btn-line btn-lg">Ver precios →</a>
@@ -205,17 +224,17 @@
                         <p class="plan-desc">Presencia constante y activa en redes sociales para tu negocio.</p>
 
                         <div class="plan-tabs">
-                            <button class="plan-tab active" data-plan="Emprende" data-price="595" data-posts="6" data-reels="1">Emprende</button>
-                            <button class="plan-tab" data-plan="Construye" data-price="950" data-posts="8" data-reels="2">Construye</button>
-                            <button class="plan-tab" data-plan="Lidera" data-price="1395" data-posts="12" data-reels="3">Lidera</button>
+                            <button class="plan-tab active" data-plan="Emprende" data-posts="6" data-reels="1">Emprende</button>
+                            <button class="plan-tab" data-plan="Construye" data-posts="8" data-reels="2">Construye</button>
+                            <button class="plan-tab" data-plan="Lidera" data-posts="12" data-reels="3">Lidera</button>
                         </div>
 
-                        <div class="price-tag">
-                            <span class="currency">Q</span>
-                            <span class="amount" id="planPrice">595</span>
+                        <div class="price-tag" id="planPriceTag">
+                            <span class="currency" id="planCurrency">Q</span>
+                            <span class="amount" id="planPrice">1,595</span>
                             <span class="period">/ mes</span>
                         </div>
-                        <div class="price-from">Facturado mensualmente</div>
+                        <div class="price-from" id="planNote">Facturado mensualmente</div>
 
                         <div class="price-divider"></div>
 
@@ -228,7 +247,7 @@
                             <li>Reporte de resultados mensual</li>
                         </ul>
 
-                        <a href="https://wa.me/50234427911?text=Hola%2C%20me%20interesa%20el%20paquete%20de%20Marketing%20Emprende%20por%20Q595%2Fmes"
+                        <a href="https://wa.me/50234427911?text=Hola%2C%20me%20interesa%20el%20paquete%20de%20Marketing%20Emprende%20por%20Q1%2C595%2Fmes"
                             target="_blank" class="btn btn-line btn-block" id="planCta">
                             Quiero este plan
                         </a>
@@ -242,8 +261,8 @@
                         <p class="plan-desc">Tu sitio completo, publicado y listo para recibir clientes.</p>
 
                         <div class="price-tag">
-                            <span class="currency">Q</span>
-                            <span class="amount">3,500</span>
+                            <span class="currency" data-bind="currency">Q</span>
+                            <span class="amount" data-bind="webPrice">5,638.70</span>
                             <span class="period">desde</span>
                         </div>
                         <div class="price-from">Pago único · dominio y hosting incluidos por 1 año</div>
@@ -259,8 +278,8 @@
                             <li>Entrega en pocos días</li>
                         </ul>
 
-                        <a href="https://wa.me/50234427911?text=Hola%2C%20me%20interesa%20la%20p%C3%A1gina%20web%20desde%20Q3500"
-                            target="_blank" class="btn btn-primary btn-block">
+                        <a href="https://wa.me/50234427911?text=Hola%2C%20me%20interesa%20la%20p%C3%A1gina%20web"
+                            target="_blank" class="btn btn-primary btn-block" id="webCta">
                             Quiero mi página web
                         </a>
                     </article>
@@ -268,7 +287,8 @@
                 </div>
 
                 <p class="pricing-note reveal">
-                    ¿Necesitas algo más específico? <a href="https://wa.me/50234427911?text=Hola%2C%20quiero%20una%20cotizaci%C3%B3n%20personalizada" target="_blank">Escríbenos y armamos una propuesta a tu medida.</a>
+                    ¿Necesitas algo más específico? <a href="https://wa.me/50234427911?text=Hola%2C%20quiero%20una%20cotizaci%C3%B3n%20personalizada" target="_blank"
+                        data-wa="Hola, quiero una cotización personalizada">Escríbenos y armamos una propuesta a tu medida.</a>
                 </p>
 
             </div>
@@ -368,7 +388,7 @@
 
                     <div class="faq-item open">
                         <button class="faq-question">
-                            ¿Qué incluye el paquete de página web de Q3,500?
+                            ¿Qué incluye el paquete de página web?
                             <span class="plus">+</span>
                         </button>
                         <div class="faq-answer">
@@ -382,7 +402,7 @@
 
                     <div class="faq-item">
                         <button class="faq-question">
-                            ¿Qué incluye el paquete de marketing de Q595?
+                            ¿Qué incluye el paquete de marketing?
                             <span class="plus">+</span>
                         </button>
                         <div class="faq-answer">
@@ -408,14 +428,15 @@
 
                     <div class="faq-item">
                         <button class="faq-question">
-                            ¿Trabajan fuera de Guatemala?
+                            ¿Trabajan con clientes de otros países?
                             <span class="plus">+</span>
                         </button>
                         <div class="faq-answer">
                             <div class="faq-answer-inner">
                                 Sí. Trabajamos completamente online y podemos hacer proyectos hacia cualquier
                                 parte del mundo. Tenemos diversas formas de pago compatibles con clientes
-                                internacionales, todo adaptado para tu comodidad.
+                                internacionales, todo adaptado para tu comodidad. Para consultas internacionales
+                                puedes escribir a cualquiera de nuestros dos WhatsApp, el de Guatemala o el de Argentina.
                             </div>
                         </div>
                     </div>
@@ -448,7 +469,7 @@
 
                 <div class="final-cta-actions">
                     <a href="https://wa.me/50234427911?text=Hola%2C%20quiero%20cotizar%20un%20proyecto"
-                        target="_blank" class="btn btn-primary">
+                        target="_blank" class="btn btn-primary" data-wa="Hola, quiero cotizar un proyecto">
                         Escribir por WhatsApp
                     </a>
                     <a href="mailto:hector@hdulam.com" class="btn btn-line-light">
@@ -469,7 +490,7 @@
 
                 <div class="footer-brand">
                     <a href="#" class="brand">HDulam</a>
-                    <p>Diseño web y marketing digital para negocios en Guatemala, sin complicaciones y con precios claros.</p>
+                    <p>Diseño web y marketing digital para negocios en Guatemala y Argentina, sin complicaciones y con precios claros.</p>
                 </div>
 
                 <div>
@@ -495,8 +516,8 @@
                     <h5>Contacto</h5>
                     <ul>
                         <li>hector@hdulam.com</li>
-                        <li>+502 3442-7911</li>
-                        <li>Guatemala</li>
+                        <li data-bind="phone">+502 3442-7911</li>
+                        <li data-bind="country">Guatemala</li>
                     </ul>
                 </div>
 
@@ -512,7 +533,7 @@
 
     <!-- WhatsApp flotante -->
     <a href="https://wa.me/50234427911?text=Hola%2C%20quiero%20cotizar%20un%20proyecto" target="_blank"
-        class="wa-float" aria-label="Escribir por WhatsApp">
+        class="wa-float" aria-label="Escribir por WhatsApp" data-wa="Hola, quiero cotizar un proyecto">
         <svg viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path d="M16.004 3C9.377 3 4 8.373 4 15c0 2.34.652 4.527 1.786 6.393L4 29l7.786-1.744A11.93 11.93 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3Zm6.994 16.87c-.294.826-1.46 1.512-2.386 1.71-.635.135-1.464.243-4.257-.914-3.575-1.48-5.875-5.106-6.055-5.343-.173-.237-1.454-1.937-1.454-3.696s.913-2.62 1.238-2.978c.325-.358.71-.447.947-.447.237 0 .474.003.68.013.219.01.512-.083.8.61.294.706 1 2.437 1.088 2.615.087.178.145.386.029.622-.115.237-.173.386-.34.593-.168.207-.353.462-.505.62-.168.176-.343.366-.148.716.196.35.87 1.437 1.868 2.328 1.284 1.147 2.367 1.503 2.717 1.673.35.17.554.145.758-.087.204-.232.874-1.02 1.108-1.37.235-.35.47-.29.79-.174.32.116 2.036.96 2.386 1.135.35.174.583.26.669.406.087.145.087.84-.207 1.666Z"/>
         </svg>

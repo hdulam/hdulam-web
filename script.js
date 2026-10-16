@@ -1,5 +1,56 @@
 // HDulam — Blue Edition
 
+/* =====================================================
+   REGIONES
+   Todo lo que cambia por país vive aquí: contacto, moneda y precios.
+   Para actualizar un precio, solo edita el valor de abajo.
+   `null` en un paquete de marketing = se muestra "Consultar".
+   ===================================================== */
+const REGIONS = {
+    gt: {
+        lang: 'es-GT',
+        country: 'Guatemala',
+        whatsapp: '50234427911',
+        phone: '+502 3442-7911',
+        money: (amount) => `Q${amount}`,
+        currency: 'Q',
+        webPrice: '5,638.70',
+        marketing: {
+            Emprende: '1,595',
+            Construye: '1,950',
+            Lidera: '2,495'
+        },
+        quoteLabel: 'Consultar'
+    },
+    ar: {
+        lang: 'es-AR',
+        country: 'Argentina',
+        whatsapp: '5491128153592',
+        phone: '+54 9 11 2815 3592',
+        money: (amount) => `US$ ${amount}`,
+        currency: 'US$',
+        webPrice: '726.50',
+        marketing: {
+            Emprende: '205.50',
+            Construye: '251.24',
+            Lidera: '321.46'
+        },
+        quoteLabel: 'Consultar'
+    }
+};
+
+const DEFAULT_REGION = 'gt';
+const REGION_STORAGE_KEY = 'hdulam-region';
+
+/* Zona horaria del dispositivo: es una pista aproximada, sin pedir permisos */
+const AR_TIMEZONE = /^America\/(Argentina\/|Buenos_Aires$|Cordoba$|Catamarca$|Jujuy$|Mendoza$|Rosario$)/;
+
+const guessRegionFromTimezone = (timeZone) => {
+    if (AR_TIMEZONE.test(timeZone || '')) return 'ar';
+    if (timeZone === 'America/Guatemala') return 'gt';
+    return null;
+};
+
 document.addEventListener('DOMContentLoaded', () => {
 
     /* Navbar scroll state */
@@ -40,6 +91,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    const refreshFaqHeights = () => {
+        faqItems.forEach(item => {
+            if (item.classList.contains('open')) setAnswerHeight(item, true);
+        });
+    };
+
     faqItems.forEach(item => {
         const question = item.querySelector('.faq-question');
         setAnswerHeight(item, item.classList.contains('open'));
@@ -59,38 +116,151 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    /* Marketing plan selector */
+    window.addEventListener('load', refreshFaqHeights);
+    window.addEventListener('resize', refreshFaqHeights);
+
+    /* Country version (Guatemala / Argentina) */
+    const regionButtons = document.querySelectorAll('.region-btn');
     const planTabs = document.querySelectorAll('.plan-tab');
     const planName = document.getElementById('planName');
+    const planPriceTag = document.getElementById('planPriceTag');
+    const planCurrency = document.getElementById('planCurrency');
     const planPrice = document.getElementById('planPrice');
+    const planNote = document.getElementById('planNote');
     const planPosts = document.getElementById('planPosts');
     const planReels = document.getElementById('planReels');
     const planReelsLabel = document.getElementById('planReelsLabel');
     const planCta = document.getElementById('planCta');
+    const webCta = document.getElementById('webCta');
+
+    let region = DEFAULT_REGION;
+    let plan = 'Emprende';
+    let regionLocked = false; // ya definido (bandera, URL o zona horaria): la IP no lo cambia
+
+    const waLink = (message) =>
+        `https://wa.me/${REGIONS[region].whatsapp}?text=${encodeURIComponent(message)}`;
+
+    const renderPlan = () => {
+        const r = REGIONS[region];
+        const activeTab = document.querySelector(`.plan-tab[data-plan="${plan}"]`);
+        const { posts, reels } = activeTab.dataset;
+        const price = r.marketing[plan];
+        const hasPrice = price !== null && price !== undefined;
+
+        planTabs.forEach(tab => tab.classList.toggle('active', tab === activeTab));
+
+        planName.textContent = plan;
+        planPosts.textContent = posts;
+        planReels.textContent = reels;
+        planReelsLabel.textContent = Number(reels) === 1 ? 'reel editado' : 'reels editados';
+
+        planPriceTag.classList.toggle('is-quote', !hasPrice);
+        planCurrency.textContent = r.currency;
+        planPrice.textContent = hasPrice ? price : r.quoteLabel;
+        planNote.textContent = hasPrice ? 'Facturado mensualmente' : 'Escríbenos y te pasamos el precio';
+
+        planCta.href = waLink(
+            hasPrice
+                ? `Hola, me interesa el paquete de Marketing ${plan} por ${r.money(price)}/mes`
+                : `Hola, me interesa el paquete de Marketing ${plan}. ¿Me pasan el precio?`
+        );
+    };
+
+    const renderRegion = () => {
+        const r = REGIONS[region];
+
+        document.documentElement.lang = r.lang;
+        document.documentElement.dataset.region = region;
+
+        regionButtons.forEach(btn => {
+            const isActive = btn.dataset.region === region;
+            btn.classList.toggle('active', isActive);
+            btn.setAttribute('aria-pressed', String(isActive));
+        });
+
+        document.querySelectorAll('[data-bind]').forEach(el => {
+            el.textContent = r[el.dataset.bind];
+        });
+
+        document.querySelectorAll('[data-wa]').forEach(link => {
+            link.href = waLink(link.dataset.wa);
+        });
+
+        webCta.href = waLink(`Hola, me interesa la página web de ${r.money(r.webPrice)}`);
+
+        renderPlan();
+        refreshFaqHeights();
+    };
+
+    const saveRegion = (code) => {
+        try {
+            localStorage.setItem(REGION_STORAGE_KEY, code);
+        } catch (e) { /* sin almacenamiento: no pasa nada */ }
+    };
+
+    const readSavedRegion = () => {
+        try {
+            const saved = localStorage.getItem(REGION_STORAGE_KEY);
+            return REGIONS[saved] ? saved : null;
+        } catch (e) {
+            return null;
+        }
+    };
+
+    // País aproximado por IP. Solo se usa si la zona horaria no lo aclara.
+    const lookupCountryByIp = async () => {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 2500);
+        try {
+            const response = await fetch('https://api.country.is/', { signal: controller.signal });
+            const data = await response.json();
+            return data.country;
+        } catch (e) {
+            return null;
+        } finally {
+            clearTimeout(timer);
+        }
+    };
+
+    regionButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            region = btn.dataset.region;
+            regionLocked = true;
+            saveRegion(region);
+            renderRegion();
+        });
+    });
 
     planTabs.forEach(tab => {
         tab.addEventListener('click', () => {
-            planTabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-
-            const { plan, price, posts, reels } = tab.dataset;
-
-            if (planName) planName.textContent = plan;
-            if (planPrice) planPrice.textContent = price;
-            if (planPosts) planPosts.textContent = posts;
-            if (planReels) planReels.textContent = reels;
-            if (planReelsLabel) {
-                planReelsLabel.textContent = Number(reels) === 1 ? 'reel editado' : 'reels editados';
-            }
-
-            if (planCta) {
-                const message = encodeURIComponent(
-                    `Hola, me interesa el paquete de Marketing ${plan} por Q${price}/mes`
-                );
-                planCta.href = `https://wa.me/50234427911?text=${message}`;
-            }
+            plan = tab.dataset.plan;
+            renderPlan();
         });
     });
+
+    // Prioridad: ?pais=ar|gt  >  elección guardada  >  zona horaria  >  IP  >  Guatemala
+    const queryRegion = new URLSearchParams(window.location.search).get('pais')?.toLowerCase();
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const startRegion =
+        (REGIONS[queryRegion] ? queryRegion : null) ||
+        readSavedRegion() ||
+        guessRegionFromTimezone(timezone);
+
+    if (startRegion) {
+        region = startRegion;
+        regionLocked = true;
+    }
+
+    renderRegion();
+
+    if (!startRegion) {
+        lookupCountryByIp().then(country => {
+            const detected = { AR: 'ar', GT: 'gt' }[country];
+            if (regionLocked || !detected || detected === region) return;
+            region = detected;
+            renderRegion();
+        });
+    }
 
     /* Reveal on scroll */
     const revealEls = document.querySelectorAll('.reveal');
